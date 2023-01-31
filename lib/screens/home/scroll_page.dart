@@ -5,6 +5,7 @@ import 'package:http/http.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import '../../model/post.dart';
+import '../../widget/resturant_card.dart';
 
 class InfiniteScrollPaginatorDemo extends StatefulWidget {
   @override
@@ -58,7 +59,7 @@ class _InfiniteScrollPaginatorDemoState
           builderDelegate: PagedChildBuilderDelegate<Post>(
             itemBuilder: (context, item, index) => Padding(
               padding: const EdgeInsets.all(15.0),
-              child: PostItem(item.title, item.body),
+              child: ResturantItem(item.title, item.body),
             ),
           ),
         ),
