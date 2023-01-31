@@ -1,4 +1,5 @@
 import 'package:enebla_user_app/enebla_home.dart';
+import 'package:enebla_user_app/screens/order/order.dart';
 import 'package:flutter/material.dart';
 import 'package:enebla_user_app/style.dart' as style;
 
@@ -155,7 +156,10 @@ class OrderPreview extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       TextButton(
-                        onPressed: () { EneblaHome(); },
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => EneblaHome()));
+                          },
                         child:  Text(
                           'Add more items',
                           style: TextStyle(
@@ -166,7 +170,10 @@ class OrderPreview extends StatelessWidget {
                         ),
                       ),
                       IconButton(
-                          onPressed: () { EneblaHome(); },
+                          onPressed: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => EneblaHome()));
+                          },
                           icon: Icon( Icons.chevron_right),
                       ),
                     ],
@@ -181,7 +188,10 @@ class OrderPreview extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: style.Style.primaryColor,
                         ),
-                          onPressed: (){},
+                          onPressed: (){
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => Order()));
+                          },
                           child: const Text(
                             'Continue To Order',
                             style: TextStyle(
