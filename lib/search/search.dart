@@ -4,7 +4,7 @@ class Search extends StatelessWidget {
    Search({Key? key}) : super(key: key);
 
   List<String> searchResult =[
-    'ferfer','shiro'
+    '130ETB - Ethiopian','shiro migib'
   ];
 
   @override
@@ -74,21 +74,55 @@ class Search extends StatelessWidget {
             ),
           )
           :GridView.builder(
+          padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              crossAxisSpacing: 4.0,
-              mainAxisSpacing: 4.0
+              crossAxisSpacing: 14.0,
+              mainAxisSpacing: 3.0,
+              mainAxisExtent: 240
           ),
           itemBuilder: (context, index)
             {
-              return Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/home.png"),
-                    fit: BoxFit.cover),
-              ),
-              child: Text(searchResult[1]),
-            );
+              return Column(
+                  children: [
+                    Container(
+                      height: 180,
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 0),
+                          borderRadius: BorderRadius.circular(15),
+                        image: DecorationImage(
+                            image: AssetImage("lib/assets/home.jpg"),
+                            fit: BoxFit.cover
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                        height: 35,
+                        width: double.maxFinite,
+                        child: Text(
+                            searchResult[1],
+                            style: TextStyle(
+
+                              fontSize: 30,
+                              color: Colors.black,
+                              wordSpacing: 6,
+                            )
+                        )
+                    ),
+                    SizedBox(
+                        // height: 50,
+                        width: double.maxFinite,
+                        child: Text(
+                            searchResult[0],
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Color.fromRGBO(133, 133, 133, 0.8),
+                              // wordSpacing: 4,
+                            )
+                        )
+                    ),
+                  ]
+              );
           }
         ),
       );
