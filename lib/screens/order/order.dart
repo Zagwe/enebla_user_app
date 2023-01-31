@@ -36,20 +36,18 @@ class Order extends StatelessWidget {
                 Text(
                   'UPCOMING ORDERS',
                   style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 18,
                       fontWeight: FontWeight.w800,
-                      color: Colors.black54,
-                      wordSpacing: 5
+                      color: Colors.black54
                   ),
                 ),
                 Text(
                   'View History',
                   textAlign: TextAlign.end,
                   style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 14,
                       fontWeight: FontWeight.w800,
-                      color: Colors.black,
-                      wordSpacing: 5
+                      color: Colors.black
                   ),
                 ),
               ],
@@ -75,7 +73,7 @@ class Order extends StatelessWidget {
                               image: AssetImage(
                                   "lib/assets/home.jpg"),
                             width: 120,
-                            height: 180,
+                            height: 140,
                             fit: BoxFit.cover
                           ),
                         ),
@@ -105,9 +103,8 @@ class Order extends StatelessWidget {
                                             // wordSpacing: 5
                                         ),
                                       ),
-
                                   ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 Row(
