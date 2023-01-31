@@ -96,22 +96,19 @@ class Search extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(
-                        height: 35,
-                        width: double.maxFinite,
+                    Padding(
+                        padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
                         child: Text(
                             searchResult[1],
                             style: TextStyle(
-
-                              fontSize: 30,
+                              fontSize: 28,
                               color: Colors.black,
                               wordSpacing: 6,
                             )
                         )
                     ),
-                    SizedBox(
-                        // height: 50,
-                        width: double.maxFinite,
+                    Padding(
+                        padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
                         child: Text(
                             searchResult[0],
                             style: TextStyle(
