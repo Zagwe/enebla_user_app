@@ -1,5 +1,13 @@
-import 'package:enebla_user_app/search/search.dart';
+import 'package:enebla_user_app/screens/search/search.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:line_icons/line_icon.dart';
+import 'package:enebla_user_app/style.dart' as style;
+
+import 'enebla_home.dart';
 
 void main() {
   runApp(EneblaUser(
@@ -16,30 +24,5 @@ class EneblaUser extends StatelessWidget {
     return MaterialApp(
       home: EneblaHome(),
     );
-  }
-}
-
-class EneblaHome extends StatelessWidget{
-  @override
-  Widget build(BuildContext context) {
-   return MaterialApp(
-       home: Scaffold(
-         appBar: AppBar(
-           backgroundColor: Color.fromARGB(255, 17, 66, 204),
-           title: Text('Enebla'),
-           actions: [
-             IconButton(onPressed: (){
-               Navigator.push(
-                   context,
-                   MaterialPageRoute(
-                       builder: (context) =>
-                           Search()));
-              }, icon: const Icon(Icons.search))
-           ],
-         ),
-
-
-       )
-   );
   }
 }
