@@ -4,7 +4,7 @@ class Search extends StatelessWidget {
    Search({Key? key}) : super(key: key);
 
   List<String> searchResult =[
-    '130ETB - Ethiopian','shiro migib'
+    // '130ETB - Ethiopian','shiro migib'
   ];
 
   @override
@@ -64,9 +64,9 @@ class Search extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
-                      'please type in a key word',
+                      'please type in a key word to search',
                       style: TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.w600),
+                          fontSize: 24, fontWeight: FontWeight.w600),
                     ),
                   ),
                 ],
