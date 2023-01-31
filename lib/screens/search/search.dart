@@ -4,7 +4,7 @@ class Search extends StatelessWidget {
    Search({Key? key}) : super(key: key);
 
   List<String> searchResult =[
-    // '130ETB - Ethiopian','shiro migib'
+    '130ETB - Ethiopian','shiro migib'
   ];
 
   @override
@@ -29,16 +29,16 @@ class Search extends StatelessWidget {
             child: TextField(
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.search),
-                // suffixIcon: IconButton(
-                //   icon: const Icon(
-                //       Icons.clear,
-                //     color: Colors.black,
-                //   ),
-                //   onPressed: () {
-                //
-                //   },
-                // ),
-                  hintText: 'Search ....',
+                suffixIcon: IconButton(
+                  icon: const Icon(
+                      Icons.clear,
+                    color: Colors.black,
+                  ),
+                  onPressed: () {
+
+                  },
+                ),
+                  hintText: 'Search....',
                 hintStyle: TextStyle(fontSize: 20),
                 border: InputBorder.none
 
@@ -51,9 +51,9 @@ class Search extends StatelessWidget {
       body: searchResult!.length == 0 ?
           Center(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(18, 200, 18, 18),
+              padding: const EdgeInsets.fromLTRB(18, 120, 18, 18),
               child: Column(
-                children: const [
+                children: [
                   Padding(
                     padding: EdgeInsets.fromLTRB(8, 18, 8, 8),
                     child: Icon(
@@ -63,10 +63,23 @@ class Search extends StatelessWidget {
                   ),
                   Padding(
                     padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      'please type in a key word to search',
-                      style: TextStyle(
-                          fontSize: 24, fontWeight: FontWeight.w600),
+                    child: Column(
+                      children: [
+                        Text(
+                          'Please enter A Key word you want to search for.',
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            color: Color.fromARGB(133, 133, 133, 133)
+                          ),
+                        ),
+                        Text(
+                          'SEARCH RESTULT WILL APPEAR HERE ',
+                          style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -97,7 +110,7 @@ class Search extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                        padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                        padding: EdgeInsets.fromLTRB(0, 10, 45, 0),
                         child: Text(
                             searchResult[1],
                             style: TextStyle(
@@ -108,7 +121,7 @@ class Search extends StatelessWidget {
                         )
                     ),
                     Padding(
-                        padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
+                        padding: EdgeInsets.fromLTRB(0, 0, 50, 5),
                         child: Text(
                             searchResult[0],
                             style: TextStyle(
