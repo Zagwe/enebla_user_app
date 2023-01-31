@@ -15,12 +15,13 @@ class ResturantItem extends StatelessWidget {
         //resturant image section
         Container(
           height: 240,
-          decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(15)),
-              color: Colors.amber),
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Container(),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Image.network(
+              'https://img.freepik.com/free-photo/top-view-table-full-delicious-food-composition_23-2149141353.jpg?w=2000',
+              fit: BoxFit.fill,
+              width: MediaQuery.of(context).size.width,
+            ),
           ),
         ),
         //resturant name
