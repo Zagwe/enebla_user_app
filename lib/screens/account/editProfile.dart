@@ -1,3 +1,4 @@
+import 'package:enebla_user_app/enebla_home.dart';
 import 'package:enebla_user_app/screens/account/accountSetting.dart';
 
 import 'package:flutter/material.dart';
@@ -8,10 +9,9 @@ class EditProfile extends StatelessWidget {
   const EditProfile({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: "Setting UI",
-      home: EditProfilePage(),
+    return Scaffold(
+      // debugShowCheckedModeBanner: false,
+      body: EditProfilePage(),
     );
   }
 }
@@ -27,25 +27,37 @@ class _EditProfilePageState extends State<EditProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 1,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: style.Style.primaryColor),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.of(context).pop();
           },
         ),
         actions: [
           IconButton(
             icon: Icon(
-              Icons.settings,
+              Icons.home,
               color: style.Style.primaryColor,
             ),
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => AccountSetting()));
+                  builder: (BuildContext context) => EneblaHome()));
             },
           ),
+          // IconButton(
+          //   icon: Icon(
+          //     Icons.settings,
+          //     color: style.Style.primaryColor,
+          //   ),
+          //   onPressed: () {
+          //     Navigator.of(context).push(MaterialPageRoute(
+          //         builder: (BuildContext context) => AccountSetting()));
+          //   },
+          // ),
+
         ],
       ),
       body: Container(
