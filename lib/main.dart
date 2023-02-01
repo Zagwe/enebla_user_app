@@ -1,4 +1,5 @@
 import 'package:enebla_user_app/auth/login.dart';
+import 'package:enebla_user_app/screens/home/tabbar.dart';
 import 'package:enebla_user_app/screens/search/search.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icon.dart';
-import 'package:enebla_user_app/style.dart' as style;
+import 'package:enebla_user_app/another_style.dart' as style;
 
 import 'enebla_home.dart';
 
@@ -27,7 +28,7 @@ class EneblaUser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Login_page(),
+      home: EneblaHome(),
     );
   }
 }

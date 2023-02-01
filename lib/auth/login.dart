@@ -1,3 +1,4 @@
+import 'package:enebla_user_app/auth/reset_password.dart';
 import 'package:enebla_user_app/auth/signup.dart';
 import 'package:enebla_user_app/enebla_home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -108,24 +109,8 @@ class _Login_pageState extends State<Login_page> {
                   emailField,
                   SizedBox(height: 20),
                   passwordField,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => sinup()));
-                        },
-                        child: Text(
-                          'forgot password',
-                          style: TextStyle(
-                              color: Colors.redAccent,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15),
-                        ),
-                      )
-                    ],
-                  ),
+                  SizedBox(height: 8),
+                  forgotpassword(context),
                   SizedBox(height: 30),
                   loginButton,
                   SizedBox(height: 20),
@@ -170,5 +155,24 @@ class _Login_pageState extends State<Login_page> {
         Fluttertoast.showToast(msg: e!.message);
       });
     }
+  }
+
+  Widget forgotpassword(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 85,
+      alignment: Alignment.bottomRight,
+      child: TextButton(
+        child: const Text(
+          "forgot password",
+          style: TextStyle(color: Colors.white),
+          textAlign: TextAlign.right,
+        ),
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => sinup()));
+        },
+      ),
+    );
   }
 }
