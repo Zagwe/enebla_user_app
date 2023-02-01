@@ -4,6 +4,7 @@ import 'package:enebla_user_app/enebla_home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:enebla_user_app/style.dart' as style;
 
 class Login_page extends StatefulWidget {
   const Login_page({super.key});
@@ -52,7 +53,6 @@ class _Login_pageState extends State<Login_page> {
         if (value!.isEmpty) {
           return ("password is required for login");
         }
-
         if (!regex.hasMatch(value)) {
           return ("please enter valid password(min. 6 charater)");
         }
@@ -68,19 +68,29 @@ class _Login_pageState extends State<Login_page> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
     );
     final loginButton = Material(
-      elevation: 5,
-      borderRadius: BorderRadius.circular(30),
-      child: MaterialButton(
-        padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        minWidth: MediaQuery.of(context).size.width,
+      // elevation: 5,
+      borderRadius: BorderRadius.circular(20),
+      child: ElevatedButton(
         onPressed: () {
           signIn(emailController.text, passwordController.text);
         },
-        child: Text(
+        child: const Text(
           'login',
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 20, color: Colors.black12, fontWeight: FontWeight.bold),
+              fontSize: 20,
+              color: Colors.white,
+              fontWeight: FontWeight.bold),
+        ),
+        style: ElevatedButton.styleFrom(
+          // minWidth: MediaQuery.of(context).size.width,
+
+          backgroundColor: style.Style.primaryColor,
+          padding: EdgeInsets.fromLTRB(120, 15, 120, 15),
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+          ),
         ),
       ),
     );
@@ -111,7 +121,7 @@ class _Login_pageState extends State<Login_page> {
                   passwordField,
                   SizedBox(height: 8),
                   forgotpassword(context),
-                  SizedBox(height: 30),
+                  SizedBox(height: 0),
                   loginButton,
                   SizedBox(height: 20),
                   Row(

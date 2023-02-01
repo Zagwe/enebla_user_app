@@ -19,9 +19,12 @@ class AccountSetting extends StatelessWidget {
         toolbarHeight: 70,
         elevation: 2,
         automaticallyImplyLeading: false,
-        title: Text(
-          'Account Setting',
-          style: TextStyle(color: style.Style.primaryColor),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 30),
+          child: Text(
+            'Account Setting',
+            style: TextStyle(color: style.Style.primaryColor),
+          ),
         ),
       ),
       body: SettingsList(
@@ -33,7 +36,7 @@ class AccountSetting extends StatelessWidget {
               SettingsTile(
                 title: 'Home',
                 subtitle: 'Go to Enebla Home',
-                leading: Icon(Icons.home),
+                leading: Icon(Icons.home, color: style.Style.primaryColor),
                 onPressed: (BuildContext context) {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => EneblaHome()));
@@ -42,7 +45,7 @@ class AccountSetting extends StatelessWidget {
               SettingsTile(
                 title: 'Profile Setting',
                 subtitle: 'Change your account information',
-                leading: Icon(Icons.manage_accounts),
+                leading: Icon(Icons.manage_accounts, color: style.Style.primaryColor),
                 onPressed: (BuildContext context) {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => EditProfile()));
@@ -51,7 +54,7 @@ class AccountSetting extends StatelessWidget {
               SettingsTile(
                 title: 'Change Password',
                 subtitle: 'Change your account Password',
-                leading: Icon(Icons.lock),
+                leading: Icon(Icons.lock, color: style.Style.primaryColor),
                 onPressed: (BuildContext context) {
                   Navigator.push(
                       context,
@@ -62,13 +65,13 @@ class AccountSetting extends StatelessWidget {
               SettingsTile(
                 title: 'Payment Method',
                 subtitle: 'Add your Account',
-                leading: Icon(Icons.payment),
+                leading: Icon(Icons.payment, color: style.Style.primaryColor),
                 onPressed: (BuildContext context) {},
               ),
               SettingsTile(
                 title: 'Order History',
                 subtitle: 'View Order History',
-                leading: Icon(Icons.fastfood),
+                leading: Icon(Icons.fastfood, color: style.Style.primaryColor),
                 onPressed: (BuildContext context) {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => Order()));
@@ -89,17 +92,17 @@ class AccountSetting extends StatelessWidget {
               SettingsTile(
                 title: 'Contact Us',
                 subtitle: 'Send us a direct email',
-                leading: Icon(Icons.email),
+                leading: Icon(Icons.email, color: style.Style.primaryColor),
                 onPressed: (BuildContext context) {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ContactUs()));
+                          builder: (context) => ContactUs( )));
                 },
               ),
               SettingsTile(
                 title: 'Logout',
-                leading: Icon(Icons.logout),
+                leading: Icon(Icons.logout, color: style.Style.primaryColor),
                 onPressed: (BuildContext context) {},
               ),
             ],

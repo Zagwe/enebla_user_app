@@ -80,8 +80,9 @@ class _OnBordingState extends State<OnBording> {
                       },
                       style: ElevatedButton.styleFrom(
                         shape: CircleBorder(),
+                        backgroundColor: style.Style.primaryColor
                       ),
-                      child: Icon(Icons.arrow_forward),
+                      child: Icon(Icons.arrow_forward ),
                     ),
                   ),
                 ],

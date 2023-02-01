@@ -83,7 +83,7 @@ class _ContactUsState extends State<ContactUs> {
                 _controller.clear();
                 Navigator.pop(context);
               },
-              icon: Icon(Icons.arrow_back),
+              icon: Icon(Icons.arrow_back, color: style.Style.primaryColor),
               color: style.Style.primaryColor,
             ),
             title: Container(
@@ -125,8 +125,7 @@ class _ContactUsState extends State<ContactUs> {
                                   color: style
                                       .Style.primaryColor)),
                           icon: Icon(
-                            Icons.person,
-                            color: nameColor,
+                            Icons.person, color: style.Style.primaryColor
                           ),
                           labelText: "Name",
                           labelStyle:
@@ -159,8 +158,7 @@ class _ContactUsState extends State<ContactUs> {
                                   color: style
                                       .Style.primaryColor)),
                           icon: Icon(
-                            Icons.subject,
-                            color: subjectColor,
+                            Icons.subject, color: style.Style.primaryColor,
                           ),
                           labelText: "subject",
                           labelStyle: TextStyle(
@@ -196,8 +194,7 @@ class _ContactUsState extends State<ContactUs> {
                                   color: style
                                       .Style.primaryColor)),
                           icon: Icon(
-                            Icons.email,
-                            color: emailColor,
+                            Icons.email, color: style.Style.primaryColor,
                           ),
                           labelText: "Email",
                           labelStyle:
@@ -232,8 +229,7 @@ class _ContactUsState extends State<ContactUs> {
                                   color: style
                                       .Style.primaryColor)),
                           icon: Icon(
-                            Icons.message,
-                            color: messageColor,
+                            Icons.message, color: style.Style.primaryColor,
                           ),
                           labelText: "message",
                           labelStyle: TextStyle(
