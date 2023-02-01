@@ -115,8 +115,7 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_settings_ui
-      sha256: cde4a0613b52e2f866579b05fcc84687ed23d00717bb6e3cbb048aa7bd5541d5
-      url: "https://pub.dev"
+      url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
   flutter_test:
@@ -222,13 +221,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.6.2"
-  settings_ui:
-    dependency: "direct main"
-    description:
-      name: settings_ui
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
   sky_engine:
     dependency: transitive
     description: flutter
