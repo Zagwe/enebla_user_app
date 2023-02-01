@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:enebla_user_app/style.dart' as style;
 
+import '../../enebla_home.dart';
+
 class OnBording extends StatefulWidget {
   const OnBording({Key? key}) : super(key: key);
 
@@ -61,15 +63,16 @@ class _OnBordingState extends State<OnBording> {
                     width: 60,
                     child: ElevatedButton(
                       onPressed: () {
+                        _pageIndex != 3?
                         _pageController.nextPage(
                             duration: Duration(milliseconds: 300),
-                            curve: Curves.ease);
+                            curve: Curves.ease): Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => EneblaHome()));
                       },
                       style: ElevatedButton.styleFrom(
                         shape: CircleBorder(),
                       ),
                       child: Icon( Icons.arrow_forward),
-
                     ),
                   ),
                 ],
