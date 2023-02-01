@@ -22,6 +22,7 @@ class EneblaUser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: style.Style.themeData,
       home: EneblaHome(),
     );

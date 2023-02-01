@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 import 'package:enebla_user_app/style.dart' as style;
 
-
 class EditProfile extends StatelessWidget {
   const EditProfile({Key? key}) : super(key: key);
   @override
@@ -31,13 +30,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 1,
         leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: style.Style.primaryColor
-          ),
+          icon: Icon(Icons.arrow_back, color: style.Style.primaryColor),
           onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext context) => AccountSetting()));
+            Navigator.pop(context);
           },
         ),
         actions: [
@@ -144,7 +139,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           borderRadius: BorderRadius.circular(20)),
                     ),
                   ),
-                  ElevatedButton (
+                  ElevatedButton(
                     onPressed: () {},
                     child: Text(
                       "SAVE",
@@ -179,16 +174,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
         decoration: InputDecoration(
             suffixIcon: isPasswordTextField
                 ? IconButton(
-              onPressed: () {
-                setState(() {
-                  showPassword = !showPassword;
-                });
-              },
-                icon: Icon(
-                  Icons.remove_red_eye,
-                  color: Colors.grey,
-                ),
-            )
+                    onPressed: () {
+                      setState(() {
+                        showPassword = !showPassword;
+                      });
+                    },
+                    icon: Icon(
+                      Icons.remove_red_eye,
+                      color: Colors.grey,
+                    ),
+                  )
                 : null,
             contentPadding: EdgeInsets.only(bottom: 3),
             labelText: labelText,
