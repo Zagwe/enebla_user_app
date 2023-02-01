@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 class Search extends StatelessWidget {
   Search({Key? key}) : super(key: key);
 
-  List<String> searchResult = ['130ETB - Ethiopian', 'shiro migib'];
+  List<String> searchResult = [
+    // '130ETB - Ethiopian', 'shiro migib'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -55,17 +57,28 @@ class Search extends StatelessWidget {
                       padding: EdgeInsets.all(8.0),
                       child: Column(
                         children: [
-                          Text(
-                            'Please enter A Key word you want to search for.',
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Color.fromARGB(133, 133, 133, 133)),
+                          Center(
+                            child: Text(
+                              'Please enter A Key word you want to search for.',
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color.fromARGB(133, 133, 133, 133)),
+                            ),
                           ),
-                          Text(
-                            'SEARCH RESTULT WILL APPEAR HERE ',
-                            style: TextStyle(
-                                fontSize: 24, fontWeight: FontWeight.w600),
+                          Center(
+                            child: Text(
+                              'SEARCH RESTULT WILL',
+                              style: TextStyle(
+                                  fontSize: 24, fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                          Center(
+                            child: Text(
+                              'APPEAR HERE ',
+                              style: TextStyle(
+                                  fontSize: 24, fontWeight: FontWeight.w600),
+                            ),
                           ),
                         ],
                       ),
