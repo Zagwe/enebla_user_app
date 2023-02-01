@@ -64,7 +64,7 @@ class ResturantItem extends StatelessWidget {
           SizedBox(
             height: 6,
           ),
-// showBarModalBottomSheet  - - the best one yet
+
           //rating and comment
           GestureDetector(
             onTap: () {

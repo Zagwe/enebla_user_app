@@ -90,7 +90,7 @@ class _CommentAndRatingState extends State<CommentAndRating> {
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           LimitedBox(
-                            maxWidth: MediaQuery.of(context).size.width * .78,
+                            maxWidth: MediaQuery.of(context).size.width * .7,
                             child: Text(
                               'some random text made by some random ass user and there is always some bug bla bla bla blaand  andotehr bla bla bla lsfjls ajklfdsk jldk sldkj fsd lsdkjf lkjsdlfkj lsdkjf sldjflsdjf klsjdf fdsl kjlfjdssldkj sdlfj lkj fldskjflkjsdlf kjsdlkfjlsdkjf sldfjlsdkjf jkdsfjlsdkf jsld kjf',
                             ),
