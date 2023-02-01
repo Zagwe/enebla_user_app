@@ -24,12 +24,11 @@ class _EneblaHomeState extends State<EneblaHome> {
   int _selectedIndex = 0;
 
   ////
-  static List<Widget> _widgetOptions = <Widget>[
-    HomePage(),
+  static final List _widgetOptions = [
+    const HomePage(),
     Search(),
-    OrderPreview(),
-    AccountSetting(),
-
+    const OrderPreview(),
+    const AccountSetting(),
   ];
 
   @override

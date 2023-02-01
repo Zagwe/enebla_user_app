@@ -11,6 +11,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:enebla_user_app/style.dart' as style;
 
+import '../../auth/login.dart';
 import '../search/search.dart';
 
 class HomePage extends StatelessWidget {
@@ -41,8 +42,12 @@ class HomePage extends StatelessWidget {
                   color: Colors.black,
                 ),
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => OnBording()));
+                  // Navigator.push(context,
+                  //     MaterialPageRoute(builder: (context) => OnBording()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginPage()));
                 },
               ),
             )

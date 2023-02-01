@@ -49,7 +49,7 @@ class _CommentAndRatingState extends State<CommentAndRating> {
                     // )
                   ],
                 ),
-                Text('200+', style: Theme.of(context).textTheme.headline4)
+                Text('200+', style: Theme.of(context).textTheme.headlineMedium)
               ],
             ),
           ),
