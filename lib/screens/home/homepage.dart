@@ -1,5 +1,4 @@
 import 'package:enebla_user_app/screens/account/accountSetting.dart';
-import 'package:enebla_user_app/screens/home/scroll_page.dart';
 import 'package:enebla_user_app/screens/order/order.dart';
 import 'package:enebla_user_app/screens/order/orderPreview.dart';
 import 'package:enebla_user_app/widget/homepage_slider.dart';
@@ -40,8 +39,10 @@ class HomePage extends StatelessWidget {
                   color: Colors.black,
                 ),
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AccountSetting()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AccountSetting()));
                 },
               ),
             )
