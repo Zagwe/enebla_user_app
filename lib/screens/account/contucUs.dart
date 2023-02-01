@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:enebla_user_app/style.dart' as style;
+import 'package:enebla_user_app/theme/style.dart' as style;
 import 'package:http/http.dart' as http;
 
 final nameController = TextEditingController();
@@ -70,7 +70,6 @@ class _ContactUsState extends State<ContactUs> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -83,15 +82,14 @@ class _ContactUsState extends State<ContactUs> {
                 _controller.clear();
                 Navigator.pop(context);
               },
-              icon: Icon(Icons.arrow_back, color: style.Style.primaryColor),
+              icon: Icon(Icons.arrow_back),
               color: style.Style.primaryColor,
             ),
             title: Container(
                 margin: EdgeInsets.only(left: 55),
                 child: Text(
                   "Contact us",
-                  style: TextStyle(
-                      color: style.Style.primaryColor),
+                  style: TextStyle(color: style.Style.primaryColor),
                 )),
             backgroundColor: Colors.transparent,
             elevation: 0,
@@ -118,18 +116,17 @@ class _ContactUsState extends State<ContactUs> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       controller: nameController,
                       decoration: InputDecoration(
-                          focusColor:
-                          style.Style.primaryColor,
+                          focusColor: style.Style.primaryColor,
                           focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: style
-                                      .Style.primaryColor)),
+                              borderSide:
+                                  BorderSide(color: style.Style.primaryColor)),
                           icon: Icon(
-                            Icons.person, color: style.Style.primaryColor
+                            Icons.person,
+                            color: nameColor,
                           ),
                           labelText: "Name",
                           labelStyle:
-                          TextStyle(color: nameColor)), // InputDecoration
+                              TextStyle(color: nameColor)), // InputDecoration
                     ),
                   ),
                   SizedBox(
@@ -151,14 +148,13 @@ class _ContactUsState extends State<ContactUs> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       controller: subjectController,
                       decoration: InputDecoration(
-                          focusColor:
-                          style.Style.primaryColor,
+                          focusColor: style.Style.primaryColor,
                           focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: style
-                                      .Style.primaryColor)),
+                              borderSide:
+                                  BorderSide(color: style.Style.primaryColor)),
                           icon: Icon(
-                            Icons.subject, color: style.Style.primaryColor,
+                            Icons.subject,
+                            color: subjectColor,
                           ),
                           labelText: "subject",
                           labelStyle: TextStyle(
@@ -187,18 +183,17 @@ class _ContactUsState extends State<ContactUs> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       controller: emailController,
                       decoration: InputDecoration(
-                          focusColor:
-                          style.Style.primaryColor,
+                          focusColor: style.Style.primaryColor,
                           focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: style
-                                      .Style.primaryColor)),
+                              borderSide:
+                                  BorderSide(color: style.Style.primaryColor)),
                           icon: Icon(
-                            Icons.email, color: style.Style.primaryColor,
+                            Icons.email,
+                            color: emailColor,
                           ),
                           labelText: "Email",
                           labelStyle:
-                          TextStyle(color: emailColor)), // InputDecoration
+                              TextStyle(color: emailColor)), // InputDecoration
                     ),
                   ),
                   SizedBox(
@@ -222,14 +217,13 @@ class _ContactUsState extends State<ContactUs> {
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
                       decoration: InputDecoration(
-                          focusColor:
-                          style.Style.primaryColor,
+                          focusColor: style.Style.primaryColor,
                           focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: style
-                                      .Style.primaryColor)),
+                              borderSide:
+                                  BorderSide(color: style.Style.primaryColor)),
                           icon: Icon(
-                            Icons.message, color: style.Style.primaryColor,
+                            Icons.message,
+                            color: messageColor,
                           ),
                           labelText: "message",
                           labelStyle: TextStyle(
@@ -242,8 +236,7 @@ class _ContactUsState extends State<ContactUs> {
                   ElevatedButton(
                     // backgroundColor:
                     style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                        style.Style.primaryColor),
+                        backgroundColor: style.Style.primaryColor),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         showDialog(

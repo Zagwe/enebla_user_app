@@ -4,7 +4,7 @@ import 'package:enebla_user_app/screens/account/editProfile.dart';
 import 'package:enebla_user_app/screens/order/orderPreview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
-import 'package:enebla_user_app/style.dart' as style;
+import 'package:enebla_user_app/theme/style.dart' as style;
 import '../../enebla_home.dart';
 import '../order/order.dart';
 
@@ -19,12 +19,9 @@ class AccountSetting extends StatelessWidget {
         toolbarHeight: 70,
         elevation: 2,
         automaticallyImplyLeading: false,
-        title: Padding(
-          padding: const EdgeInsets.only(left: 30),
-          child: Text(
-            'Account Setting',
-            style: TextStyle(color: style.Style.primaryColor),
-          ),
+        title: Text(
+          'Account Setting',
+          style: TextStyle(color: style.Style.primaryColor),
         ),
       ),
       body: SettingsList(
@@ -36,7 +33,7 @@ class AccountSetting extends StatelessWidget {
               SettingsTile(
                 title: 'Home',
                 subtitle: 'Go to Enebla Home',
-                leading: Icon(Icons.home, color: style.Style.primaryColor),
+                leading: Icon(Icons.home),
                 onPressed: (BuildContext context) {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => EneblaHome()));
@@ -45,7 +42,7 @@ class AccountSetting extends StatelessWidget {
               SettingsTile(
                 title: 'Profile Setting',
                 subtitle: 'Change your account information',
-                leading: Icon(Icons.manage_accounts, color: style.Style.primaryColor),
+                leading: Icon(Icons.manage_accounts),
                 onPressed: (BuildContext context) {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => EditProfile()));
@@ -54,7 +51,7 @@ class AccountSetting extends StatelessWidget {
               SettingsTile(
                 title: 'Change Password',
                 subtitle: 'Change your account Password',
-                leading: Icon(Icons.lock, color: style.Style.primaryColor),
+                leading: Icon(Icons.lock),
                 onPressed: (BuildContext context) {
                   Navigator.push(
                       context,
@@ -65,13 +62,13 @@ class AccountSetting extends StatelessWidget {
               SettingsTile(
                 title: 'Payment Method',
                 subtitle: 'Add your Account',
-                leading: Icon(Icons.payment, color: style.Style.primaryColor),
+                leading: Icon(Icons.payment),
                 onPressed: (BuildContext context) {},
               ),
               SettingsTile(
                 title: 'Order History',
                 subtitle: 'View Order History',
-                leading: Icon(Icons.fastfood, color: style.Style.primaryColor),
+                leading: Icon(Icons.fastfood),
                 onPressed: (BuildContext context) {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => Order()));
@@ -92,17 +89,15 @@ class AccountSetting extends StatelessWidget {
               SettingsTile(
                 title: 'Contact Us',
                 subtitle: 'Send us a direct email',
-                leading: Icon(Icons.email, color: style.Style.primaryColor),
+                leading: Icon(Icons.email),
                 onPressed: (BuildContext context) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ContactUs( )));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ContactUs()));
                 },
               ),
               SettingsTile(
                 title: 'Logout',
-                leading: Icon(Icons.logout, color: style.Style.primaryColor),
+                leading: Icon(Icons.logout),
                 onPressed: (BuildContext context) {},
               ),
             ],

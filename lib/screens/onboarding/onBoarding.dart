@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:enebla_user_app/style.dart' as style;
+import 'package:enebla_user_app/theme/style.dart' as style;
 
 import '../../auth/login.dart';
 import '../../enebla_home.dart';
@@ -83,9 +83,8 @@ class _OnBordingState extends State<OnBording> {
                       },
                       style: ElevatedButton.styleFrom(
                         shape: CircleBorder(),
-                        backgroundColor: style.Style.primaryColor
                       ),
-                      child: Icon(Icons.arrow_forward ),
+                      child: Icon(Icons.arrow_forward),
                     ),
                   ),
                 ],

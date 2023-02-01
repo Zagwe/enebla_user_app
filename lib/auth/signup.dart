@@ -4,7 +4,6 @@ import 'package:enebla_user_app/models/usermodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:enebla_user_app/style.dart' as style;
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -16,13 +15,13 @@ class SignUp extends StatefulWidget {
 class _signupState extends State<SignUp> {
   final _auth = FirebaseAuth.instance;
   final _formkey = GlobalKey<FormState>();
-  final firstnameEditingController = new TextEditingController();
-  final lastnameEditingController = new TextEditingController();
-  final phoneNumberEditingController = new TextEditingController();
-  final emailEditingController = new TextEditingController();
-  final passwordEditingController = new TextEditingController();
-  final conformPasswordEditingController = new TextEditingController();
-  final AdressEditingController = new TextEditingController();
+  final firstnameEditingController = TextEditingController();
+  final lastnameEditingController = TextEditingController();
+  final phoneNumberEditingController = TextEditingController();
+  final emailEditingController = TextEditingController();
+  final passwordEditingController = TextEditingController();
+  final conformPasswordEditingController = TextEditingController();
+  final AdressEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +71,7 @@ class _signupState extends State<SignUp> {
           hintText: "last name",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
     );
+
     final phoneNumber = TextFormField(
       autofocus: false,
       controller: phoneNumberEditingController,
@@ -170,25 +170,19 @@ class _signupState extends State<SignUp> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
     );
     final signupButton = Material(
-
+      elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      child: ElevatedButton(
+      child: MaterialButton(
+        padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        minWidth: MediaQuery.of(context).size.width,
         onPressed: () {
           signup(emailEditingController.text, passwordEditingController.text);
         },
-        child: const Text(
+        child: Text(
           'signUp',
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-        style: ElevatedButton.styleFrom(
-          backgroundColor: style.Style.primaryColor,
-          padding: EdgeInsets.fromLTRB(115, 15, 120, 15),
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
+              fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
         ),
       ),
     );
@@ -218,19 +212,16 @@ class _signupState extends State<SignUp> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   SizedBox(
-                    child: Image.asset("lib/assets/logo1.png"),
-                  ),
-                  SizedBox(
-                    height: 10,
+                    height: 180,
                     child: Text('enbla app'),
                   ),
                   SizedBox(height: 45),
                   firstname,
-                  SizedBox(height: 20),
+                  SizedBox(height: 45),
                   lastname,
                   SizedBox(height: 20),
                   phoneNumber,
-                  // SizedBox(height: 20),
+                  SizedBox(height: 20),
                   SizedBox(height: 20),
                   emailField,
                   SizedBox(height: 20),
@@ -239,7 +230,7 @@ class _signupState extends State<SignUp> {
                   conformPassword,
                   SizedBox(height: 20),
                   address,
-                  SizedBox(height: 20),
+                  SizedBox(height: 15),
                   signupButton,
                 ],
               ),
