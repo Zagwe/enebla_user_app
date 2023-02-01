@@ -1,5 +1,7 @@
+import 'package:enebla_user_app/screens/comment_and_rating.dart';
 import 'package:flutter/material.dart';
 import 'package:enebla_user_app/style.dart' as style;
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart' as bottemsheet;
 
 class ResturantItem extends StatelessWidget {
   @override
@@ -50,59 +52,72 @@ class ResturantItem extends StatelessWidget {
           SizedBox(
             height: 6,
           ),
-
+// showBarModalBottomSheet  - - the best one yet
           //rating and comment
-          Row(
-            children: [
-              Row(
-                children: [
-                  //rating
-                  Row(
-                    children: [
-                      //rating value
-                      Text('4.5'),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                        child: Icon(
-                          Icons.star,
-                          size: 20,
-                          color: style.Style.SecondaryColor,
+          GestureDetector(
+            onTap: () {
+              bottemsheet.showBarModalBottomSheet(
+                expand: false,
+                context: context,
+                bounce: true,
+                backgroundColor: Colors.transparent,
+                builder: (context) => CommentAndRating(),
+              );
+              // Navigator.push(context,
+              //     MaterialPageRoute(builder: (context) => CommentAndRating()));
+            },
+            child: Row(
+              children: [
+                Row(
+                  children: [
+                    //rating
+                    Row(
+                      children: [
+                        //rating value
+                        Text('4.5'),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                          child: Icon(
+                            Icons.star,
+                            size: 20,
+                            color: style.Style.SecondaryColor,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      //rated people count
-                      Text('200+ Rating'),
-                    ],
-                  ),
-                  //separetor
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Text(
-                      '\u2981',
-                      style: TextStyle(
-                          color: style.Style.resturantTagColor, fontSize: 16),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        //rated people count
+                        Text('200+ Rating'),
+                      ],
                     ),
-                  ),
+                    //separetor
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Text(
+                        '\u2981',
+                        style: TextStyle(
+                            color: style.Style.resturantTagColor, fontSize: 16),
+                      ),
+                    ),
 
-                  //comment
-                  Row(
-                    children: const [
-                      Icon(
-                        Icons.comment,
-                        size: 20,
-                        color: Color.fromARGB(255, 54, 48, 48),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text('comment')
-                    ],
-                  )
-                ],
-              )
-            ],
+                    //comment
+                    Row(
+                      children: const [
+                        Icon(
+                          Icons.comment,
+                          size: 20,
+                          color: Color.fromARGB(255, 54, 48, 48),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text('comment')
+                      ],
+                    )
+                  ],
+                )
+              ],
+            ),
           )
         ],
       ),

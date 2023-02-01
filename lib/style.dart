@@ -7,5 +7,8 @@ class Style {
   static Color navBarSecondaryColor = const Color(0xFF979797);
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
-  static TextTheme textTheme = const TextTheme();
+  static ThemeData themeData = ThemeData(
+      textTheme: TextTheme(
+          headline4: TextStyle(
+              fontSize: 25, fontWeight: FontWeight.bold, color: Colors.black)));
 }
