@@ -33,15 +33,18 @@ class _EditProfilePageState extends State<EditProfilePage> {
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
-            color: Colors.green,
+            color: style.Style.primaryColor
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (BuildContext context) => AccountSetting()));
+          },
         ),
         actions: [
           IconButton(
             icon: Icon(
               Icons.settings,
-              color: Colors.green,
+              color: style.Style.primaryColor,
             ),
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
