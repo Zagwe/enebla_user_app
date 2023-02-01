@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:enebla_user_app/style.dart' as style;
 
+import '../../auth/login.dart';
 import '../../enebla_home.dart';
 
 class OnBording extends StatefulWidget {
@@ -71,6 +72,11 @@ class _OnBordingState extends State<OnBording> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => EneblaHome()));
+                        _pageIndex != 3?
+                        _pageController.nextPage(
+                            duration: Duration(milliseconds: 300),
+                            curve: Curves.ease): Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Login_page()));
                       },
                       style: ElevatedButton.styleFrom(
                         shape: CircleBorder(),
@@ -203,3 +209,9 @@ class OnboardContent extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
