@@ -1,5 +1,8 @@
+import 'package:enebla_user_app/screens/order/orderPreview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
+
+import '../order/order.dart';
 
 class AccountSetting extends StatelessWidget {
   const AccountSetting({Key? key}) : super(key: key);
@@ -39,6 +42,15 @@ class AccountSetting extends StatelessWidget {
                 subtitle: 'Add your Account',
                 leading: Icon( Icons.payment),
                 onPressed: (BuildContext context) {},
+              ),
+              SettingsTile(
+                title: 'Order History',
+                subtitle: 'View Order History',
+                leading: Icon( Icons.fastfood),
+                onPressed: (BuildContext context) {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Order()));
+                },
               ),
               SettingsTile(
                 title: 'Location',

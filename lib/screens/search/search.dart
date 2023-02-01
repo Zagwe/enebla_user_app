@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class Search extends StatelessWidget {
   Search({Key? key}) : super(key: key);
 
-  List<String> searchResult = ['130ETB - Ethiopian', 'shiro migib'];
-
+  List<String> searchResult = [];
+  // '130ETB - Ethiopian', 'shiro migib'
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +38,7 @@ class Search extends StatelessWidget {
           ),
         ),
       ),
-      body: searchResult.length == 0
+      body: searchResult.isEmpty
           ? Center(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(18, 120, 18, 18),
@@ -80,7 +80,7 @@ class Search extends StatelessWidget {
                   crossAxisCount: 2,
                   crossAxisSpacing: 14.0,
                   mainAxisSpacing: 3.0,
-                  mainAxisExtent: 240),
+                  mainAxisExtent: 260),
               itemBuilder: (context, index) {
                 return Column(children: [
                   Container(
@@ -97,7 +97,7 @@ class Search extends StatelessWidget {
                       padding: EdgeInsets.fromLTRB(0, 10, 45, 0),
                       child: Text(searchResult[1],
                           style: TextStyle(
-                            fontSize: 28,
+                            fontSize: 26,
                             color: Colors.black,
                             wordSpacing: 6,
                           ))),

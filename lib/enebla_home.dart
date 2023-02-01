@@ -1,6 +1,7 @@
 import 'package:enebla_user_app/screens/account/accountSetting.dart';
 import 'package:enebla_user_app/screens/home/homepage.dart';
 import 'package:enebla_user_app/screens/order/order.dart';
+import 'package:enebla_user_app/screens/order/orderPreview.dart';
 import 'package:enebla_user_app/screens/search/search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -26,8 +27,9 @@ class _EneblaHomeState extends State<EneblaHome> {
   static List<Widget> _widgetOptions = <Widget>[
     HomePage(),
     Search(),
-    Order(),
+    OrderPreview(),
     AccountSetting(),
+
   ];
 
   @override
