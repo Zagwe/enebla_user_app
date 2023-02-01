@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:settings_ui/settings_ui.dart';
+import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 
 class AccountSetting extends StatelessWidget {
   const AccountSetting({Key? key}) : super(key: key);
@@ -14,7 +14,7 @@ class AccountSetting extends StatelessWidget {
         sections: [
           SettingsSection(
             titlePadding: EdgeInsets.all(20),
-            title: 'Section 1',
+            title: 'Account Setting',
             tiles: [
               SettingsTile(
                 title: 'Language',
@@ -22,31 +22,47 @@ class AccountSetting extends StatelessWidget {
                 leading: Icon(Icons.language),
                 onPressed: (BuildContext context) {},
               ),
-              SettingsTile.switchTile(
-                title: 'Use System Theme',
+              SettingsTile(
+                title: 'Profile Setting',
+                subtitle: 'Change your account information',
                 leading: Icon(Icons.phone_android),
-                switchValue: isSwitched,
-                onToggle: (value) {
-                },
+                onPressed: (BuildContext context) {},
+              ),
+              SettingsTile(
+                title: 'Change Password',
+                subtitle: 'Change your account Password',
+                leading: Icon(Icons.phone_android),
+                onPressed: (BuildContext context) {},
+              ),
+              SettingsTile(
+                title: 'Payment Method',
+                subtitle: 'Add your Account',
+                leading: Icon(Icons.phone_android),
+                onPressed: (BuildContext context) {},
+              ),
+              SettingsTile(
+                title: 'Location',
+                subtitle: 'Add or Remove Location',
+                leading: Icon(Icons.phone_android),
+                onPressed: (BuildContext context) {},
               ),
             ],
           ),
           SettingsSection(
             titlePadding: EdgeInsets.all(20),
-            title: 'Section 2',
+            title: 'More',
             tiles: [
               SettingsTile(
-                title: 'Security',
-                subtitle: 'Fingerprint',
+                title: 'Contact Us',
+                subtitle: 'Send us a direct email',
                 leading: Icon(Icons.lock),
                 onPressed: (BuildContext context) {},
               ),
-              SettingsTile.switchTile(
-                title: 'Use fingerprint',
-                leading: Icon(Icons.fingerprint),
-                switchValue: true,
-                onToggle: (value) {},
-                ),
+              SettingsTile(
+                title: 'Logout',
+                leading: Icon(Icons.lock),
+                onPressed: (BuildContext context) {},
+              ),
               ],
             ),
           ],
