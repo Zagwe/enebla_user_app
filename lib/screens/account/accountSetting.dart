@@ -1,4 +1,5 @@
 import 'package:enebla_user_app/screens/account/changePassword.dart';
+import 'package:enebla_user_app/screens/account/contucUs.dart';
 import 'package:enebla_user_app/screens/account/editProfile.dart';
 import 'package:enebla_user_app/screens/order/orderPreview.dart';
 import 'package:flutter/material.dart';
@@ -89,7 +90,12 @@ class AccountSetting extends StatelessWidget {
                 title: 'Contact Us',
                 subtitle: 'Send us a direct email',
                 leading: Icon(Icons.email),
-                onPressed: (BuildContext context) {},
+                onPressed: (BuildContext context) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ContactUs()));
+                },
               ),
               SettingsTile(
                 title: 'Logout',

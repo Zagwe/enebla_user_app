@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../enebla_home.dart';
+
 
 class Order extends StatelessWidget {
   const Order({Key? key}) : super(key: key);
@@ -32,7 +34,7 @@ class Order extends StatelessWidget {
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const <Widget>[
+              children: <Widget>[
                 Text(
                   'UPCOMING ORDERS',
                   style: TextStyle(
@@ -41,13 +43,19 @@ class Order extends StatelessWidget {
                       color: Colors.black54
                   ),
                 ),
-                Text(
-                  'View History',
-                  textAlign: TextAlign.end,
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w800,
-                      color: Colors.black
+                TextButton(
+                   onPressed: () {
+                     Navigator.of(context).push(MaterialPageRoute(
+                         builder: (BuildContext context) => EneblaHome()));
+                   },
+                  child: Text(
+                    'View History',
+                    textAlign: TextAlign.end,
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.black
+                    ),
                   ),
                 ),
               ],
@@ -59,7 +67,7 @@ class Order extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Container(
                    width: MediaQuery.of(context).size.width,
-                    height: 130,
+                    height: 120,
                     margin: EdgeInsets.only(bottom: 15),
                     decoration: const BoxDecoration(
                       // color: Colors.red,
@@ -73,7 +81,7 @@ class Order extends StatelessWidget {
                               image: AssetImage(
                                   "lib/assets/home.jpg"),
                             width: 120,
-                            height: 140,
+                            height: 120,
                             fit: BoxFit.cover
                           ),
                         ),
@@ -136,7 +144,7 @@ class Order extends StatelessWidget {
                     ),
                   );
                 }
-                ,),
+              ,),
             )
           ],
         ),

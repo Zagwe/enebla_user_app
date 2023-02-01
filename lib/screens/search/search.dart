@@ -4,7 +4,7 @@ class Search extends StatelessWidget {
   Search({Key? key}) : super(key: key);
 
   List<String> searchResult = [
-    // '130ETB - Ethiopian', 'shiro migib'
+    '130ETB - Ethiopian', 'shiro migib'
   ];
 
   @override
@@ -93,7 +93,7 @@ class Search extends StatelessWidget {
                   crossAxisCount: 2,
                   crossAxisSpacing: 14.0,
                   mainAxisSpacing: 3.0,
-                  mainAxisExtent: 260),
+                  mainAxisExtent: 220),
               itemBuilder: (context, index) {
                 return Column(children: [
                   Container(
@@ -107,7 +107,7 @@ class Search extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                      padding: EdgeInsets.fromLTRB(0, 10, 45, 0),
+                      padding: EdgeInsets.fromLTRB(0, 10, 55, 0),
                       child: Text(searchResult[1],
                           style: TextStyle(
                             fontSize: 24,
@@ -115,7 +115,7 @@ class Search extends StatelessWidget {
                             wordSpacing: 6,
                           ))),
                   Padding(
-                      padding: EdgeInsets.fromLTRB(0, 0, 50, 5),
+                      padding: EdgeInsets.fromLTRB(0, 5, 75, 0),
                       child: Text(searchResult[0],
                           style: TextStyle(
                             fontSize: 13,
