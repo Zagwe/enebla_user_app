@@ -1,4 +1,7 @@
+import 'package:enebla_user_app/screens/account/accountSetting.dart';
 import 'package:enebla_user_app/screens/home/homepage.dart';
+import 'package:enebla_user_app/screens/order/order.dart';
+import 'package:enebla_user_app/screens/search/search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -20,20 +23,11 @@ class _EneblaHomeState extends State<EneblaHome> {
   int _selectedIndex = 0;
 
   ////
-  static const List<Widget> _widgetOptions = <Widget>[
+  static List<Widget> _widgetOptions = <Widget>[
     HomePage(),
-    Text(
-      'Likes',
-      style: style.Style.optionStyle,
-    ),
-    Text(
-      'Search',
-      style: style.Style.optionStyle,
-    ),
-    Text(
-      'Profile',
-      style: style.Style.optionStyle,
-    ),
+    Search(),
+    Order(),
+    AccountSetting(),
   ];
 
   @override
