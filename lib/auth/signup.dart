@@ -1,19 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enebla_user_app/auth/login.dart';
-import 'package:enebla_user_app/auth/usermodel.dart';
+import 'package:enebla_user_app/models/usermodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:enebla_user_app/style.dart' as style;
 
-class sinup extends StatefulWidget {
-  const sinup({Key? key}) : super(key: key);
+class SignUp extends StatefulWidget {
+  const SignUp({Key? key}) : super(key: key);
 
   @override
-  State<sinup> createState() => _signupState();
+  State<SignUp> createState() => _signupState();
 }
 
-class _signupState extends State<sinup> {
+class _signupState extends State<SignUp> {
   final _auth = FirebaseAuth.instance;
   final _formkey = GlobalKey<FormState>();
   final firstnameEditingController = new TextEditingController();
@@ -283,7 +283,7 @@ class _signupState extends State<sinup> {
 
     Navigator.pushAndRemoveUntil(
         (context),
-        MaterialPageRoute(builder: (context) => Login_page()),
+        MaterialPageRoute(builder: (context) => LoginPage()),
         (router) => false);
   }
 }

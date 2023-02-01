@@ -6,14 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:enebla_user_app/style.dart' as style;
 
-class Login_page extends StatefulWidget {
-  const Login_page({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<Login_page> createState() => _Login_pageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _Login_pageState extends State<Login_page> {
+class _LoginPageState extends State<LoginPage> {
   final _formkey = GlobalKey<FormState>();
 
   final TextEditingController emailController = new TextEditingController();
@@ -130,8 +130,10 @@ class _Login_pageState extends State<Login_page> {
                       Text("dont have an account"),
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => sinup()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SignUp()));
                         },
                         child: Text(
                           'sigup',
@@ -180,7 +182,7 @@ class _Login_pageState extends State<Login_page> {
         ),
         onPressed: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => sinup()));
+              context, MaterialPageRoute(builder: (context) => SignUp()));
         },
       ),
     );
