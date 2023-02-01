@@ -1,4 +1,6 @@
+import 'package:enebla_user_app/auth/login.dart';
 import 'package:enebla_user_app/screens/search/search.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -9,7 +11,10 @@ import 'package:enebla_user_app/style.dart' as style;
 
 import 'enebla_home.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(EneblaUser(
     title: 'enebla user app',
   ));
@@ -22,7 +27,7 @@ class EneblaUser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: EneblaHome(),
+      home: Login_page(),
     );
   }
 }

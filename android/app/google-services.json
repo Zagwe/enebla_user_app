@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "866902982152",
+    "project_id": "enblaproject-userauth",
+    "storage_bucket": "enblaproject-userauth.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:866902982152:android:15f0f64dfbe2d17e799bbd",
+        "android_client_info": {
+          "package_name": "com.example.enebla_user_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "866902982152-fsam8a4b2g53gnn5a68l374c5ih1ghsc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrAWTeJ2H9SeTo06DBMlWsT5mybZU8vqE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "866902982152-fsam8a4b2g53gnn5a68l374c5ih1ghsc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
