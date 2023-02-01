@@ -1,7 +1,8 @@
+import 'package:enebla_user_app/screens/account/editProfile.dart';
 import 'package:enebla_user_app/screens/order/orderPreview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
-
+import 'package:enebla_user_app/style.dart' as style;
 import '../order/order.dart';
 
 class AccountSetting extends StatelessWidget {
@@ -11,7 +12,17 @@ class AccountSetting extends StatelessWidget {
     bool isSwitched = false;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Account Setting'),
+        backgroundColor: Colors.white,
+        toolbarHeight: 70,
+        elevation: 2,
+        title: Text(
+            'Account Setting',
+            style: TextStyle(
+              color: style.Style.primaryColor
+            ),
+        ),
+
+
       ),
       body: SettingsList(
         sections: [
@@ -29,7 +40,10 @@ class AccountSetting extends StatelessWidget {
                 title: 'Profile Setting',
                 subtitle: 'Change your account information',
                 leading: Icon( Icons.manage_accounts),
-                onPressed: (BuildContext context) {},
+                onPressed: (BuildContext context) {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => EditProfile()));
+                },
               ),
               SettingsTile(
                 title: 'Change Password',

@@ -47,7 +47,7 @@ class OrderPreview extends StatelessWidget {
                       child:Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children:  <Widget>[
-                          Text(
+                          const Text(
                             '1',
                             style: TextStyle(
                               fontSize: 20,
@@ -55,7 +55,7 @@ class OrderPreview extends StatelessWidget {
                               color: Colors.black54,
                             ),
                           ),
-                          Text(
+                          const Text(
                             'Maheberawi',
                             style: TextStyle(
                               fontSize: 20,
