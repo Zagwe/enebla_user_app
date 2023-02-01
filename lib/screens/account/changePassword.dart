@@ -28,11 +28,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 1,
         leading: IconButton(
-
-          icon: Icon(
-              Icons.arrow_back,
-              color: style.Style.primaryColor
-          ),
+          icon: Icon(Icons.arrow_back, color: style.Style.primaryColor),
           onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (BuildContext context) => AccountSetting()));

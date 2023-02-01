@@ -1,4 +1,5 @@
 import 'package:enebla_user_app/screens/comment_and_rating.dart';
+import 'package:enebla_user_app/screens/home/resturant_home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:enebla_user_app/style.dart' as style;
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart' as bottemsheet;
@@ -12,14 +13,20 @@ class ResturantItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           //resturant image section
-          Container(
-            height: 240,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Image.network(
-                'https://img.freepik.com/free-photo/top-view-table-full-delicious-food-composition_23-2149141353.jpg?w=2000',
-                fit: BoxFit.fill,
-                width: MediaQuery.of(context).size.width,
+          GestureDetector(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ResturantHomePage()));
+            },
+            child: Container(
+              height: 240,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image.network(
+                  'https://img.freepik.com/free-photo/top-view-table-full-delicious-food-composition_23-2149141353.jpg?w=2000',
+                  fit: BoxFit.fill,
+                  width: MediaQuery.of(context).size.width,
+                ),
               ),
             ),
           ),
@@ -27,7 +34,10 @@ class ResturantItem extends StatelessWidget {
           TextButton(
             style: TextButton.styleFrom(
                 minimumSize: Size.zero, padding: EdgeInsets.zero),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ResturantHomePage()));
+            },
             child: Text(
               'Resturant name',
               style: TextStyle(color: style.Style.primaryColor, fontSize: 20),

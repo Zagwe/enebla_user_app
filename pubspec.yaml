@@ -43,6 +43,7 @@ dependencies:
   smooth_page_indicator: ^1.0.0+2
   modal_bottom_sheet: ^2.1.2
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

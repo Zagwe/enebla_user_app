@@ -19,10 +19,8 @@ class AccountSetting extends StatelessWidget {
         elevation: 2,
         automaticallyImplyLeading: false,
         title: Text(
-            'Account Setting',
-            style: TextStyle(
-              color: style.Style.primaryColor
-            ),
+          'Account Setting',
+          style: TextStyle(color: style.Style.primaryColor),
         ),
       ),
       body: SettingsList(
@@ -43,7 +41,7 @@ class AccountSetting extends StatelessWidget {
               SettingsTile(
                 title: 'Profile Setting',
                 subtitle: 'Change your account information',
-                leading: Icon( Icons.manage_accounts),
+                leading: Icon(Icons.manage_accounts),
                 onPressed: (BuildContext context) {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => EditProfile()));
@@ -54,20 +52,22 @@ class AccountSetting extends StatelessWidget {
                 subtitle: 'Change your account Password',
                 leading: Icon(Icons.lock),
                 onPressed: (BuildContext context) {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ChangePassword()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ChangePassword()));
                 },
               ),
               SettingsTile(
                 title: 'Payment Method',
                 subtitle: 'Add your Account',
-                leading: Icon( Icons.payment),
+                leading: Icon(Icons.payment),
                 onPressed: (BuildContext context) {},
               ),
               SettingsTile(
                 title: 'Order History',
                 subtitle: 'View Order History',
-                leading: Icon( Icons.fastfood),
+                leading: Icon(Icons.fastfood),
                 onPressed: (BuildContext context) {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => Order()));
@@ -93,15 +93,13 @@ class AccountSetting extends StatelessWidget {
               ),
               SettingsTile(
                 title: 'Logout',
-                leading: Icon( Icons.logout),
+                leading: Icon(Icons.logout),
                 onPressed: (BuildContext context) {},
               ),
-              ],
-            ),
-          ],
-        ),
-      );
-    }
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 }
-
-
