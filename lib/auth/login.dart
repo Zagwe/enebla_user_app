@@ -4,7 +4,7 @@ import 'package:enebla_user_app/enebla_home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:enebla_user_app/style.dart' as style;
+import 'package:enebla_user_app/theme/style.dart' as style;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -78,9 +78,7 @@ class _LoginPageState extends State<LoginPage> {
           'login',
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 20,
-              color: Colors.white,
-              fontWeight: FontWeight.bold),
+              fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
         ),
         style: ElevatedButton.styleFrom(
           // minWidth: MediaQuery.of(context).size.width,
@@ -89,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
           padding: EdgeInsets.fromLTRB(120, 15, 120, 15),
           elevation: 0,
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(20),
           ),
         ),
       ),

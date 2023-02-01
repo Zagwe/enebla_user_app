@@ -3,7 +3,7 @@ import 'package:enebla_user_app/screens/account/accountSetting.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
-import 'package:enebla_user_app/style.dart' as style;
+import 'package:enebla_user_app/theme/style.dart' as style;
 
 class EditProfile extends StatelessWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -57,7 +57,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
           //         builder: (BuildContext context) => AccountSetting()));
           //   },
           // ),
-
         ],
       ),
       body: Container(

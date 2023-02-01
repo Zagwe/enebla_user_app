@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:enebla_user_app/style.dart' as style;
+import 'package:enebla_user_app/theme/style.dart' as style;
 
 class Style {
   static var appBarTheme = const AppBarTheme(

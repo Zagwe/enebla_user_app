@@ -1,13 +1,13 @@
 import 'package:enebla_user_app/provider/dumy_provider.dart';
 import 'package:enebla_user_app/screens/home/tabbar.dart';
-import 'package:enebla_user_app/style.dart';
+import 'package:enebla_user_app/theme/style.dart';
 import 'package:enebla_user_app/widget/resturant_page_upper_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:enebla_user_app/style.dart' as style;
+import 'package:enebla_user_app/theme/style.dart' as style;
 
 import '../comment_and_rating.dart';
 
