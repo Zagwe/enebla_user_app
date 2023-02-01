@@ -1,8 +1,10 @@
+import 'package:enebla_user_app/screens/account/changePassword.dart';
 import 'package:enebla_user_app/screens/account/editProfile.dart';
 import 'package:enebla_user_app/screens/order/orderPreview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 import 'package:enebla_user_app/style.dart' as style;
+import '../../enebla_home.dart';
 import '../order/order.dart';
 
 class AccountSetting extends StatelessWidget {
@@ -15,14 +17,13 @@ class AccountSetting extends StatelessWidget {
         backgroundColor: Colors.white,
         toolbarHeight: 70,
         elevation: 2,
+        automaticallyImplyLeading: false,
         title: Text(
             'Account Setting',
             style: TextStyle(
               color: style.Style.primaryColor
             ),
         ),
-
-
       ),
       body: SettingsList(
         sections: [
@@ -31,10 +32,13 @@ class AccountSetting extends StatelessWidget {
             title: 'Account Setting',
             tiles: [
               SettingsTile(
-                title: 'Language',
-                subtitle: 'English',
-                leading: Icon(Icons.language),
-                onPressed: (BuildContext context) {},
+                title: 'Home',
+                subtitle: 'Go to Enebla Home',
+                leading: Icon(Icons.home),
+                onPressed: (BuildContext context) {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => EneblaHome()));
+                },
               ),
               SettingsTile(
                 title: 'Profile Setting',
@@ -49,7 +53,10 @@ class AccountSetting extends StatelessWidget {
                 title: 'Change Password',
                 subtitle: 'Change your account Password',
                 leading: Icon(Icons.lock),
-                onPressed: (BuildContext context) {},
+                onPressed: (BuildContext context) {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ChangePassword()));
+                },
               ),
               SettingsTile(
                 title: 'Payment Method',
@@ -66,12 +73,12 @@ class AccountSetting extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => Order()));
                 },
               ),
-              SettingsTile(
-                title: 'Location',
-                subtitle: 'Add or Remove Location',
-                leading: Icon(Icons.location_on),
-                onPressed: (BuildContext context) {},
-              ),
+              // SettingsTile(
+              //   title: 'Location',
+              //   subtitle: 'Add or Remove Location',
+              //   leading: Icon(Icons.location_on),
+              //   onPressed: (BuildContext context) {},
+              // ),
             ],
           ),
           SettingsSection(
