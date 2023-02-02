@@ -3,7 +3,7 @@
 *.log
 *.pyc
 *.swp
-*.lock
+
 .DS_Store
 .atom/
 .buildlog/
@@ -32,7 +32,7 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
-
+/pubspec.lock
 # Symbolication related
 app.*.symbols
 

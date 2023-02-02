@@ -1,14 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class ResetPassword extends StatefulWidget {
-  const ResetPassword({super.key});
+class reset_password extends StatefulWidget {
+  const reset_password({super.key});
 
   @override
-  State<ResetPassword> createState() => _ResetPasswordState();
+  State<reset_password> createState() => _reset_passwordState();
 }
 
-class _ResetPasswordState extends State<ResetPassword> {
+class _reset_passwordState extends State<reset_password> {
   final _formkey = GlobalKey<FormState>();
 
   final TextEditingController emailController = new TextEditingController();
@@ -85,7 +85,7 @@ class _ResetPasswordState extends State<ResetPassword> {
             ),
             MaterialButton(
               onPressed: passwordReset,
-              child: Text("reset password"),
+              child: Text("reset password", style: TextStyle(fontSize: 20, color:Colors.black), ),
               color: Colors.deepPurple[200],
             )
           ],

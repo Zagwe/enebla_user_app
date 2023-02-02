@@ -175,12 +175,12 @@ class _LoginPageState extends State<LoginPage> {
       child: TextButton(
         child: const Text(
           "forgot password",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.black),
           textAlign: TextAlign.right,
         ),
         onPressed: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => SignUp()));
+              context, MaterialPageRoute(builder: (context) => reset_password()));
         },
       ),
     );
