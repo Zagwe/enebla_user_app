@@ -71,7 +71,6 @@ class _signupState extends State<SignUp> {
           hintText: "last name",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
     );
-
     final phoneNumber = TextFormField(
       autofocus: false,
       controller: phoneNumberEditingController,
