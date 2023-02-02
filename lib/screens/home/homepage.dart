@@ -1,17 +1,8 @@
-import 'package:enebla_user_app/screens/account/accountSetting.dart';
-// import 'package:enebla_user_app/screens/home/scroll_page.dart';
-import 'package:enebla_user_app/screens/onboarding/onBoarding.dart';
-import 'package:enebla_user_app/screens/order/order.dart';
-import 'package:enebla_user_app/screens/order/orderPreview.dart';
 import 'package:enebla_user_app/widget/homepage_slider.dart';
 import 'package:enebla_user_app/widget/resturant_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:enebla_user_app/style.dart' as style;
-
-import '../search/search.dart';
+import 'package:enebla_user_app/theme/style.dart' as style;
+import '../../auth/login.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -34,15 +25,19 @@ class HomePage extends StatelessWidget {
           ),
           actions: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 8),
               child: IconButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.search,
                   color: Colors.black,
                 ),
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Search()));
+                  // Navigator.push(context,
+                  //     MaterialPageRoute(builder: (context) => OnBording()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginPage()));
                 },
               ),
             )
@@ -52,14 +47,14 @@ class HomePage extends StatelessWidget {
       ///still have alots of work to do on the scroll bar
 
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
             HomePageSlider(),
             Container(
-              padding: EdgeInsets.all(15),
+              padding: const EdgeInsets.all(15),
               child: ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: 10,
                 itemBuilder: (context, index) {

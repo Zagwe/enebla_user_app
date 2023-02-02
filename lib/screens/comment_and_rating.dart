@@ -3,7 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:enebla_user_app/style.dart' as style;
+import 'package:enebla_user_app/theme/style.dart' as style;
 
 class CommentAndRating extends StatefulWidget {
   const CommentAndRating({super.key});
@@ -49,7 +49,7 @@ class _CommentAndRatingState extends State<CommentAndRating> {
                     // )
                   ],
                 ),
-                Text('200+', style: Theme.of(context).textTheme.headline4)
+                Text('200+', style: Theme.of(context).textTheme.headlineMedium)
               ],
             ),
           ),

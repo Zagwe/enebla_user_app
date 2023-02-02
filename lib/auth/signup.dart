@@ -1,27 +1,27 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enebla_user_app/auth/login.dart';
-import 'package:enebla_user_app/auth/usermodel.dart';
+import 'package:enebla_user_app/models/usermodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class sinup extends StatefulWidget {
-  const sinup({Key? key}) : super(key: key);
+class SignUp extends StatefulWidget {
+  const SignUp({Key? key}) : super(key: key);
 
   @override
-  State<sinup> createState() => _signupState();
+  State<SignUp> createState() => _signupState();
 }
 
-class _signupState extends State<sinup> {
+class _signupState extends State<SignUp> {
   final _auth = FirebaseAuth.instance;
   final _formkey = GlobalKey<FormState>();
-  final firstnameEditingController = new TextEditingController();
-  final lastnameEditingController = new TextEditingController();
-  final phoneNumberEditingController = new TextEditingController();
-  final emailEditingController = new TextEditingController();
-  final passwordEditingController = new TextEditingController();
-  final conformPasswordEditingController = new TextEditingController();
-  final AdressEditingController = new TextEditingController();
+  final firstnameEditingController = TextEditingController();
+  final lastnameEditingController = TextEditingController();
+  final phoneNumberEditingController = TextEditingController();
+  final emailEditingController = TextEditingController();
+  final passwordEditingController = TextEditingController();
+  final conformPasswordEditingController = TextEditingController();
+  final AdressEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -273,7 +273,7 @@ class _signupState extends State<sinup> {
 
     Navigator.pushAndRemoveUntil(
         (context),
-        MaterialPageRoute(builder: (context) => Login_page()),
+        MaterialPageRoute(builder: (context) => LoginPage()),
         (router) => false);
   }
 }

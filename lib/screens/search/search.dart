@@ -6,7 +6,6 @@ class Search extends StatelessWidget {
   List<String> searchResult = [
     '130ETB - Ethiopian', 'shiro migib'
   ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,9 +120,9 @@ class Search extends StatelessWidget {
                             fontSize: 13,
                             color: Color.fromRGBO(133, 133, 133, 0.8),
                             // wordSpacing: 4,
-                          ))),
-                ]);
+                      ))),
+                  ]);
               }),
-    );
+          );
+      }
   }
-}

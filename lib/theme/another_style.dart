@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:enebla_user_app/style.dart' as style;
+import 'package:enebla_user_app/theme/style.dart' as style;
 
 class Style {
   static var appBarTheme = const AppBarTheme(
@@ -8,10 +8,12 @@ class Style {
       elevation: 0,
       backgroundColor: Colors.white,
       toolbarHeight: 80);
-  static var textTheme = const TextTheme(
+  static var textTheme = TextTheme(
       headlineLarge: TextStyle(
           fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black),
-      headlineSmall: TextStyle(fontSize: 15, fontWeight: FontWeight.bold));
+      headlineSmall: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+      headlineMedium: TextStyle(
+          fontSize: 25, fontWeight: FontWeight.bold, color: Colors.black));
 
   static var tabbarTheme = TabBarTheme(
       indicator: UnderlineTabIndicator(

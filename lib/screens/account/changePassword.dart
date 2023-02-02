@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:enebla_user_app/style.dart' as style;
+import 'package:enebla_user_app/theme/style.dart' as style;
 import 'package:enebla_user_app/screens/account/accountSetting.dart';
 
 import '../../enebla_home.dart';
@@ -54,7 +54,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
           //         builder: (BuildContext context) => AccountSetting()));
           //   },
           // ),
-
         ],
       ),
       body: Container(
@@ -100,7 +99,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           borderRadius: BorderRadius.circular(20)),
                     ),
                   ),
-                  ElevatedButton (
+                  ElevatedButton(
                     onPressed: () {},
                     child: Text(
                       "SAVE",
@@ -135,16 +134,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
         decoration: InputDecoration(
             suffixIcon: isPasswordTextField
                 ? IconButton(
-              onPressed: () {
-                setState(() {
-                  showPassword = !showPassword;
-                });
-              },
-              icon: Icon(
-                Icons.remove_red_eye,
-                color: Colors.grey,
-              ),
-            )
+                    onPressed: () {
+                      setState(() {
+                        showPassword = !showPassword;
+                      });
+                    },
+                    icon: Icon(
+                      Icons.remove_red_eye,
+                      color: Colors.grey,
+                    ),
+                  )
                 : null,
             contentPadding: EdgeInsets.only(bottom: 3),
             labelText: labelText,

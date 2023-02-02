@@ -4,7 +4,7 @@ import 'package:enebla_user_app/screens/account/editProfile.dart';
 import 'package:enebla_user_app/screens/order/orderPreview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
-import 'package:enebla_user_app/style.dart' as style;
+import 'package:enebla_user_app/theme/style.dart' as style;
 import '../../enebla_home.dart';
 import '../order/order.dart';
 
@@ -91,10 +91,8 @@ class AccountSetting extends StatelessWidget {
                 subtitle: 'Send us a direct email',
                 leading: Icon(Icons.email),
                 onPressed: (BuildContext context) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ContactUs()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ContactUs()));
                 },
               ),
               SettingsTile(

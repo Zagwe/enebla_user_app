@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:enebla_user_app/style.dart';
+import 'package:enebla_user_app/theme/style.dart';
 
 class TopTabBarWidget extends StatefulWidget {
   const TopTabBarWidget({Key? key}) : super(key: key);
