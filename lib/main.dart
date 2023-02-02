@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:enebla_user_app/theme/another_style.dart' as style;
 
+//added some comment
+
 import 'enebla_home.dart';
 
 Future<void> main() async {
