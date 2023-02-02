@@ -99,7 +99,7 @@ class _Login_pageState extends State<Login_page> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   SizedBox(
-                    child: Image.asset("lib/assets/logo.png"),
+                    child: Image.asset("lib/assets/logo1.png"),
                   ),
                   SizedBox(
                     height: 30,
