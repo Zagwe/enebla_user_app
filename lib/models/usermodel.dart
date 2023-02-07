@@ -1,12 +1,12 @@
-class usermodel {
+class User {
   String? uid;
-  int? phonenumber;
+  String? phonenumber;
   String? email;
   String? address;
   String? firstname;
   String? lastname;
 
-  usermodel(
+  User(
       {this.uid,
       this.email,
       this.firstname,
@@ -14,8 +14,8 @@ class usermodel {
       this.address,
       this.lastname});
   //receiving data from server
-  factory usermodel.fromMap(Map) {
-    return usermodel(
+  factory User.fromMap(Map) {
+    return User(
       uid: Map['uid'],
       email: Map['email'],
       firstname: Map['firstname'],
@@ -25,7 +25,7 @@ class usermodel {
     );
   }
   //sending data to our server
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'uid': uid,
       'email': email,

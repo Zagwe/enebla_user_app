@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:enebla_user_app/theme/style.dart' as style;
 
 import '../../auth/login.dart';
-import '../../enebla_home.dart';
+import '../../enebla_user_home.dart';
 
 class OnBording extends StatefulWidget {
   const OnBording({Key? key}) : super(key: key);

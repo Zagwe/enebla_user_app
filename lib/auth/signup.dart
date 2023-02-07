@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enebla_user_app/auth/login.dart';
-import 'package:enebla_user_app/models/usermodel.dart';
+import 'package:enebla_user_app/models/usermodel.dart' as model;
+import 'package:enebla_user_app/resources/auth_methods.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -21,7 +22,7 @@ class _signupState extends State<SignUp> {
   final emailEditingController = TextEditingController();
   final passwordEditingController = TextEditingController();
   final conformPasswordEditingController = TextEditingController();
-  final AdressEditingController = TextEditingController();
+  final addressController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -153,7 +154,7 @@ class _signupState extends State<SignUp> {
     );
     final address = TextFormField(
       autofocus: false,
-      controller: AdressEditingController,
+      controller: addressController,
       keyboardType: TextInputType.emailAddress,
       validator: (value) {
         if (value!.isEmpty) {
@@ -174,8 +175,28 @@ class _signupState extends State<SignUp> {
       child: MaterialButton(
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
-        onPressed: () {
-          signup(emailEditingController.text, passwordEditingController.text);
+        onPressed: () async {
+          // signup(emailEditingController.text, passwordEditingController.text);
+
+          if (_formkey.currentState!.validate()) {
+            String res = await AuthMethods().signupUser(
+                email: emailEditingController.text,
+                password: passwordEditingController.text,
+                firstname: firstnameEditingController.text,
+                lastname: lastnameEditingController.text,
+                phonenumber: phoneNumberEditingController.text,
+                address: addressController.text);
+            if (res == 'success') {
+              Fluttertoast.showToast(msg: 'account created successfully');
+
+              Navigator.pushAndRemoveUntil(
+                  (context),
+                  MaterialPageRoute(builder: (context) => LoginPage()),
+                  (router) => false);
+            } else {
+              Fluttertoast.showToast(msg: res);
+            }
+          }
         },
         child: Text(
           'signUp',
@@ -240,40 +261,41 @@ class _signupState extends State<SignUp> {
     );
   }
 
-  void signup(String email, String password) async {
-    if (_formkey.currentState!.validate()) {
-      await _auth
-          .createUserWithEmailAndPassword(email: email, password: password)
-          .then((value) => {postDetailsToFirestore()})
-          .catchError((e) {
-        Fluttertoast.showToast(msg: e!.message);
-      });
-    }
-  }
+  // void signup(String email, String password) async {
+  //   if (_formkey.currentState!.validate()) {
+  //     UserCredential userCredential = await _auth
+  //         .createUserWithEmailAndPassword(email: email, password: password);
+  //     postDetailsToFirestore(userCredential);
+  //     //   .then((value) => {postDetailsToFirestore()})
+  //     //   .catchError((e) {
+  //     // Fluttertoast.showToast(msg: e!.message);
+  //     // });
+  //   }
+  // }
 
-  postDetailsToFirestore() async {
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    User? user = _auth.currentUser;
+  // postDetailsToFirestore(UserCredential userCredential) async {
+  //   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+  //   User? user = _auth.currentUser;
 
-    usermodel Usermodel = usermodel();
+  //   model.User Usermodel = model.User();
 
-    Usermodel.email = user!.email;
-    Usermodel.uid = user.uid;
-    Usermodel.firstname = firstnameEditingController.text;
-    Usermodel.lastname = lastnameEditingController.text;
+  //   Usermodel.email = user!.email;
+  //   Usermodel.uid = userCredential.user!.uid;
+  //   Usermodel.firstname = firstnameEditingController.text;
+  //   Usermodel.lastname = lastnameEditingController.text;
 
-    Usermodel.phonenumber = int.parse(phoneNumberEditingController.text);
-    Usermodel.address = AdressEditingController.text;
+  //   Usermodel.phonenumber = phoneNumberEditingController.text;
+  //   Usermodel.address = addressController.text;
 
-    await firebaseFirestore
-        .collection('users')
-        .doc(user.uid)
-        .set(Usermodel.toMap());
-    Fluttertoast.showToast(msg: 'account created successfully');
+  //   await firebaseFirestore
+  //       .collection('users')
+  //       .doc(user.uid)
+  //       .set(Usermodel.toJson());
+  //   Fluttertoast.showToast(msg: 'account created successfully');
 
-    Navigator.pushAndRemoveUntil(
-        (context),
-        MaterialPageRoute(builder: (context) => LoginPage()),
-        (router) => false);
-  }
+  //   Navigator.pushAndRemoveUntil(
+  //       (context),
+  //       MaterialPageRoute(builder: (context) => LoginPage()),
+  //       (router) => false);
+  // }
 }

@@ -7,6 +7,8 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 // import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class ResturantItem extends StatelessWidget {
+  final snap;
+  ResturantItem({required this.snap});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -17,8 +19,12 @@ class ResturantItem extends StatelessWidget {
           //resturant image section
           GestureDetector(
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ResturantHomePage()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ResturantHomePage(
+                            snap: snap,
+                          )));
             },
             child: Container(
               height: 240,
@@ -37,11 +43,15 @@ class ResturantItem extends StatelessWidget {
             style: TextButton.styleFrom(
                 minimumSize: Size.zero, padding: EdgeInsets.zero),
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ResturantHomePage()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ResturantHomePage(
+                            snap: snap,
+                          )));
             },
             child: Text(
-              'Resturant name',
+              snap['name'],
               style: TextStyle(color: style.Style.primaryColor, fontSize: 20),
             ),
           ),
@@ -51,12 +61,12 @@ class ResturantItem extends StatelessWidget {
               text: TextSpan(
                   style: TextStyle(
                       color: style.Style.resturantTagColor, fontSize: 16),
-                  children: const [
+                  children: [
                 TextSpan(text: '\$\$'),
                 TextSpan(text: ' \u2981 '),
                 TextSpan(text: 'chicken'),
                 TextSpan(text: ' \u2981 '),
-                TextSpan(text: 'America'),
+                TextSpan(text: snap['address']),
                 TextSpan(text: ' \u2981  '),
                 TextSpan(text: 'Deshi Food'),
               ])),

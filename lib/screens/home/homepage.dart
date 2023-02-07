@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enebla_user_app/widget/homepage_slider.dart';
 import 'package:enebla_user_app/widget/resturant_card.dart';
 import 'package:flutter/material.dart';
@@ -53,14 +54,27 @@ class HomePage extends StatelessWidget {
             HomePageSlider(),
             Container(
               padding: const EdgeInsets.all(15),
-              child: ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return ResturantItem();
-                },
-              ),
+              child: StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection('resturant')
+                      .snapshots(),
+                  builder: (context,
+                      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                          snapshot) {
+                    final snap = snapshot.data!.docs;
+
+                    return ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: snap.length,
+                      itemBuilder: (context, index) {
+                        final resturant = snap[index].data();
+                        return ResturantItem(
+                          snap: resturant,
+                        );
+                      },
+                    );
+                  }),
             ),
           ],
         ),

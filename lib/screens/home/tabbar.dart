@@ -2,7 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:enebla_user_app/theme/style.dart';
 
 class TopTabBarWidget extends StatefulWidget {
-  const TopTabBarWidget({Key? key}) : super(key: key);
+  final snap;
+  final menuItem;
+  final menuName;
+  const TopTabBarWidget(
+      {Key? key,
+      required this.snap,
+      required this.menuItem,
+      required this.menuName})
+      : super(key: key);
 
   @override
   State<TopTabBarWidget> createState() => _TopTabBarWidget();
@@ -12,21 +20,23 @@ class _TopTabBarWidget extends State<TopTabBarWidget>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
-  List<Tab> tabs = <Tab>[
-    const Tab(text: 'yetsom'),
-    const Tab(text: 'yefitsek'),
-    const Tab(text: 'fast food'),
-    const Tab(
-      text: 'erteb',
-    ),
-    const Tab(
-      text: 'special',
-    ),
-  ];
+  var menu;
+  var foodlist;
+
+  getTabs() {
+    for (var item in widget.menuName) {
+      tabs.add(Tab(
+        text: item,
+      ));
+    }
+  }
+
+  List<Tab> tabs = <Tab>[];
 
   @override
   void initState() {
     super.initState();
+    getTabs();
     _tabController = TabController(vsync: this, length: tabs.length);
   }
 
@@ -50,9 +60,81 @@ class _TopTabBarWidget extends State<TopTabBarWidget>
         Expanded(
             child: TabBarView(
           controller: _tabController,
-          children: [],
+          children: List<Widget>.generate(widget.menuName.length, (int index) {
+            // return ListView.builder(
+            //   itemBuilder: (context, index) {
+            //     final menu = widget.menuItem;
+            //     final foods =
+            //         widget.menuItem[widget.menuName[index]]['listOfFood'];
+
+            //     return Container();
+            //   },
+            // );
+            final foods = widget.menuItem[widget.menuName[index]]['listOfFood'];
+
+            return ListView.builder(
+                itemCount: foods.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    height: 60,
+                    padding: EdgeInsets.all(8),
+                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                    decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.black,
+                              offset: Offset(0.0, 10), //(x,y)
+                              blurRadius: 1.0,
+                              blurStyle: BlurStyle.inner),
+                        ],
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(width: 1)),
+                    child: Center(
+                        child: Text(
+                      foods[index]['name'],
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    )),
+                  );
+                });
+          }),
         ))
       ],
     );
   }
 }
+
+Widget makeFoodList() {
+  return ListView();
+}
+
+
+///working on tabbarview children
+//  ListView.builder(
+//                 itemCount: 5,
+//                 itemBuilder: (context, index) {
+// // menuItem['menuname[index]']['listoffood'][index][name]
+//                   // final menu = widget.menuItem;
+//                   // final foods =
+//                   // widget.menuItem[widget.menuName[index]]['listOfFood'];
+//                   print('=-=-=-=-');
+
+//                   // print(widget.menuItem[widget.menuName[index]]['listOfFood']
+//                   //     [index]['name']);
+
+//                   menu = widget.menuItem[widget.menuName[index]];
+//                   foodlist =
+//                       widget.menuItem[widget.menuName[index]]['listOfFood'];
+//                   print(foodlist);
+//                   // print(widget.menuName[index]);
+//                   return Container(
+//                     height: 70,
+//                     margin: EdgeInsets.all(10),
+//                     padding: EdgeInsets.all(10),
+//                     decoration: BoxDecoration(
+//                         borderRadius: BorderRadius.circular(20),
+//                         border: Border.all(width: 1)),
+//                     child: Center(child: Text(foodlist[index]['name'])),
+//                   );
+//                 }),

@@ -1,6 +1,7 @@
 import 'package:enebla_user_app/auth/reset_password.dart';
 import 'package:enebla_user_app/auth/signup.dart';
-import 'package:enebla_user_app/enebla_home.dart';
+import 'package:enebla_user_app/enebla_user_home.dart';
+import 'package:enebla_user_app/resources/auth_methods.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -71,8 +72,20 @@ class _LoginPageState extends State<LoginPage> {
       // elevation: 5,
       borderRadius: BorderRadius.circular(20),
       child: ElevatedButton(
-        onPressed: () {
-          signIn(emailController.text, passwordController.text);
+        onPressed: () async {
+/////LOGIN
+          if (_formkey.currentState!.validate()) {
+            String res = await AuthMethods().loginUser(
+                email: emailController.text, password: passwordController.text);
+            // signIn(emailController.text, passwordController.text);
+            if (res == 'success') {
+              Fluttertoast.showToast(msg: "login successful");
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => EneblaHome()));
+            } else {
+              Fluttertoast.showToast(msg: res);
+            }
+          }
         },
         child: const Text(
           'login',
@@ -152,20 +165,20 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void signIn(String email, String password) async {
-    if (_formkey.currentState!.validate()) {
-      await _auth
-          .signInWithEmailAndPassword(email: email, password: password)
-          .then((uid) => {
-                Fluttertoast.showToast(msg: "login successful"),
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => EneblaHome()))
-              })
-          .catchError((e) {
-        Fluttertoast.showToast(msg: e!.message);
-      });
-    }
-  }
+  // void signIn(String email, String password) async {
+  //   if (_formkey.currentState!.validate()) {
+  //     await _auth
+  //         .signInWithEmailAndPassword(email: email, password: password)
+  //         .then((uid) => {
+  //               Fluttertoast.showToast(msg: "login successful"),
+  //               Navigator.of(context).pushReplacement(
+  //                   MaterialPageRoute(builder: (context) => EneblaHome()))
+  //             })
+  //         .catchError((e) {
+  //       Fluttertoast.showToast(msg: e!.message);
+  //     });
+  //   }
+  // }
 
   Widget forgotpassword(BuildContext context) {
     return Container(
@@ -176,11 +189,11 @@ class _LoginPageState extends State<LoginPage> {
         child: const Text(
           "forgot password",
           style: TextStyle(color: Colors.black),
-          textAlign: TextAlign.right,
+          textAlign: TextAlign.left,
         ),
         onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => reset_password()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => reset_password()));
         },
       ),
     );

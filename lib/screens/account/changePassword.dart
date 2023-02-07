@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:enebla_user_app/theme/style.dart' as style;
 import 'package:enebla_user_app/screens/account/accountSetting.dart';
 
-import '../../enebla_home.dart';
+import '../../enebla_user_home.dart';
 
 class ChangePassword extends StatelessWidget {
   const ChangePassword({Key? key}) : super(key: key);

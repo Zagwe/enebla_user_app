@@ -4,7 +4,7 @@ import 'package:enebla_user_app/theme/another_style.dart' as style;
 
 //added some comment
 
-import 'enebla_home.dart';
+import 'enebla_user_home.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +22,24 @@ class EneblaUser extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: style.Style.themeData,
       home: const EneblaHome(),
+    );
+  }
+}
+
+class Trail extends StatefulWidget {
+  const Trail({super.key});
+
+  @override
+  State<Trail> createState() => _TrailState();
+}
+
+class _TrailState extends State<Trail> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Form(
+        child: Column(children: []),
+      ),
     );
   }
 }

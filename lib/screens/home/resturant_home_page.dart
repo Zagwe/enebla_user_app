@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enebla_user_app/provider/dumy_provider.dart';
 import 'package:enebla_user_app/screens/home/tabbar.dart';
 import 'package:enebla_user_app/theme/style.dart';
@@ -12,7 +13,9 @@ import 'package:enebla_user_app/theme/style.dart' as style;
 import '../comment_and_rating.dart';
 
 class ResturantHomePage extends StatefulWidget {
-  const ResturantHomePage({super.key});
+  final snap;
+
+  ResturantHomePage({super.key, required this.snap});
 
   @override
   State<ResturantHomePage> createState() => _ResturantHomePageState();
@@ -38,7 +41,7 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: Text(
-                        'Resturant name',
+                        widget.snap['name'],
                         style: TextStyle(color: Colors.black, fontSize: 24),
                       ),
                     ),
@@ -181,7 +184,32 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
                 ),
               ),
               //food menu tab bar
-              Expanded(child: TopTabBarWidget())
+              Expanded(
+                  child: StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection('menus')
+                          .where('id', isEqualTo: widget.snap['owner'])
+                          .snapshots(),
+                      builder: (context,
+                          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                              snapshot) {
+                        final snap = snapshot.data!.docs[0].data();
+
+                        //the entire list of menus
+
+                        //menuItem['menuname[index]']['listoffood'][index][name]
+
+                        //title menuname[index]
+                        final menuItem = snap['menulist'];
+
+                        final menuName = menuItem.keys.toList();
+
+                        return TopTabBarWidget(
+                          snap: snap,
+                          menuItem: menuItem,
+                          menuName: menuName,
+                        );
+                      }))
             ],
           ),
         )
