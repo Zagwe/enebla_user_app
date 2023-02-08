@@ -1,3 +1,4 @@
+import 'package:enebla_user_app/trial.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:enebla_user_app/theme/another_style.dart' as style;
@@ -21,25 +22,7 @@ class EneblaUser extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: style.Style.themeData,
-      home: const EneblaHome(),
-    );
-  }
-}
-
-class Trail extends StatefulWidget {
-  const Trail({super.key});
-
-  @override
-  State<Trail> createState() => _TrailState();
-}
-
-class _TrailState extends State<Trail> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Form(
-        child: Column(children: []),
-      ),
+      home: const Trial(),
     );
   }
 }

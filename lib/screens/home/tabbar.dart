@@ -19,9 +19,7 @@ class TopTabBarWidget extends StatefulWidget {
 class _TopTabBarWidget extends State<TopTabBarWidget>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-
-  var menu;
-  var foodlist;
+  Color containerColor = Colors.white;
 
   getTabs() {
     for (var item in widget.menuName) {
@@ -40,6 +38,7 @@ class _TopTabBarWidget extends State<TopTabBarWidget>
     _tabController = TabController(vsync: this, length: tabs.length);
   }
 
+  bool checkedvalue = false;
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -75,27 +74,75 @@ class _TopTabBarWidget extends State<TopTabBarWidget>
             return ListView.builder(
                 itemCount: foods.length,
                 itemBuilder: (context, index) {
-                  return Container(
-                    height: 60,
-                    padding: EdgeInsets.all(8),
-                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-                    decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.black,
-                              offset: Offset(0.0, 10), //(x,y)
-                              blurRadius: 1.0,
-                              blurStyle: BlurStyle.inner),
+                  final name = foods[index]['name'];
+                  final price = foods[index]['price'].toString();
+                  return GestureDetector(
+                    onTap: () {
+                      // if (containerColor == Colors.white) {
+                      //   setState(() {
+                      //     containerColor = Colors.green;
+                      //   });
+                      // } else {
+                      //   setState(() {
+                      //     containerColor = Colors.white;
+                      //   });
+                      // }
+                      print(name);
+                    },
+                    child: Container(
+                      height: 60,
+                      padding: EdgeInsets.all(8),
+                      margin:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                      decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black,
+                                offset: Offset(0.0, 10), //(x,y)
+                                blurRadius: 1.0,
+                                blurStyle: BlurStyle.inner),
+                          ],
+                          color: containerColor,
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(width: 1)),
+                      child: Center(
+                          child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            name,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 20),
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                price,
+                                style: TextStyle(
+                                    color: Colors.green,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20),
+                              ),
+                              Checkbox(
+                                  value: checkedvalue,
+                                  checkColor: Colors.green,
+                                  activeColor: Colors.black,
+                                  onChanged: (value) {
+                                    if (checkedvalue == false) {
+                                      setState(() {
+                                        checkedvalue = true;
+                                      });
+                                    } else {
+                                      setState(() {
+                                        checkedvalue = false;
+                                      });
+                                    }
+                                  })
+                            ],
+                          )
                         ],
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(width: 1)),
-                    child: Center(
-                        child: Text(
-                      foods[index]['name'],
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                    )),
+                      )),
+                    ),
                   );
                 });
           }),
@@ -104,37 +151,3 @@ class _TopTabBarWidget extends State<TopTabBarWidget>
     );
   }
 }
-
-Widget makeFoodList() {
-  return ListView();
-}
-
-
-///working on tabbarview children
-//  ListView.builder(
-//                 itemCount: 5,
-//                 itemBuilder: (context, index) {
-// // menuItem['menuname[index]']['listoffood'][index][name]
-//                   // final menu = widget.menuItem;
-//                   // final foods =
-//                   // widget.menuItem[widget.menuName[index]]['listOfFood'];
-//                   print('=-=-=-=-');
-
-//                   // print(widget.menuItem[widget.menuName[index]]['listOfFood']
-//                   //     [index]['name']);
-
-//                   menu = widget.menuItem[widget.menuName[index]];
-//                   foodlist =
-//                       widget.menuItem[widget.menuName[index]]['listOfFood'];
-//                   print(foodlist);
-//                   // print(widget.menuName[index]);
-//                   return Container(
-//                     height: 70,
-//                     margin: EdgeInsets.all(10),
-//                     padding: EdgeInsets.all(10),
-//                     decoration: BoxDecoration(
-//                         borderRadius: BorderRadius.circular(20),
-//                         border: Border.all(width: 1)),
-//                     child: Center(child: Text(foodlist[index]['name'])),
-//                   );
-//                 }),
