@@ -85,7 +85,10 @@ class _reset_passwordState extends State<reset_password> {
             ),
             MaterialButton(
               onPressed: passwordReset,
-              child: Text("reset password", style: TextStyle(fontSize: 20, color:Colors.black), ),
+              child: Text(
+                "reset password",
+                style: TextStyle(fontSize: 20, color: Colors.black),
+              ),
               color: Colors.deepPurple[200],
             )
           ],

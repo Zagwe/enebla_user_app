@@ -56,7 +56,7 @@ class AccountSetting extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ChangePassword()));
+                          builder: (context) => BackupSettings()));
                 },
               ),
               SettingsTile(

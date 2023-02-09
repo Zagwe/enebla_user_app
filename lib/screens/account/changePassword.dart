@@ -1,159 +1,122 @@
+import 'package:enebla_user_app/auth/login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import 'package:enebla_user_app/theme/style.dart' as style;
 import 'package:enebla_user_app/screens/account/accountSetting.dart';
 
 import '../../enebla_user_home.dart';
 
-class ChangePassword extends StatelessWidget {
-  const ChangePassword({Key? key}) : super(key: key);
+class BackupSettings extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: EditProfilePage(),
-    );
+  _BackupSettingsState createState() => _BackupSettingsState();
+}
+
+class _BackupSettingsState extends State<BackupSettings> {
+  final _newpasswordController = TextEditingController();
+  final _repeatpasswordController = TextEditingController();
+  var _formKey = GlobalKey<FormState>();
+
+  void _changePassword(String currentPassword, String newPassword) async {
+    final user = await FirebaseAuth.instance.currentUser;
+    final cred = EmailAuthProvider.credential(
+        email: user.email, password: currentPassword);
+
+    user.reauthenticateWithCredential(cred).then((value) {
+      user.updatePassword(newPassword).then((_) {
+        //Success, do something
+      }).catchError((error) {
+        //Error, show something
+      });
+    }).catchError((err) {});
   }
-}
 
-class EditProfilePage extends StatefulWidget {
-  @override
-  _EditProfilePageState createState() => _EditProfilePageState();
-}
-
-class _EditProfilePageState extends State<EditProfilePage> {
-  bool showPassword = false;
+  bool checkCurrentPasswordValid = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        elevation: 1,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: style.Style.primaryColor),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+        title: Text(
+          ('backup_text'),
         ),
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.home,
-              color: style.Style.primaryColor,
-            ),
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => EneblaHome()));
-            },
-          ),
-          // IconButton(
-          //   icon: Icon(
-          //     Icons.settings,
-          //     color: style.Style.primaryColor,
-          //   ),
-          //   onPressed: () {
-          //     Navigator.of(context).push(MaterialPageRoute(
-          //         builder: (BuildContext context) => AccountSetting()));
-          //   },
-          // ),
-        ],
-      ),
-      body: Container(
-        padding: EdgeInsets.only(left: 16, top: 25, right: 16),
-        child: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).unfocus();
+        elevation: 0,
+        brightness: Brightness.light,
+        backgroundColor: Colors.black,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context,
+                MaterialPageRoute(builder: (context) => AccountSetting()));
           },
-          child: ListView(
-            children: [
-              Text(
-                "Edit Profile",
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              SizedBox(
-                height: 35,
-              ),
-              buildTextField("Password", "********", true),
-              buildTextField("New Password", "", true),
-              buildTextField("Confirm Password", "", true),
-              SizedBox(
-                height: 35,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  OutlinedButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (BuildContext context) => AccountSetting()));
+          icon: Icon(
+            Icons.arrow_back_ios,
+            size: 20,
+            color: Colors.black,
+          ),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(20.0),
+          child: Column(
+            key: _formKey,
+            children: <Widget>[
+              Container(
+                child: TextFormField(
+                    validator: (input) {
+                      if (input!.length < 8)
+                        return 'Please Provide Minimum 8 Character';
                     },
-                    child: Text("CANCEL",
-                        style: TextStyle(
-                            fontSize: 14,
-                            letterSpacing: 2.2,
-                            color: Colors.black)),
-                    style: OutlinedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(horizontal: 50),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
+                    decoration: InputDecoration(
+                      labelText: "new_password",
+                      labelStyle: TextStyle(color: Colors.grey),
+                      prefixIcon: Icon(
+                        Icons.lock,
+                        color: Colors.black,
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                    ),
+                    obscureText: true,
+                    controller: _newpasswordController),
+              ),
+              Container(
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'repeat_password',
+                    labelStyle: TextStyle(color: Colors.grey),
+                    prefixIcon: Icon(
+                      Icons.lock,
+                      color: Colors.black,
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
                     ),
                   ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Text(
-                      "SAVE",
-                      style: TextStyle(
-                          fontSize: 14,
-                          letterSpacing: 2.2,
-                          color: Colors.white),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: style.Style.primaryColor,
-                      padding: EdgeInsets.symmetric(horizontal: 50),
-                      elevation: 2,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                    ),
-                  )
-                ],
+                  obscureText: true,
+                  controller: _repeatpasswordController,
+                  validator: (value) {
+                    return _newpasswordController.text == value
+                        ? null
+                        : "Please validate your entered password";
+                  },
+                ),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                // padding: EdgeInsets.fromLTRB(70, 10, 70, 10),
+                onPressed: () {},
+
+                child: Text(('save_button'),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold)),
+                style: ElevatedButton.styleFrom(),
               )
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget buildTextField(
-      String labelText, String placeholder, bool isPasswordTextField) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 35.0),
-      child: TextField(
-        obscureText: isPasswordTextField ? showPassword : false,
-        decoration: InputDecoration(
-            suffixIcon: isPasswordTextField
-                ? IconButton(
-                    onPressed: () {
-                      setState(() {
-                        showPassword = !showPassword;
-                      });
-                    },
-                    icon: Icon(
-                      Icons.remove_red_eye,
-                      color: Colors.grey,
-                    ),
-                  )
-                : null,
-            contentPadding: EdgeInsets.only(bottom: 3),
-            labelText: labelText,
-            floatingLabelBehavior: FloatingLabelBehavior.always,
-            hintText: placeholder,
-            hintStyle: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            )),
       ),
     );
   }
