@@ -1,9 +1,9 @@
-import 'package:enebla_user_app/widget/resturant_card.dart';
+// import 'package:enebla_user_app/widget/resturant_card.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+// import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:enebla_user_app/provider/dumy_provider.dart';
 
 class HomePageSlider extends StatefulWidget {

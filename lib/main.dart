@@ -22,7 +22,7 @@ class EneblaUser extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: style.Style.themeData,
-      home: const Trial(),
+      home: const EneblaHome(),
     );
   }
 }

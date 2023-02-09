@@ -30,8 +30,8 @@ class ResturantItem extends StatelessWidget {
               height: 240,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
-                child: Image.network(
-                  'https://img.freepik.com/free-photo/top-view-table-full-delicious-food-composition_23-2149141353.jpg?w=2000',
+                child: Image.asset(
+                  "lib/assets/home.jpg",
                   fit: BoxFit.fill,
                   width: MediaQuery.of(context).size.width,
                 ),

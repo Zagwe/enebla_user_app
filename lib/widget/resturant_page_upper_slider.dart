@@ -27,7 +27,7 @@ class ResturantPageUpperSlider extends StatelessWidget {
                   height: 240,
                   width: MediaQuery.of(context).size.width,
                   //we need to have a defualt picture in case the image won't load
-                  child: Image.network(
+                  child: Image.asset(
                     DummyProvider.imgList[index],
                     fit: BoxFit.cover,
                   ),
