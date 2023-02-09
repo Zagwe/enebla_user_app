@@ -1,4 +1,5 @@
-import 'package:enebla_user_app/trial.dart';
+import 'package:enebla_user_app/bloc/order_bloc.dart';
+import 'package:enebla_user_app/bloc/state.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:enebla_user_app/theme/another_style.dart' as style;
@@ -10,8 +11,10 @@ import 'enebla_user_home.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  final blocProvider = BlocProvider(orderBloc: OrderBloc());
 
-  runApp(const EneblaUser());
+  runApp(
+      AppStateContainer(blocProvider: blocProvider, child: const EneblaUser()));
 }
 
 class EneblaUser extends StatelessWidget {
@@ -22,7 +25,7 @@ class EneblaUser extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: style.Style.themeData,
-      home: const Trial(),
+      home: const EneblaHome(),
     );
   }
 }

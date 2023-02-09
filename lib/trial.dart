@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -11,27 +12,35 @@ class Trial extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // final String user = FirebaseAuth.instance.currentUser!.uid.toString();
+    // print(user);
+    // final String userr = 'roaRptCVACSv9YHjHFFMGIVHjqr1';
+
     return Scaffold(
       body: StreamBuilder(
-          stream:
-              FirebaseFirestore.instance.collection('subscription').snapshots(),
+          stream: FirebaseFirestore.instance
+              .collection('subscription')
+              // .where('owner', isEqualTo: user)
+              .snapshots(),
           builder: (context, snapshot) {
-            final snap = snapshot.data!.docs[0].data();
+            final snap;
+
+            if (snapshot.data != null) {
+              snap = snapshot.data!.docs[0].data();
+            } else {
+              snap = Map();
+            }
             print('==-==-=-=--');
 
             print(snap.keys.toList());
-
+            print(FirebaseAuth.instance.currentUser!.uid);
             print(snap.values.toList());
             print(snap['owner']);
 
             print(snap['maxthreshold ']);
             print(snap['minthreshold']);
 
-            return Center(
-              child: Container(
-                child: Text('dome'),
-              ),
-            );
+            return Center(child: CircularProgressIndicator());
           }),
     );
   }

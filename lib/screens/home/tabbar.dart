@@ -1,5 +1,9 @@
+import 'package:enebla_user_app/bloc/state.dart';
 import 'package:flutter/material.dart';
 import 'package:enebla_user_app/theme/style.dart';
+import 'package:enebla_user_app/theme/style.dart' as style;
+
+import '../../widget/tab_bar_listtile.dart';
 
 class TopTabBarWidget extends StatefulWidget {
   final snap;
@@ -18,6 +22,31 @@ class TopTabBarWidget extends StatefulWidget {
 
 class _TopTabBarWidget extends State<TopTabBarWidget>
     with SingleTickerProviderStateMixin {
+  bool visibility = false;
+
+  refresh(BuildContext context) {
+    // if (AppStateProvider.of(context)!.state.orderFoodList['food']!.isEmpty) {
+    //   setState(() {
+    //     visibility = true;
+    //   });
+    //   print('empty');
+    // } else {
+    //   setState(() {
+    //     visibility = false;
+    //   });
+    //   print('not empty');
+    // }
+    // if (visibility == false) {
+    //   setState(() {
+    //     visibility = true;
+    //   });
+    // } else {
+    //   setState(() {
+    //     visibility = false;
+    //   });
+    // }
+  }
+
   late TabController _tabController;
   Color containerColor = Colors.white;
 
@@ -34,6 +63,7 @@ class _TopTabBarWidget extends State<TopTabBarWidget>
   @override
   void initState() {
     super.initState();
+
     getTabs();
     _tabController = TabController(vsync: this, length: tabs.length);
   }
@@ -42,112 +72,103 @@ class _TopTabBarWidget extends State<TopTabBarWidget>
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TabBar(
-          indicatorWeight: 20,
+    ValueNotifier show = ValueNotifier(
+        AppStateProvider.of(context)?.state.orderFoodList['food']!.length);
+    show.notifyListeners();
+    return ValueListenableBuilder(
+        valueListenable: show,
+        builder: (context, value, child) {
+          if (value != 0) {
+            visibility = true;
+          }
+          print('-=-==-=-');
+          print(value);
 
-          labelStyle:
-              const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+          return Stack(
+            children: [
+              Column(
+                children: [
+                  TabBar(
+                    indicatorWeight: 20,
 
-          indicatorPadding: EdgeInsets.only(right: 20, top: 40),
-          //labelPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-          isScrollable: true,
-          controller: _tabController,
-          tabs: tabs,
-        ),
-        Expanded(
-            child: TabBarView(
-          controller: _tabController,
-          children: List<Widget>.generate(widget.menuName.length, (int index) {
-            // return ListView.builder(
-            //   itemBuilder: (context, index) {
-            //     final menu = widget.menuItem;
-            //     final foods =
-            //         widget.menuItem[widget.menuName[index]]['listOfFood'];
+                    labelStyle: const TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.black),
 
-            //     return Container();
-            //   },
-            // );
-            final foods = widget.menuItem[widget.menuName[index]]['listOfFood'];
-
-            return ListView.builder(
-                itemCount: foods.length,
-                itemBuilder: (context, index) {
-                  final name = foods[index]['name'];
-                  final price = foods[index]['price'].toString();
-                  return GestureDetector(
-                    onTap: () {
-                      // if (containerColor == Colors.white) {
-                      //   setState(() {
-                      //     containerColor = Colors.green;
-                      //   });
-                      // } else {
-                      //   setState(() {
-                      //     containerColor = Colors.white;
-                      //   });
-                      // }
-                      print(name);
+                    indicatorPadding: const EdgeInsets.only(right: 20, top: 40),
+                    //labelPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                    isScrollable: true,
+                    controller: _tabController,
+                    onTap: (value) {
+                      setState(() {
+                        visibility = false;
+                      });
                     },
-                    child: Container(
-                      height: 60,
-                      padding: EdgeInsets.all(8),
-                      margin:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-                      decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.black,
-                                offset: Offset(0.0, 10), //(x,y)
-                                blurRadius: 1.0,
-                                blurStyle: BlurStyle.inner),
-                          ],
-                          color: containerColor,
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(width: 1)),
-                      child: Center(
-                          child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            name,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                price,
-                                style: TextStyle(
-                                    color: Colors.green,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20),
-                              ),
-                              Checkbox(
-                                  value: checkedvalue,
-                                  checkColor: Colors.green,
-                                  activeColor: Colors.black,
-                                  onChanged: (value) {
-                                    if (checkedvalue == false) {
-                                      setState(() {
-                                        checkedvalue = true;
-                                      });
-                                    } else {
-                                      setState(() {
-                                        checkedvalue = false;
-                                      });
-                                    }
-                                  })
-                            ],
-                          )
-                        ],
-                      )),
+                    tabs: tabs,
+                  ),
+                  Expanded(
+                      child: TabBarView(
+                    controller: _tabController,
+                    children: List<Widget>.generate(widget.menuName.length,
+                        (int index) {
+                      // return ListView.builder(
+                      //   itemBuilder: (context, index) {
+                      //     final menu = widget.menuItem;
+                      //     final foods =
+                      //         widget.menuItem[widget.menuName[index]]['listOfFood'];
+
+                      //     return Container();
+                      //   },
+                      // );
+                      final foods =
+                          widget.menuItem[widget.menuName[index]]['listOfFood'];
+
+                      //LIST VIEW BUILDER START
+                      return ListView.builder(
+                          itemCount: foods.length,
+                          itemBuilder: (context, index) {
+                            final name = foods[index]['name'];
+                            final price = foods[index]['price'].toString();
+                            return ListViewTile(
+                              notifyParent: refresh,
+                              containerColor: containerColor,
+                              name: name,
+                              price: price,
+                            );
+                          });
+                    }),
+                  )),
+                  // FloatingActionButton(
+                  //   onPressed: () {},
+                  //   child: Icon(Icons.add),
+                  // )
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 70,
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(50),
+                          topRight: Radius.circular(50)),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: style.Style.SecondaryColor,
+                        ),
+                        onPressed: () {
+                          AppStateProvider.of(context)
+                              ?.state
+                              .orderFoodList['resturantId']!
+                              .add(widget.snap['owner']);
+                        },
+                        child: const Icon(
+                          Icons.add,
+                          size: 50,
+                        ),
+                      ),
                     ),
-                  );
-                });
-          }),
-        ))
-      ],
-    );
+                  )
+                ],
+              ),
+            ],
+          );
+        });
   }
 }

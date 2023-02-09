@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:enebla_user_app/provider/dumy_provider.dart';
+import 'package:enebla_user_app/bloc/state.dart';
+
 import 'package:enebla_user_app/screens/home/tabbar.dart';
 import 'package:enebla_user_app/theme/style.dart';
 import 'package:enebla_user_app/widget/resturant_page_upper_slider.dart';
@@ -24,6 +25,8 @@ class ResturantHomePage extends StatefulWidget {
 class _ResturantHomePageState extends State<ResturantHomePage> {
   @override
   Widget build(BuildContext context) {
+    final state = AppStateProvider.of(context)?.state;
+
     return Scaffold(
         body: Column(
       children: [
@@ -161,7 +164,13 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
                             padding: EdgeInsets.all(13),
                             elevation: 5,
                             backgroundColor: style.Style.SecondaryColor),
-                        onPressed: () {},
+                        onPressed: () {
+                          ///for testing purpose only
+                          AppStateProvider.of(context)
+                              ?.state
+                              .selectedFoodList
+                              .clear();
+                        },
                         child: Text(
                           'Subscribe'.toUpperCase(),
                           style: TextStyle(color: Colors.white),
