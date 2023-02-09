@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:enebla_user_app/enebla_user_home.dart';
 import 'package:enebla_user_app/screens/order/order.dart';
 import 'package:flutter/material.dart';
@@ -37,87 +39,106 @@ class _OrderPreviewState extends State<OrderPreview> {
         children: [
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: ListView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: AppStateProvider.of(context)!
-                      .state
-                      .orderFoodList['food']!
-                      .length,
-                  itemBuilder: (context, index) {
-                    List? foodlist = AppStateProvider.of(context)
-                        ?.state
-                        .orderFoodList['food'];
-                    List? priceList = AppStateProvider.of(context)
-                        ?.state
-                        .orderFoodList['price'];
-                    return Dismissible(
-                      key: UniqueKey(),
-                      background: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 80,
-                        padding: const EdgeInsets.all(30),
-                        margin: const EdgeInsets.only(bottom: 15),
-                        decoration: const BoxDecoration(
-                          color: Colors.red,
-                          // color: Colors.red,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [const Icon(Icons.delete)],
-                        ),
-                      ),
-                      onDismissed: (direction) {
-                        bloc?.orderService.removeFoodFromOrderList(
-                            context: context, foodName: foodlist[index]);
+                padding: const EdgeInsets.all(15.0),
+                child: ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: AppStateProvider.of(context)!
+                            .state
+                            .orderFoodList['resturantId']!
+                            .isNotEmpty
+                        ? AppStateProvider.of(context)!
+                            .state
+                            .orderFoodList['food']!
+                            .length
+                        : 1,
+                    itemBuilder: (context, index) {
+                      List? foodlist = AppStateProvider.of(context)
+                          ?.state
+                          .orderFoodList['food'];
+                      List? priceList = AppStateProvider.of(context)
+                          ?.state
+                          .orderFoodList['price'];
 
-                        /// this has to be remvoed if possible i am re rendering the entire
-                        /// page just to change the numbers of the food list
-                        ///
-                        /// we can replace the numbers with image maybe
-                        setState(() {});
-                      },
-                      child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: 80,
-                          padding: const EdgeInsets.all(30),
-                          margin: const EdgeInsets.only(bottom: 15),
-                          decoration: BoxDecoration(
-                            color: style.Style.primaryColor,
-                            // color: Colors.red,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text(
-                                (index + 1).toString(),
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w800,
-                                  color: Colors.white,
+                      return AppStateProvider.of(context)!
+                              .state
+                              .orderFoodList['resturantId']!
+                              .isNotEmpty
+                          ? Dismissible(
+                              key: UniqueKey(),
+                              background: Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: 80,
+                                padding: const EdgeInsets.all(30),
+                                margin: const EdgeInsets.only(bottom: 15),
+                                decoration: const BoxDecoration(
+                                  color: Colors.red,
+                                  // color: Colors.red,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [const Icon(Icons.delete)],
                                 ),
                               ),
-                              Text(
-                                foodlist![index],
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w800,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              Text(
-                                priceList![index],
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w800,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          )),
-                    );
-                  }),
-            ),
+                              onDismissed: (direction) {
+                                bloc?.orderService.removeFoodFromOrderList(
+                                    context: context,
+                                    foodName: foodlist[index]);
+
+                                /// this has to be remvoed if possible i am re rendering the entire
+                                /// page just to change the numbers of the food list
+                                ///
+                                /// we can replace the numbers with image maybe
+                                setState(() {});
+                              },
+                              child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 80,
+                                  padding: const EdgeInsets.all(30),
+                                  margin: const EdgeInsets.only(bottom: 15),
+                                  decoration: BoxDecoration(
+                                    color: style.Style.primaryColor,
+                                    // color: Colors.red,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Text(
+                                        (index + 1).toString(),
+                                        style: const TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w800,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      Text(
+                                        foodlist![index],
+                                        style: const TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w800,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      Text(
+                                        priceList![index],
+                                        style: const TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w800,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  )),
+                            )
+                          : Container(
+                              child: Text(
+                                  'you need to click the add button after selecting food item from menu',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 10,
+                                      color: Colors.red)),
+                            );
+                    })),
           ),
           Container(
               height: MediaQuery.of(context).size.height / 2.4,
@@ -233,12 +254,34 @@ class _OrderPreviewState extends State<OrderPreview> {
                           ),
                           onPressed: () {
                             ///logic to add order to a database
-                            bloc.orderService
-                                .addOrderToDatabase(context: context);
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const Order()));
+                            // print(AppStateProvider.of(context)
+                            //     ?.state
+                            //     .orderFoodList['resturantId']!
+                            //     .first);
+                            if (AppStateProvider.of(context)!
+                                .state
+                                .orderFoodList['food']!
+                                .isNotEmpty) {
+                              bloc.orderService
+                                  .addOrderToDatabase(context: context);
+                            }
+
+                            setState(() {
+                              AppStateProvider.of(context)!
+                                  .state
+                                  .orderFoodList['food']!
+                                  .clear();
+
+                              AppStateProvider.of(context)!
+                                  .state
+                                  .orderFoodList['price']!
+                                  .clear();
+                            });
+
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => const Order()));
                           },
                           child: const Text(
                             'Continue To Order',

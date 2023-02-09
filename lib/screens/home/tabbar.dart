@@ -110,15 +110,6 @@ class _TopTabBarWidget extends State<TopTabBarWidget>
                     controller: _tabController,
                     children: List<Widget>.generate(widget.menuName.length,
                         (int index) {
-                      // return ListView.builder(
-                      //   itemBuilder: (context, index) {
-                      //     final menu = widget.menuItem;
-                      //     final foods =
-                      //         widget.menuItem[widget.menuName[index]]['listOfFood'];
-
-                      //     return Container();
-                      //   },
-                      // );
                       final foods =
                           widget.menuItem[widget.menuName[index]]['listOfFood'];
 
@@ -137,11 +128,7 @@ class _TopTabBarWidget extends State<TopTabBarWidget>
                           });
                     }),
                   )),
-                  // FloatingActionButton(
-                  //   onPressed: () {},
-                  //   child: Icon(Icons.add),
-                  // )
-                  Container(
+                  SizedBox(
                     width: MediaQuery.of(context).size.width,
                     height: 70,
                     child: ClipRRect(
@@ -156,7 +143,9 @@ class _TopTabBarWidget extends State<TopTabBarWidget>
                           AppStateProvider.of(context)
                               ?.state
                               .orderFoodList['resturantId']!
-                              .add(widget.snap['owner']);
+                              .add(widget.snap['id']);
+
+                          // print(widget.snap['id']);
                         },
                         child: const Icon(
                           Icons.add,

@@ -27,7 +27,7 @@ class _EneblaHomeState extends State<EneblaHome> {
   static final List _widgetOptions = [
     const HomePage(),
     Search(),
-    const OrderPreview(),
+    OrderPreview(),
     const AccountSetting(),
   ];
 

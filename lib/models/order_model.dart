@@ -3,38 +3,61 @@ import 'package:enebla_user_app/models/usermodel.dart';
 import 'food_model.dart';
 
 class Order {
-  int id;
-  User orderMadeBy;
-  int orderTotalPrice;
-  List<Food> listOfFoodItemsInOrder;
-  Enum orderstatus;
-
-  set setOrderStatus(Enum orderstatus) {
-    this.orderstatus = orderstatus;
-  }
+  String orderby;
+  String ordermadeto;
+  String orderid;
+  int ordertotal;
+  double ordersubtotal;
+  int day;
+  List placeHolder;
+  String time;
 
   Order(
-      {required this.id,
-      required this.orderTotalPrice,
-      required this.orderMadeBy,
-      required this.listOfFoodItemsInOrder,
-      required this.orderstatus});
+      {required this.day,
+      required this.time,
+      required this.orderby,
+      required this.orderid,
+      required this.ordermadeto,
+      required this.placeHolder,
+      required this.ordersubtotal,
+      required this.ordertotal});
+
+  // Order(
+  //     {required this.id,
+  //     required this.orderTotalPrice,
+  //     required this.orderMadeBy,
+  //     required this.listOfFoodItemsInOrder,
+  //     required this.orderstatus});
+
   factory Order.fromMap(Map) {
     return Order(
-      id: Map["id"],
-      orderTotalPrice: Map["orderTotalPrice"],
-      orderMadeBy: Map['orderMadeBy'],
-      listOfFoodItemsInOrder: Map["listOfFoodItemsInOrder"],
-      orderstatus: Map["orderstatus"],
+      orderby: Map['orderby'],
+      ordermadeto: Map['ordermadeto'],
+      day: Map['day'],
+      orderid: Map['orderid'],
+      ordersubtotal: Map['ordersubtotal'],
+      ordertotal: Map['ordertotal'],
+      placeHolder: Map['placeHolder'],
+      time: Map['time'],
+
+      // id: Map["id"],
+      // orderTotalPrice: Map["orderTotalPrice"],
+      // orderMadeBy: Map['orderMadeBy'],
+      // listOfFoodItemsInOrder: Map["listOfFoodItemsInOrder"],
+      // orderstatus: Map["orderstatus"],
     );
   }
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
-      "id": id,
-      "orderTotalprice": orderTotalPrice,
-      "listOfFoodItemsInOrder": listOfFoodItemsInOrder,
-      "orderMadeBy": orderMadeBy,
-      "orderstatus": orderstatus
+      orderby: {
+        'orderby': orderby,
+        'ordermadeto': ordermadeto,
+        'orderlist': {orderid: placeHolder},
+        'ordertotal': ordertotal,
+        'ordersubtotal': ordersubtotal,
+        'day': day,
+        'time': time
+      }
     };
   }
 }
