@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elegant_notification/elegant_notification.dart';
 import 'package:enebla_user_app/provider/dumy_provider.dart';
 import 'package:enebla_user_app/screens/account/contucUs.dart';
+import 'package:enebla_user_app/bloc/state.dart';
+
 import 'package:enebla_user_app/screens/home/tabbar.dart';
 import 'package:enebla_user_app/theme/style.dart';
 import 'package:enebla_user_app/widget/resturant_page_upper_slider.dart';
@@ -33,6 +35,10 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    print('=-=-=-=-=-');
+    print(widget.snap);
+    final state = AppStateProvider.of(context)?.state;
+
     return Scaffold(
         body: Column(
       children: [
@@ -309,22 +315,29 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
                       builder: (context,
                           AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
                               snapshot) {
-                        final snap = snapshot.data!.docs[0].data();
+                        final PlatformProvidedMenuItemType;
+                        if (snapshot.data!.docs.isNotEmpty) {
+                          final snap = snapshot.data!.docs[0].data();
+                          final menuItem = snap['menulist'];
+
+                          final menuName = menuItem.keys.toList();
+
+                          return TopTabBarWidget(
+                            snap: snap,
+                            menuItem: menuItem,
+                            menuName: menuName,
+                          );
+                        }
 
                         //the entire list of menus
 
                         //menuItem['menuname[index]']['listoffood'][index][name]
 
                         //title menuname[index]
-                        final menuItem = snap['menulist'];
 
-                        final menuName = menuItem.keys.toList();
-
-                        return TopTabBarWidget(
-                          snap: snap,
-                          menuItem: menuItem,
-                          menuName: menuName,
-                        );
+                        return Center(
+                            child: Text(
+                                'this resturant does not have a menu yet'));
                       }))
             ],
           ),

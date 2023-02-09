@@ -61,14 +61,19 @@ class HomePage extends StatelessWidget {
                   builder: (context,
                       AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
                           snapshot) {
-                    final snap = snapshot.data!.docs;
+                    var snap;
+
+                    if (snapshot.data != null) {
+                      snap = snapshot.data!.docs;
+                    }
 
                     return ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: snap.length,
+                      itemCount: 4,
                       itemBuilder: (context, index) {
                         final resturant = snap[index].data();
+
                         return ResturantItem(
                           snap: resturant,
                         );
