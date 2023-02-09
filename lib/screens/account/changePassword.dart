@@ -55,68 +55,72 @@ class _BackupSettingsState extends State<BackupSettings> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
-          child: Column(
+          child: Form(
             key: _formKey,
-            children: <Widget>[
-              TextFormField(
-                  validator: (input) {
-                    if (input!.length < 8) {
-                      return 'Please Provide Minimum 8 Character';
-                    }
-                    return null;
-                  },
-                  decoration: const InputDecoration(
-                    labelText: "new_password",
-                    labelStyle: TextStyle(color: Colors.grey),
-                    prefixIcon: Icon(
-                      Icons.lock,
-                      color: Colors.black,
+            child: Column(
+              children: <Widget>[
+                TextFormField(
+                    validator: (input) {
+                      if (input!.length < 8) {
+                        return 'Please Provide Minimum 8 Character';
+                      }
+                      return null;
+                    },
+                    decoration: const InputDecoration(
+                      labelText: "new_password",
+                      labelStyle: TextStyle(color: Colors.grey),
+                      prefixIcon: Icon(
+                        Icons.lock,
+                        color: Colors.black,
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
                     ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black),
+                    obscureText: true,
+                    controller: _newpasswordController),
+                Container(
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: 'repeat_password',
+                      labelStyle: TextStyle(color: Colors.grey),
+                      prefixIcon: Icon(
+                        Icons.lock,
+                        color: Colors.black,
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
                     ),
+                    obscureText: true,
+                    controller: _repeatpasswordController,
+                    validator: (value) {
+                      return _newpasswordController.text == value
+                          ? null
+                          : "Please validate your entered password";
+                    },
                   ),
-                  obscureText: true,
-                  controller: _newpasswordController),
-              Container(
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'repeat_password',
-                    labelStyle: TextStyle(color: Colors.grey),
-                    prefixIcon: Icon(
-                      Icons.lock,
-                      color: Colors.black,
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black),
-                    ),
-                  ),
-                  obscureText: true,
-                  controller: _repeatpasswordController,
-                  validator: (value) {
-                    return _newpasswordController.text == value
-                        ? null
-                        : "Please validate your entered password";
-                  },
                 ),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                // padding: EdgeInsets.fromLTRB(70, 10, 70, 10),
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _changePassword(_newpasswordController.text);
-                  }
-                },
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  // padding: EdgeInsets.fromLTRB(70, 10, 70, 10),
+                  onPressed: () {
+                    print('-==-=-=-=-=-=');
+                    if (_formKey.currentState!.validate()) {
+                      _changePassword(_newpasswordController.text);
+                      print('inside');
+                    }
+                  },
 
-                style: ElevatedButton.styleFrom(),
-                child: const Text(('save_button'),
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold)),
-              )
-            ],
+                  style: ElevatedButton.styleFrom(),
+                  child: const Text(('save_button'),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold)),
+                )
+              ],
+            ),
           ),
         ),
       ),
