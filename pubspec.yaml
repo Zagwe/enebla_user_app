@@ -55,6 +55,7 @@ dependencies:
   smooth_page_indicator: ^1.0.0+2
   modal_bottom_sheet: ^2.1.2
   chapasdk: ^0.0.5
+  shared_preferences: ^2.0.17
 
 
 dev_dependencies:
@@ -95,6 +96,7 @@ flutter:
      - lib/assets/home.png
      - lib/assets/logo1.png  
      - lib/assets/home.jpg
+     - lib/assets/enebla.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -37,6 +37,7 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
   Widget build(BuildContext context) {
     print('=-=-=-=-=-');
     print(widget.snap);
+    var subscription_state = 0;
     final state = AppStateProvider.of(context)?.state;
 
     return Scaffold(
@@ -199,6 +200,7 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
               ),
 
               ////subscription seciton
+              subscription_state != 1 ?
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -239,8 +241,8 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
                             backgroundColor: style.Style.SecondaryColor),
                         onPressed: () {
                           print(amountController);
-                          if(int.parse(amountController.text) < 1000){
 
+                          if(int.parse(amountController.text) < 1000){
                             ElegantNotification(
                               title: Text("Error"),
                               description:  Text(" Enter Amount more than 1000"),
@@ -265,6 +267,7 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
 
                               progressIndicatorColor: Colors.green,
                             ).show(context);
+                            subscription_state = 1;
                             Chapa.paymentParameters(
                               context: context, // context
                               publicKey: 'CHASECK_TEST-FnTXa03f7dXyGVn0HCyfZFvHgT8j1XJX',
@@ -279,17 +282,18 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
                               namedRouteFallBack: '/fallback',
                               // fall back route name
                             );
-                          }
 
 
-
-                        },
+                          } },
                         child: Text(
                           'Subscribe'.toUpperCase(),
                           style: TextStyle(color: Colors.white),
                         )),
                   )
                 ],
+              ):
+              Container(
+                  child: Text("you are subscribed to this resturant")
               ),
               Padding(
                 padding:

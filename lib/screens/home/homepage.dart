@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:enebla_user_app/screens/search/search.dart';
 import 'package:enebla_user_app/widget/homepage_slider.dart';
 import 'package:enebla_user_app/widget/resturant_card.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,7 @@ class HomePage extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const LoginPage()));
+                          builder: (context) => Search()));
                 },
               ),
             )

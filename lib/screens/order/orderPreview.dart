@@ -278,10 +278,10 @@ class _OrderPreviewState extends State<OrderPreview> {
                                   .clear();
                             });
 
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => const Order()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Order()));
                           },
                           child: const Text(
                             'Continue To Order',

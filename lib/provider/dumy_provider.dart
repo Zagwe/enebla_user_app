@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 class DummyProvider {
   static List<String> imgList = [
     "lib/assets/home.jpg",
+    "lib/assets/enebla.jpg",
     "lib/assets/home.jpg",
-    "lib/assets/home.jpg",
-    "lib/assets/home.jpg",
+    "lib/assets/enebla.jpg",
     "lib/assets/home.jpg",
     ];
   static final List<Widget> imageSliders = imgList

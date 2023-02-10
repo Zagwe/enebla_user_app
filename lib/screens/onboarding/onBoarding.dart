@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:enebla_user_app/theme/style.dart' as style;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../auth/login.dart';
 import '../../enebla_user_home.dart';
@@ -26,6 +27,13 @@ class _OnBordingState extends State<OnBording> {
     super.dispose();
   }
 
+  _storeOnBoardInfo() async {
+    int isViewed = 0;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt("OnBording", isViewed);
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,10 +43,11 @@ class _OnBordingState extends State<OnBording> {
           child: Column(
             children: [
               Expanded(
-                child: PageView.builder(
+                child: PageView.builder (
                   itemCount: demo_data.length,
                   controller: _pageController,
-                  onPageChanged: (index) {
+                  onPageChanged: (index) async{
+                    await _storeOnBoardInfo();
                     setState(() {
                       _pageIndex = index;
                     });
@@ -63,7 +72,8 @@ class _OnBordingState extends State<OnBording> {
                     height: 60,
                     width: 60,
                     child: ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
+                        await _storeOnBoardInfo();
                         _pageIndex != 3
                             ? _pageController.nextPage(
                                 duration: Duration(milliseconds: 300),
@@ -71,7 +81,7 @@ class _OnBordingState extends State<OnBording> {
                             : Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => EneblaHome()));
+                                    builder: (context) => LoginPage()));
                       },
                       style: ElevatedButton.styleFrom(
                         shape: CircleBorder(),
