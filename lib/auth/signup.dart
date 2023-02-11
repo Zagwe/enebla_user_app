@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enebla_user_app/auth/login.dart';
 import 'package:enebla_user_app/models/usermodel.dart' as model;
@@ -5,6 +7,9 @@ import 'package:enebla_user_app/resources/auth_methods.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
+
+import '../utils/utils.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -23,6 +28,15 @@ class _signupState extends State<SignUp> {
   final passwordEditingController = TextEditingController();
   final conformPasswordEditingController = TextEditingController();
   final addressController = TextEditingController();
+
+  Uint8List? _image;
+
+  void selectImage() async {
+    Uint8List image = await pickImage(ImageSource.gallery);
+    setState(() {
+      _image = image;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +58,8 @@ class _signupState extends State<SignUp> {
       onSaved: (Value) {},
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: Icon(Icons.account_circle),
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          prefixIcon: const Icon(Icons.account_circle),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "first name",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
     );
@@ -67,8 +81,8 @@ class _signupState extends State<SignUp> {
       onSaved: (Value) {},
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: Icon(Icons.account_circle),
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          prefixIcon: const Icon(Icons.account_circle),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "last name",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
     );
@@ -85,8 +99,8 @@ class _signupState extends State<SignUp> {
       onSaved: (Value) {},
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: Icon(Icons.phone),
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          prefixIcon: const Icon(Icons.phone),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "phoneNumber",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
     );
@@ -106,8 +120,8 @@ class _signupState extends State<SignUp> {
       onSaved: (Value) {},
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: Icon(Icons.mail),
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          prefixIcon: const Icon(Icons.mail),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "email",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
     );
@@ -128,8 +142,8 @@ class _signupState extends State<SignUp> {
       onSaved: (Value) {},
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: Icon(Icons.vpn_key),
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          prefixIcon: const Icon(Icons.vpn_key),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "password",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
     );
@@ -147,8 +161,8 @@ class _signupState extends State<SignUp> {
       onSaved: (Value) {},
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: Icon(Icons.vpn_key),
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          prefixIcon: const Icon(Icons.vpn_key),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "conformPassword",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
     );
@@ -164,8 +178,8 @@ class _signupState extends State<SignUp> {
       onSaved: (Value) {},
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
-          prefixIcon: Icon(Icons.location_on),
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          prefixIcon: const Icon(Icons.location_on),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "address",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
     );
@@ -173,7 +187,7 @@ class _signupState extends State<SignUp> {
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
       child: MaterialButton(
-        padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
         onPressed: () async {
           // signup(emailEditingController.text, passwordEditingController.text);
@@ -185,20 +199,21 @@ class _signupState extends State<SignUp> {
                 firstname: firstnameEditingController.text,
                 lastname: lastnameEditingController.text,
                 phonenumber: phoneNumberEditingController.text,
-                address: addressController.text);
+                address: addressController.text,
+                file: _image!);
             if (res == 'success') {
               Fluttertoast.showToast(msg: 'account created successfully');
 
               Navigator.pushAndRemoveUntil(
                   (context),
-                  MaterialPageRoute(builder: (context) => LoginPage()),
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
                   (router) => false);
             } else {
               Fluttertoast.showToast(msg: res);
             }
           }
         },
-        child: Text(
+        child: const Text(
           'signUp',
           textAlign: TextAlign.center,
           style: TextStyle(
@@ -212,7 +227,7 @@ class _signupState extends State<SignUp> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.red),
+          icon: const Icon(Icons.arrow_back, color: Colors.red),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -231,26 +246,41 @@ class _signupState extends State<SignUp> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  SizedBox(
-                    height: 180,
-                    child: Text('enbla app'),
+                  /// there will be an image hre
+                  Stack(
+                    children: [
+                      _image != null
+                          ? CircleAvatar(
+                              radius: 64, backgroundImage: MemoryImage(_image!))
+                          : const CircleAvatar(
+                              radius: 64,
+                              backgroundImage: NetworkImage(
+                                  'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg'),
+                            ),
+                      Positioned(
+                          bottom: -10,
+                          left: 80,
+                          child: IconButton(
+                              onPressed: selectImage,
+                              icon: const Icon(Icons.add_a_photo)))
+                    ],
                   ),
-                  SizedBox(height: 45),
+                  const SizedBox(height: 45),
                   firstname,
-                  SizedBox(height: 45),
+                  const SizedBox(height: 45),
                   lastname,
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   phoneNumber,
-                  SizedBox(height: 20),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   emailField,
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   passwordField,
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   conformPassword,
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   address,
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
                   signupButton,
                 ],
               ),

@@ -159,7 +159,13 @@ class _CommentAndRatingState extends State<CommentAndRating> {
 
                                   String comment = commentsnapshot.data!
                                       .data()![keys[index]]['comment'];
+                                  String? imageUrl;
 
+                                  if (snapshot.data!.data()!['photoUrl'] !=
+                                      null) {
+                                    imageUrl =
+                                        snapshot.data!.data()!['photoUrl'];
+                                  }
                                   return Container(
                                     width: MediaQuery.of(context).size.width,
                                     // padding: EdgeInsets.all(20),
@@ -180,12 +186,19 @@ class _CommentAndRatingState extends State<CommentAndRating> {
                                             child: ClipRRect(
                                               borderRadius:
                                                   BorderRadius.circular(50),
-                                              child: Image.network(
-                                                'https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3540&q=80',
-                                                height: 50,
-                                                width: 50,
-                                                fit: BoxFit.cover,
-                                              ),
+                                              child: imageUrl == null
+                                                  ? Image.asset(
+                                                      'lib/assets/profile image.png',
+                                                      height: 50,
+                                                      width: 50,
+                                                      fit: BoxFit.cover,
+                                                    )
+                                                  : Image.network(
+                                                      imageUrl,
+                                                      height: 50,
+                                                      width: 50,
+                                                      fit: BoxFit.cover,
+                                                    ),
                                             ),
                                           ),
                                           SizedBox(

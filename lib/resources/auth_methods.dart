@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'package:enebla_user_app/models/usermodel.dart' as model;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:enebla_user_app/resources/storage_methods.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,8 @@ class AuthMethods {
       required String firstname,
       required String lastname,
       required String phonenumber,
-      required String address}) async {
+      required String address,
+      required Uint8List file}) async {
     FirebaseFirestore _firestore = FirebaseFirestore.instance;
     String res = 'some error occured';
     try {
@@ -27,18 +29,22 @@ class AuthMethods {
           firstname.isNotEmpty ||
           lastname.isNotEmpty ||
           address.isNotEmpty ||
-          phonenumber.isNotEmpty) {
+          phonenumber.isNotEmpty ||
+          file != null) {
         UserCredential credential = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
 
+        String photoUrl = await StorageMethods()
+            .uploadImgeToStorage('profilePics', file, false);
+
         model.User user = model.User(
-          firstname: firstname,
-          uid: _auth.currentUser!.uid,
-          lastname: lastname,
-          email: email,
-          phonenumber: phonenumber,
-          address: address,
-        );
+            firstname: firstname,
+            uid: _auth.currentUser!.uid,
+            lastname: lastname,
+            email: email,
+            phonenumber: phonenumber,
+            address: address,
+            photoUrl: photoUrl);
 
         await _firestore.collection('users').doc(credential.user!.uid).set(
               user.toJson(),

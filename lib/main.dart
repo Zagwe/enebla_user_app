@@ -36,7 +36,7 @@ class EneblaUser extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: style.Style.themeData,
-      home: isViewed != 0 ? OnBording() : EneblaHome(),
+      home: isViewed != 0 ? OnBording() : LoginPage(),
     );
   }
 }
