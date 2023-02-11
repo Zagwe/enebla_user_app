@@ -277,7 +277,12 @@ class _OrderPreviewState extends State<OrderPreview> {
                                   .orderFoodList['price']!
                                   .clear();
                             });
-
+                            // String subOrderTotal = bloc!.orderService
+                            //     .getOrderTotal(context)
+                            //     .toString();
+                            // print(
+                            //     "?????????????????????????????????????3333333333333333333333");
+                            // print(subOrderTotal);
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(

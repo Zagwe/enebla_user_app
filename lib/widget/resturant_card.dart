@@ -31,7 +31,7 @@ class ResturantItem extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: Image.asset(
-                  "lib/assets/home.jpg",
+                  "lib/assets/enebla.jpg",
                   fit: BoxFit.fill,
                   width: MediaQuery.of(context).size.width,
                 ),
