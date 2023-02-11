@@ -252,7 +252,7 @@ class _OrderPreviewState extends State<OrderPreview> {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: style.Style.primaryColor,
                           ),
-                          onPressed: () {
+                          onPressed: () async {
                             ///logic to add order to a database
                             // print(AppStateProvider.of(context)
                             //     ?.state
@@ -262,7 +262,7 @@ class _OrderPreviewState extends State<OrderPreview> {
                                 .state
                                 .orderFoodList['food']!
                                 .isNotEmpty) {
-                              bloc.orderService
+                              await bloc.orderService
                                   .addOrderToDatabase(context: context);
                             }
 

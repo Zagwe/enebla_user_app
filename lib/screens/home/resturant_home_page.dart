@@ -10,6 +10,7 @@ import 'package:enebla_user_app/screens/home/tabbar.dart';
 import 'package:enebla_user_app/theme/style.dart';
 import 'package:enebla_user_app/widget/resturant_page_upper_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -120,7 +121,10 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
                           context: context,
                           bounce: true,
                           backgroundColor: Colors.transparent,
-                          builder: (context) => CommentAndRating(),
+                          builder: (context) => CommentAndRating(
+                            commentedby: FirebaseAuth.instance.currentUser!.uid,
+                            commentedto: widget.snap['owner'],
+                          ),
                         );
                       },
                       child: Row(

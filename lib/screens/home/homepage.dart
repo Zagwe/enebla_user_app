@@ -36,10 +36,8 @@ class HomePage extends StatelessWidget {
                 onPressed: () {
                   // Navigator.push(context,
                   //     MaterialPageRoute(builder: (context) => OnBording()));
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Search()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Search()));
                 },
               ),
             )
@@ -66,21 +64,22 @@ class HomePage extends StatelessWidget {
 
                     if (snapshot.data != null) {
                       snap = snapshot.data!.docs;
-                      print(snap.length);
                     }
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: snap.length,
+                        itemBuilder: (context, index) {
+                          final resturant = snap[index].data();
 
-                    return ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: snap.length,
-                      itemBuilder: (context, index) {
-                        final resturant = snap[index].data();
-
-                        return ResturantItem(
-                          snap: resturant,
-                        );
-                      },
-                    );
+                          return ResturantItem(
+                            snap: resturant,
+                          );
+                        },
+                      );
+                    }
+                    return CircularProgressIndicator();
                   }),
             ),
           ],

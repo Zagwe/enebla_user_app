@@ -12,14 +12,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'enebla_user_home.dart';
 
 int? isViewed;
-int? isButtonActive;
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  final blocProvider = BlocProvider(orderBloc: OrderBloc());
+  final blocProvider =
+      BlocProvider(commentBloc: CommentBloc(), orderBloc: OrderBloc());
   SharedPreferences prefs = await SharedPreferences.getInstance();
   isViewed = prefs.getInt('OnBording');
-  // isButtonActive = prefs.getInt('Subscription');
+
+  print(FirebaseAuth.instance.currentUser!.uid);
   runApp(
       AppStateContainer(blocProvider: blocProvider, child: const EneblaUser()));
 }
@@ -32,7 +34,7 @@ class EneblaUser extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: style.Style.themeData,
-      home: isViewed != 0 ? OnBording() : EneblaHome(),
+      home: isViewed !=0 ? OnBording() : LoginPage(),
     );
   }
 }

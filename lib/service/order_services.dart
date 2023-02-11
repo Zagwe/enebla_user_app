@@ -45,6 +45,7 @@ class OrderService {
         in AppStateProvider.of(context)!.state.orderFoodList['price']!) {
       total += int.parse(val);
     }
+
     return total;
   }
 
@@ -52,7 +53,7 @@ class OrderService {
     required context,
 
     //we have to pass resturant uid here
-  }) {
+  }) async {
     ////there is a bug here when i make an order to the same resturant it is saved on data base in two separate resturant id which means i made an order to two separate resturants
     ///
     ///why is that?
@@ -63,8 +64,35 @@ class OrderService {
     final priceList =
         AppStateProvider.of(context)!.state.orderFoodList['price'];
 
-    final total = getOrderTotal(context);
+    ///read the total price first
+    ///
+    ///then add the new value
+    int total;
+    final perviousOrderTotal = await _firestore
+        .collection('order')
+        .where('resturanid', isEqualTo: resurantId)
+        .get()
+        .then((value) {
+      if (value.docs.isNotEmpty) {
+        for (var key in value.docs[0].data().keys) {
+          if (key == FirebaseAuth.instance.currentUser!.uid) {
+            return value.docs[0].data()[FirebaseAuth.instance.currentUser!.uid]
+                ['ordertotal'];
+          }
+        }
+      }
+    });
 
+    if (perviousOrderTotal != null) {
+      total = perviousOrderTotal + getOrderTotal(context);
+    } else {
+      total = getOrderTotal(context);
+    }
+
+    print(perviousOrderTotal);
+    print(total);
+
+    // print(getOrderTotal(context));
     final subtotal = total * 1.15;
 
     List placeHoler = [];
@@ -90,7 +118,6 @@ class OrderService {
         ordersubtotal: subtotal,
         ordertotal: total);
 
-    print(orderId);
     _firestore
         .collection('order')
         .doc(resurantId)
@@ -103,7 +130,8 @@ class OrderService {
             'ordertotal': total,
             'ordersubtotal': subtotal,
             'day': DateTime.now().day,
-            'time': DateFormat.jm().format(DateTime.now())
+            'time': DateFormat.jm().format(DateTime.now()),
+            'orderstatus': 'pending'
           }
         }, SetOptions(merge: true))
         .then((value) => print('order added successfully'))

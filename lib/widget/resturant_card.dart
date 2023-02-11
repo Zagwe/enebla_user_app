@@ -1,5 +1,6 @@
 import 'package:enebla_user_app/screens/comment_and_rating.dart';
 import 'package:enebla_user_app/screens/home/resturant_home_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:enebla_user_app/theme/style.dart' as style;
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -78,12 +79,17 @@ class ResturantItem extends StatelessWidget {
           //rating and comment
           GestureDetector(
             onTap: () {
+              print('=-=-=-=-=-=-=-=-=-');
+              print(FirebaseAuth.instance.currentUser!.uid);
+              print(snap);
               showBarModalBottomSheet(
                 expand: false,
                 context: context,
                 bounce: true,
                 backgroundColor: Colors.transparent,
-                builder: (context) => CommentAndRating(),
+                builder: (context) => CommentAndRating(
+                    commentedby: FirebaseAuth.instance.currentUser!.uid,
+                    commentedto: snap['owner']),
               );
               // Navigator.push(context,
               //     MaterialPageRoute(builder: (context) => CommentAndRating()));

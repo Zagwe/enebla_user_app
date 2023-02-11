@@ -56,6 +56,8 @@ dependencies:
   modal_bottom_sheet: ^2.1.2
   chapasdk: ^0.0.5
   shared_preferences: ^2.0.17
+  image_picker: ^0.8.6+1
+  firebase_storage: ^11.0.11
 
 
 dev_dependencies:
@@ -97,6 +99,7 @@ flutter:
      - lib/assets/logo1.png  
      - lib/assets/home.jpg
      - lib/assets/enebla.jpg
+     - lib/assets/profile image.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
