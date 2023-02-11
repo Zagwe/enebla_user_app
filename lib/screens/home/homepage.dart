@@ -66,12 +66,13 @@ class HomePage extends StatelessWidget {
 
                     if (snapshot.data != null) {
                       snap = snapshot.data!.docs;
+                      print(snap.length);
                     }
 
                     return ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: 4,
+                      itemCount: snap.length,
                       itemBuilder: (context, index) {
                         final resturant = snap[index].data();
 

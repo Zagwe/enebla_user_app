@@ -95,6 +95,7 @@ class OrderService {
         .collection('order')
         .doc(resurantId)
         .set({
+          'resturanid': resurantId,
           uid: {
             'orderby': uid,
             'ordermadeto': resurantId,
