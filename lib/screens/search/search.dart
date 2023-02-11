@@ -26,7 +26,6 @@ class _SearchState extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
-
     print(searchResult);
     return Scaffold(
       appBar: AppBar(
@@ -62,84 +61,85 @@ class _SearchState extends State<Search> {
         ),
       ),
       body: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance.collection('resturant')
-              .snapshots(),
+          stream:
+              FirebaseFirestore.instance.collection('resturant').snapshots(),
           builder: (context, snapshots) {
             return (snapshots.connectionState == ConnectionState.waiting)
                 ? Center(
-              child: CircularProgressIndicator(),
-            )
+                    child: CircularProgressIndicator(),
+                  )
                 : ListView.builder(
-                itemCount: snapshots.data!.docs.length,
-                itemBuilder: (context, index) {
-                  var data = snapshots.data!.docs[index].data()
-                  as Map<String, dynamic>;
+                    itemCount: snapshots.data!.docs.length,
+                    itemBuilder: (context, index) {
+                      var data = snapshots.data!.docs[index].data()
+                          as Map<String, dynamic>;
 
-                  if (searchResult.isEmpty) {
-                    return ListTile(
-                      title: Text(
-                        data['name'],
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            color: Colors.black54,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text(
-                        data['address'],
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            color: Colors.black54,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      leading: CircleAvatar(
-                        backgroundImage: AssetImage("lib/assets/home.png"),
-                      ),
-                    );
-                  }
-                  if (data['name']
-                      .toString()
-                      .toLowerCase()
-                      .startsWith(searchResult.toLowerCase())) {
-                    return GestureDetector(
-                      onTap: (){
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => CommentAndRating()));
-                      },
-                      child: ListTile(
-                        title: Text(
-                          data['name'],
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        subtitle: Text(
-                          data['address'],
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        leading: CircleAvatar(
-                          backgroundImage: AssetImage("lib/assets/home.png"),
-                        ),
-                      ),
-                    );
-                  }
-                  return Container();
-                });
-          }
-      ),);
+                      if (searchResult.isEmpty) {
+                        return ListTile(
+                          title: Text(
+                            data['name'],
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: Colors.black54,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text(
+                            data['address'],
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: Colors.black54,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          leading: CircleAvatar(
+                            backgroundImage: AssetImage("lib/assets/home.png"),
+                          ),
+                        );
+                      }
+                      if (data['name']
+                          .toString()
+                          .toLowerCase()
+                          .startsWith(searchResult.toLowerCase())) {
+                        return GestureDetector(
+                          onTap: () {
+                            //commented this code for a while i don't know its purpose tho
+                            // Navigator.push(context,
+                            // MaterialPageRoute(builder: (context) => CommentAndRating()));
+                          },
+                          child: ListTile(
+                            title: Text(
+                              data['name'],
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            subtitle: Text(
+                              data['address'],
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            leading: CircleAvatar(
+                              backgroundImage:
+                                  AssetImage("lib/assets/home.png"),
+                            ),
+                          ),
+                        );
+                      }
+                      return Container();
+                    });
+          }),
+    );
   }
-
 }
 
 

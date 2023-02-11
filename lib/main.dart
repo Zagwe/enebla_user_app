@@ -1,4 +1,5 @@
 import 'package:enebla_user_app/auth/login.dart';
+import 'package:enebla_user_app/bloc/comment_bloc.dart';
 import 'package:enebla_user_app/bloc/order_bloc.dart';
 import 'package:enebla_user_app/bloc/state.dart';
 import 'package:enebla_user_app/screens/onboarding/onBoarding.dart';
@@ -17,7 +18,8 @@ int? isViewed;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  final blocProvider = BlocProvider(orderBloc: OrderBloc());
+  final blocProvider =
+      BlocProvider(commentBloc: CommentBloc(), orderBloc: OrderBloc());
   SharedPreferences prefs = await SharedPreferences.getInstance();
   isViewed = prefs.getInt('OnBording');
 

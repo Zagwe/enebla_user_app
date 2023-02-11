@@ -130,7 +130,8 @@ class OrderService {
             'ordertotal': total,
             'ordersubtotal': subtotal,
             'day': DateTime.now().day,
-            'time': DateFormat.jm().format(DateTime.now())
+            'time': DateFormat.jm().format(DateTime.now()),
+            'orderstatus': 'pending'
           }
         }, SetOptions(merge: true))
         .then((value) => print('order added successfully'))
