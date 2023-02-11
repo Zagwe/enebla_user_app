@@ -30,8 +30,8 @@ class ResturantItem extends StatelessWidget {
               height: 240,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
-                child: Image.asset(
-                  "lib/assets/enebla.jpg",
+                child: Image.network(
+                  snap['imageUrl'],
                   fit: BoxFit.fill,
                   width: MediaQuery.of(context).size.width,
                 ),
