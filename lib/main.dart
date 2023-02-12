@@ -2,6 +2,7 @@ import 'package:enebla_user_app/auth/login.dart';
 import 'package:enebla_user_app/bloc/order_bloc.dart';
 import 'package:enebla_user_app/bloc/state.dart';
 import 'package:enebla_user_app/screens/onboarding/onBoarding.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:enebla_user_app/theme/another_style.dart' as style;
@@ -9,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 //added some comment
 
+import 'bloc/comment_bloc.dart';
 import 'enebla_user_home.dart';
 
 int? isViewed;
@@ -34,7 +36,7 @@ class EneblaUser extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: style.Style.themeData,
-      home: isViewed !=0 ? OnBording() : LoginPage(),
+      home: isViewed != 0 ? OnBording() : LoginPage(),
     );
   }
 }
