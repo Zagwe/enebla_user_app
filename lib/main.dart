@@ -25,8 +25,7 @@ Future<void> main() async {
 
   print(FirebaseAuth.instance.currentUser!.uid);
   runApp(
-      AppStateContainer(blocProvider: blocProvider, child: const EneblaUser())
-    );
+      AppStateContainer(blocProvider: blocProvider, child: const EneblaUser()));
 }
 
 class EneblaUser extends StatelessWidget {
@@ -37,7 +36,7 @@ class EneblaUser extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: style.Style.themeData,
-      home: isViewed != 0 ? OnBording() : LoginPage(),
+      home: isViewed != 0 ? OnBording() : EneblaHome(),
     );
   }
 }
