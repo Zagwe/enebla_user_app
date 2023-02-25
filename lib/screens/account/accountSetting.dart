@@ -98,7 +98,9 @@ class AccountSetting extends StatelessWidget {
               SettingsTile(
                 title: 'Logout',
                 leading: Icon(Icons.logout),
-                onPressed: (BuildContext context) {},
+                onPressed: (BuildContext context) {
+                  
+                },
               ),
             ],
           ),

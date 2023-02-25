@@ -36,6 +36,7 @@ dependencies:
   elegant_notification: ^1.6.3
   connectivity_plus: ^2.3.9
   flutter_inappwebview: ^5.7.2+3
+  shared_preferences: ^2.0.15
 
   flutter:
     sdk: flutter
