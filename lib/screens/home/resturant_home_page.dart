@@ -20,6 +20,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:enebla_user_app/theme/style.dart' as style;
 
 import '../../main.dart';
+import '../../service/subscription_service.dart';
 import '../chapapayment/chapa_payment initializer.dart';
 import '../comment_and_rating.dart';
 
@@ -35,41 +36,19 @@ class ResturantHomePage extends StatefulWidget {
 class _ResturantHomePageState extends State<ResturantHomePage> {
   final amountController = TextEditingController();
 
-  String isButtonActive = "false";
+  String isButtonActive = "";
 
-  checkSuscription() {
-     FirebaseFirestore.instance
-        .collection('subscriptionuser')
-        .where('owner', isEqualTo: widget.snap['owner'])
-        .get()
-        .then((value) {
-      var fields = value.docs[0].data();
-      var isSubscribedto = fields['subscriptionstatus'];
-      if (isSubscribedto.toString().isEmpty) {
-        setState(() {
-          isButtonActive = "true";
-        });
-      }if(isSubscribedto.toString() == "false"){
-        setState(() {
-          isButtonActive = "true";
-        });
-      }
-    });
-  }
-
-  @override
-  void initState() {
-    checkSuscription();
-    print("object----------------=========================-");
-    print(widget.snap);
-    print(isButtonActive.toString());
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   checkSuscription();
+  //
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
-    print('=-=-=-=-=-');
-    print(widget.snap);
+    // print('=-=-=-=-=-');
+    // print(widget.snap);
     var subscription_state = 0;
     final state = AppStateProvider.of(context)?.state;
 
@@ -273,89 +252,180 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
                     ),
                   ),
                   //subscription Button
-                  Container(
-                    width: 150,
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.only(left: 13, right: 13),
-                            elevation: 5,
-                            backgroundColor: style.Style.SecondaryColor),
-                        onPressed: isButtonActive == "true"
-                            ? () async {
-                                print(amountController);
+                  StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('subscriptionuser')
+                        .doc(widget.snap['owner'])
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<dynamic> snapshot) {
+                      print("snap============------falses");
+                      print(snapshot);
+                      if (snapshot.data == null) {
+                        // isButtonActive = snapshot!.data![FirebaseAuth.instance.currentUser!.uid]['subscriptionstatus'];
+                        // print(isButtonActive);
+                        if (snapshot.data![
+                                FirebaseAuth.instance.currentUser!.uid] ==
+                            null) {
+                          return Container(
+                            width: 150,
+                            padding: const EdgeInsets.all(8.0),
+                            child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    padding:
+                                        EdgeInsets.only(left: 13, right: 13),
+                                    elevation: 5,
+                                    backgroundColor:
+                                        style.Style.SecondaryColor),
+                                onPressed: () async {
+                                  print(amountController);
 
-                                if (amountController.text.isEmpty) {
-                                  ElegantNotification(
-                                    title: const Text("Error"),
-                                    description: const Text(
-                                        " Please Enter Subscription Amount More Than 1000"),
-                                    icon: const Icon(
-                                      Icons.close,
-                                      color: Colors.red,
-                                    ),
-                                    progressIndicatorColor: Colors.red,
-                                  ).show(context);
-                                }
+                                  if (amountController.text.isEmpty) {
+                                    ElegantNotification(
+                                      title: const Text("Error"),
+                                      description: const Text(
+                                          " Please Enter Subscription Amount More Than 1000"),
+                                      icon: const Icon(
+                                        Icons.close,
+                                        color: Colors.red,
+                                      ),
+                                      progressIndicatorColor: Colors.red,
+                                    ).show(context);
+                                  }
 
-                                if (int.parse(amountController.text) < 1000) {
-                                  ElegantNotification(
-                                    title: const Text("Error"),
-                                    description: const Text(
-                                        " The Subscription Amount must be More Than 1000"),
-                                    icon: const Icon(
-                                      Icons.close,
-                                      color: Colors.red,
-                                    ),
-                                    progressIndicatorColor: Colors.red,
-                                  ).show(context);
-                                } else {
-                                  // await _storeSubInfo();
-                                  checkSuscription();
-                                  FirebaseFirestore.instance
-                                      .collection('subscriptionuser')
-                                      .doc(widget.snap['owner'])
-                                      .set({
-                                    "subscriptionAmount": amountController.text,
-                                    'owner': widget.snap['owner'],
-                                    "subscribedUser":
-                                        FirebaseAuth.instance.currentUser?.uid,
-                                    "subscriptionstatus": 'true'
-                                  }).then((value) =>
-                                          print('subscription user done'));
-
-                                  ElegantNotification(
-                                    title: Text("Success"),
-                                    description: const Text(
-                                        "You Have Been Added to Subscription plan."),
-                                    icon: const Icon(
-                                      Icons.done,
-                                      color: Colors.green,
-                                    ),
-                                    progressIndicatorColor: Colors.green,
-                                  ).show(context);
-                                  Chapa.paymentParameters(
-                                    context: context, // context
-                                    publicKey:
-                                        'CHASECK_TEST-FnTXa03f7dXyGVn0HCyfZFvHgT8j1XJX',
-                                    currency: 'ETB',
-                                    amount: amountController.text,
-                                    email: 'xyz@gmail.com',
-                                    firstName: 'firstname',
-                                    lastName: 'lastname',
-                                    txRef: '34TXTHHgb',
-                                    title: 'title',
-                                    desc: 'desc',
-                                    namedRouteFallBack: '/fallback',
-                                    // fall back route name
-                                  );
-                                }
-                              }
-                            : null,
-                        child: Text(
-                          'Subscribe'.toUpperCase(),
-                          style: const TextStyle(color: Colors.white),
-                        )),
+                                  if (int.parse(amountController.text) < 1000) {
+                                    ElegantNotification(
+                                      title: const Text("Error"),
+                                      description: const Text(
+                                          " The Subscription Amount must be More Than 1000"),
+                                      icon: const Icon(
+                                        Icons.close,
+                                        color: Colors.red,
+                                      ),
+                                      progressIndicatorColor: Colors.red,
+                                    ).show(context);
+                                  } else {
+                                    SubscriptionService().addSubscription(
+                                        subscriptionAmount:
+                                            amountController.text,
+                                        subscriptionstatus: 'true',
+                                        subscribedUser: FirebaseAuth
+                                            .instance!.currentUser!.uid,
+                                        subscribtionOwner:
+                                            widget.snap['owner']);
+                                    ElegantNotification(
+                                      title: Text("Success"),
+                                      description: const Text(
+                                          "You Have Been Added to Subscription plan."),
+                                      icon: const Icon(
+                                        Icons.done,
+                                        color: Colors.green,
+                                      ),
+                                      progressIndicatorColor: Colors.green,
+                                    ).show(context);
+                                    Chapa.paymentParameters(
+                                      context: context, // context
+                                      publicKey:
+                                          'CHASECK_TEST-FnTXa03f7dXyGVn0HCyfZFvHgT8j1XJX',
+                                      currency: 'ETB',
+                                      amount: amountController.text,
+                                      email: 'xyz@gmail.com',
+                                      firstName: 'firstname',
+                                      lastName: 'lastname',
+                                      txRef: '34TXTHHgb',
+                                      title: 'title',
+                                      desc: 'desc',
+                                      namedRouteFallBack: '/fallback',
+                                      // fall back route name
+                                    );
+                                  }
+                                },
+                                child: Text(
+                                  'Subscribe'.toUpperCase(),
+                                  style: const TextStyle(color: Colors.white),
+                                )),
+                          );
+                        }
+                      } else {
+                        return Container(
+                          width: 150,
+                          padding: const EdgeInsets.all(8.0),
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  padding: EdgeInsets.only(left: 13, right: 13),
+                                  elevation: 5,
+                                  backgroundColor: style.Style.SecondaryColor),
+                              onPressed
+                                  // isButtonActive == null
+                                  //     ? () async {
+                                  //   print(amountController);
+                                  //
+                                  //   if (amountController.text.isEmpty) {
+                                  //     ElegantNotification(
+                                  //       title: const Text("Error"),
+                                  //       description: const Text(
+                                  //           " Please Enter Subscription Amount More Than 1000"),
+                                  //       icon: const Icon(
+                                  //         Icons.close,
+                                  //         color: Colors.red,
+                                  //       ),
+                                  //       progressIndicatorColor: Colors.red,
+                                  //     ).show(context);
+                                  //   }
+                                  //
+                                  //   if (int.parse(amountController.text) < 1000) {
+                                  //     ElegantNotification(
+                                  //       title: const Text("Error"),
+                                  //       description: const Text(
+                                  //           " The Subscription Amount must be More Than 1000"),
+                                  //       icon: const Icon(
+                                  //         Icons.close,
+                                  //         color: Colors.red,
+                                  //       ),
+                                  //       progressIndicatorColor: Colors.red,
+                                  //     ).show(context);
+                                  //   } else {
+                                  //     SubscriptionService().addSubscription(
+                                  //         subscriptionAmount: amountController.text,
+                                  //         subscriptionstatus: 'true',
+                                  //         subscribedUser: FirebaseAuth.instance!.currentUser!.uid,
+                                  //         subscribtionOwner: widget.snap['owner']);
+                                  //     ElegantNotification(
+                                  //       title: Text("Success"),
+                                  //       description: const Text(
+                                  //           "You Have Been Added to Subscription plan."),
+                                  //       icon: const Icon(
+                                  //         Icons.done,
+                                  //         color: Colors.green,
+                                  //       ),
+                                  //       progressIndicatorColor: Colors.green,
+                                  //     ).show(context);
+                                  //     Chapa.paymentParameters(
+                                  //       context: context, // context
+                                  //       publicKey:
+                                  //       'CHASECK_TEST-FnTXa03f7dXyGVn0HCyfZFvHgT8j1XJX',
+                                  //       currency: 'ETB',
+                                  //       amount: amountController.text,
+                                  //       email: 'xyz@gmail.com',
+                                  //       firstName: 'firstname',
+                                  //       lastName: 'lastname',
+                                  //       txRef: '34TXTHHgb',
+                                  //       title: 'title',
+                                  //       desc: 'desc',
+                                  //       namedRouteFallBack: '/fallback',
+                                  //       // fall back route name
+                                  //     );
+                                  //   }
+                                  // }
+                                  : null,
+                              child: Text(
+                                'Subscribe'.toUpperCase(),
+                                style: const TextStyle(color: Colors.white),
+                              )),
+                        );
+                      }
+                      return CircularProgressIndicator();
+                    },
                   )
                 ],
               ),

@@ -1,31 +1,52 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:enebla_user_app/enebla_user_home.dart';
-import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:enebla_user_app/service/subscription_service.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
 
-import 'package:enebla_user_app/main.dart';
+// import 'package:enebla_user_app/services/subscription_service.dart';
+import 'package:enebla_user_app/models/subscription_model.dart';
+
+// Define a mock for the FirebaseFirestore class
+class MockFirebaseFirestore extends Mock implements FirebaseFirestore {}
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(EneblaHome());
+  // Create a mock instance of FirebaseFirestore
+  final firestore = MockFirebaseFirestore();
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  // Create an instance of SubscriptionService using the mock FirebaseFirestore
+  final subscriptionService = SubscriptionService();
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+  group('SubscriptionService', () {
+    test('addSubscription adds a subscription to Firestore', () async {
+      // Create a SubscriptionModel to use as the input parameter for addSubscription
+      final subscription = SubscriptionModel(
+        subscriptionAmount: '10.00',
+        subscriptionstatus: 'active',
+        subscribedUser: 'user123',
+        subscribtionOwner: 'owner456',
+      );
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+      // Define the expected behavior of the mock FirebaseFirestore
+      when(firestore
+              .collection('subscriptionuser')
+              .doc('owner456')
+              .set(subscription.toJson(), SetOptions(merge: true)))
+          .thenAnswer((_) => Future.value());
+
+      // Call the addSubscription method and verify the result
+      final result = await subscriptionService.addSubscription(
+        subscriptionAmount: subscription.subscriptionAmount,
+        subscriptionstatus: subscription.subscriptionstatus,
+        subscribedUser: subscription.subscribedUser,
+        subscribtionOwner: subscription.subscribtionOwner,
+      );
+      expect(result, 'subscription added successfully');
+
+      // Verify that the mock FirebaseFirestore was called with the correct arguments
+      verify(firestore
+          .collection('subscriptionuser')
+          .doc('owner456')
+          .set(subscription.toJson(), SetOptions(merge: true)));
+    });
   });
 }
