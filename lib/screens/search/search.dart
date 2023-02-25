@@ -66,9 +66,9 @@ class _SearchState extends State<Search> {
               .snapshots(),
           builder: (context, snapshots) {
             return (snapshots.connectionState == ConnectionState.waiting)
-                ? Center(
-              child: CircularProgressIndicator(),
-            )
+                ? const Center(
+                  child: CircularProgressIndicator(),
+                  )
                 : ListView.builder(
                 itemCount: snapshots.data!.docs.length,
                 itemBuilder: (context, index) {
@@ -107,7 +107,7 @@ class _SearchState extends State<Search> {
                     return GestureDetector(
                       onTap: (){
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => CommentAndRating()));
+                            MaterialPageRoute(builder: (context) => ResturantHomePage(snap: data)));
                       },
                       child: ListTile(
                         title: Text(
@@ -135,18 +135,13 @@ class _SearchState extends State<Search> {
                     );
                   }
                   return Container();
-                });
+                }
+              );
           }
-      ),);
-  }
-
+        ),
+      );
+    }
 }
-
-
-
-
-
-
 
 
 

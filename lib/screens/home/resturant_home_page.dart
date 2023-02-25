@@ -10,13 +10,17 @@ import 'package:enebla_user_app/screens/home/tabbar.dart';
 import 'package:enebla_user_app/theme/style.dart';
 import 'package:enebla_user_app/widget/resturant_page_upper_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:enebla_user_app/theme/style.dart' as style;
 
+import '../../main.dart';
+import '../../service/subscription_service.dart';
 import '../chapapayment/chapa_payment initializer.dart';
 import '../comment_and_rating.dart';
 
@@ -32,11 +36,20 @@ class ResturantHomePage extends StatefulWidget {
 class _ResturantHomePageState extends State<ResturantHomePage> {
   final amountController = TextEditingController();
 
+  String isButtonActive = "";
+
+  // @override
+  // void initState() {
+  //   checkSuscription();
+  //
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
-    print('=-=-=-=-=-');
-    print(widget.snap);
+    // print('=-=-=-=-=-');
+    // print(widget.snap);
+    var subscription_state = 0;
     final state = AppStateProvider.of(context)?.state;
 
     return Scaffold(
@@ -87,7 +100,10 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
                           context: context,
                           bounce: true,
                           backgroundColor: Colors.transparent,
-                          builder: (context) => CommentAndRating(),
+                          builder: (context) => CommentAndRating(
+                            commentedby: FirebaseAuth.instance.currentUser!.uid,
+                            commentedto: widget.snap['owner'],
+                          ),
                         );
                       },
                       child: Row(
@@ -120,70 +136,84 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
                                   StreamBuilder(
                                       stream: FirebaseFirestore.instance
                                           .collection('subscription')
-                                          .where('owner', isEqualTo:widget.snap['owner'])
+                                          .where('owner',
+                                              isEqualTo: widget.snap['owner'])
                                           .snapshots(),
-                                    builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                                      final snapSubscription  = snapshot.data!.docs[0].data();
-                                      final min= snapSubscription['minthreshold'];
-                                      final max = snapSubscription['maxthreshold'];
-                                    return Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Icon(
-                                          Icons.attach_money,
-                                          color: style.Style.SecondaryColor,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<dynamic> snapshot) {
+                                        final snapSubscription =
+                                            snapshot.data!.docs[0].data();
+                                        final min =
+                                            snapSubscription['minthreshold'];
+                                        final max =
+                                            snapSubscription['maxthreshold'];
+                                        return Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              min,
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 16),
+                                            Icon(
+                                              Icons.attach_money,
+                                              color: style.Style.SecondaryColor,
                                             ),
-                                            SizedBox(
-                                              height: 4,
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  min,
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 16),
+                                                ),
+                                                SizedBox(
+                                                  height: 4,
+                                                ),
+                                                Text(
+                                                  'Minimum Threshold',
+                                                  style: TextStyle(
+                                                      color: style.Style
+                                                          .resturantTagColor,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 12),
+                                                )
+                                              ],
                                             ),
-                                            Text(
-                                              'Minimum Threshold',
-                                              style: TextStyle(
-                                                  color: style.Style.resturantTagColor,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 12),
-                                            )
+                                            Icon(
+                                              Icons.attach_money,
+                                              color: style.Style.SecondaryColor,
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  max,
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 16),
+                                                ),
+                                                SizedBox(
+                                                  height: 4,
+                                                ),
+                                                Text(
+                                                  'Maximum Threshold',
+                                                  style: TextStyle(
+                                                      color: style.Style
+                                                          .resturantTagColor,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 12),
+                                                )
+                                              ],
+                                            ),
                                           ],
-                                        ),
-                                        Icon(
-                                          Icons.attach_money,
-                                          color: style.Style.SecondaryColor,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                             Text(
-                                              max,
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 16),
-                                            ),
-                                            SizedBox(
-                                              height: 4,
-                                            ),
-                                            Text(
-                                              'Maximum Threshold',
-                                              style: TextStyle(
-                                                  color: style.Style.resturantTagColor,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 12),
-                                            )
-                                          ],
-                                        ),
-                                      ],
-                                    );}
-                                  ),
+                                        );
+                                      }),
                                 ],
                               ),
                               //separetor
@@ -198,11 +228,12 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
                 ),
               ),
 
-              ////subscription seciton
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(width: 10,),
+                  SizedBox(
+                    width: 10,
+                  ),
                   //subscription amount
                   Flexible(
                     child: SizedBox(
@@ -210,90 +241,197 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
                       width: 180,
                       child: TextFormField(
                         controller: amountController,
-                        // validator: (value) {
-                        //   if (int.parse(value!) !> 1000) {
-                        //     return ("please enter your email");
-                        //   }
-                        //   return null;
-                        // },
                         decoration: InputDecoration(
-
                             prefixIcon: Icon(Icons.edit),
                             hintText: 'Subscription Amount',
                             hintStyle: TextStyle(fontSize: 10),
                             border: OutlineInputBorder(
                                 borderSide: BorderSide(width: 1),
-                                borderRadius: BorderRadius.circular(20)
-                            )),
+                                borderRadius: BorderRadius.circular(20))),
                       ),
                     ),
                   ),
                   //subscription Button
-                  Container(
-                    width: 150,
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.only(left: 13,right: 13),
-                            elevation: 5,
-                            backgroundColor: style.Style.SecondaryColor),
-                        onPressed: () {
-                          print(amountController);
-                          if(int.parse(amountController.text) < 1000){
+                  StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('subscriptionuser')
+                        .doc(widget.snap['owner'])
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<dynamic> snapshot) {
+                      print("snap============------falses");
+                      print(snapshot);
+                      if (snapshot.data == null) {
+                        // isButtonActive = snapshot!.data![FirebaseAuth.instance.currentUser!.uid]['subscriptionstatus'];
+                        // print(isButtonActive);
+                        if (snapshot.data![
+                                FirebaseAuth.instance.currentUser!.uid] ==
+                            null) {
+                          return Container(
+                            width: 150,
+                            padding: const EdgeInsets.all(8.0),
+                            child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    padding:
+                                        EdgeInsets.only(left: 13, right: 13),
+                                    elevation: 5,
+                                    backgroundColor:
+                                        style.Style.SecondaryColor),
+                                onPressed: () async {
+                                  print(amountController);
 
-                            ElegantNotification(
-                              title: Text("Error"),
-                              description:  Text(" Enter Amount more than 1000"),
-                              icon: Icon(
-                                Icons.close,
-                                color: Colors.red,
-                              ),
-                              progressIndicatorColor: Colors.red,
-                            ).show(context);
-                          }else{
-                            FirebaseFirestore.instance.collection('subscriptionuser')
-                                .doc(widget.snap['owner'])
-                                .set({"subscriptionAmount": amountController.text, 'owner': widget.snap['owner'], "subscribedUser": FirebaseAuth.instance.currentUser?.uid}).then(
-                                    (value) => print('subscription user done'));
-                            ElegantNotification(
-                              title: Text("Success"),
-                              description:  Text("You Have Been Added to Subscription plan."),
-                              icon: const Icon(
-                                Icons.done,
-                                color: Colors.green,
-                              ),
+                                  if (amountController.text.isEmpty) {
+                                    ElegantNotification(
+                                      title: const Text("Error"),
+                                      description: const Text(
+                                          " Please Enter Subscription Amount More Than 1000"),
+                                      icon: const Icon(
+                                        Icons.close,
+                                        color: Colors.red,
+                                      ),
+                                      progressIndicatorColor: Colors.red,
+                                    ).show(context);
+                                  }
 
-                              progressIndicatorColor: Colors.green,
-                            ).show(context);
-                            Chapa.paymentParameters(
-                              context: context, // context
-                              publicKey: 'CHASECK_TEST-FnTXa03f7dXyGVn0HCyfZFvHgT8j1XJX',
-                              currency: 'ETB',
-                              amount: amountController.text,
-                              email: 'xyz@gmail.com',
-                              firstName: 'firstname',
-                              lastName: 'lastname',
-                              txRef: '34TXTHHgb',
-                              title: 'title',
-                              desc: 'desc',
-                              namedRouteFallBack: '/fallback',
-                              // fall back route name
-                            );
-                          }
-
-
-
-                        },
-                        child: Text(
-                          'Subscribe'.toUpperCase(),
-                          style: TextStyle(color: Colors.white),
-                        )),
+                                  if (int.parse(amountController.text) < 1000) {
+                                    ElegantNotification(
+                                      title: const Text("Error"),
+                                      description: const Text(
+                                          " The Subscription Amount must be More Than 1000"),
+                                      icon: const Icon(
+                                        Icons.close,
+                                        color: Colors.red,
+                                      ),
+                                      progressIndicatorColor: Colors.red,
+                                    ).show(context);
+                                  } else {
+                                    SubscriptionService().addSubscription(
+                                        subscriptionAmount:
+                                            amountController.text,
+                                        subscriptionstatus: 'true',
+                                        subscribedUser: FirebaseAuth
+                                            .instance!.currentUser!.uid,
+                                        subscribtionOwner:
+                                            widget.snap['owner']);
+                                    ElegantNotification(
+                                      title: Text("Success"),
+                                      description: const Text(
+                                          "You Have Been Added to Subscription plan."),
+                                      icon: const Icon(
+                                        Icons.done,
+                                        color: Colors.green,
+                                      ),
+                                      progressIndicatorColor: Colors.green,
+                                    ).show(context);
+                                    Chapa.paymentParameters(
+                                      context: context, // context
+                                      publicKey:
+                                          'CHASECK_TEST-FnTXa03f7dXyGVn0HCyfZFvHgT8j1XJX',
+                                      currency: 'ETB',
+                                      amount: amountController.text,
+                                      email: 'xyz@gmail.com',
+                                      firstName: 'firstname',
+                                      lastName: 'lastname',
+                                      txRef: '34TXTHHgb',
+                                      title: 'title',
+                                      desc: 'desc',
+                                      namedRouteFallBack: '/fallback',
+                                      // fall back route name
+                                    );
+                                  }
+                                },
+                                child: Text(
+                                  'Subscribe'.toUpperCase(),
+                                  style: const TextStyle(color: Colors.white),
+                                )),
+                          );
+                        }
+                      } else {
+                        return Container(
+                          width: 150,
+                          padding: const EdgeInsets.all(8.0),
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  padding: EdgeInsets.only(left: 13, right: 13),
+                                  elevation: 5,
+                                  backgroundColor: style.Style.SecondaryColor),
+                              onPressed
+                                  // isButtonActive == null
+                                  //     ? () async {
+                                  //   print(amountController);
+                                  //
+                                  //   if (amountController.text.isEmpty) {
+                                  //     ElegantNotification(
+                                  //       title: const Text("Error"),
+                                  //       description: const Text(
+                                  //           " Please Enter Subscription Amount More Than 1000"),
+                                  //       icon: const Icon(
+                                  //         Icons.close,
+                                  //         color: Colors.red,
+                                  //       ),
+                                  //       progressIndicatorColor: Colors.red,
+                                  //     ).show(context);
+                                  //   }
+                                  //
+                                  //   if (int.parse(amountController.text) < 1000) {
+                                  //     ElegantNotification(
+                                  //       title: const Text("Error"),
+                                  //       description: const Text(
+                                  //           " The Subscription Amount must be More Than 1000"),
+                                  //       icon: const Icon(
+                                  //         Icons.close,
+                                  //         color: Colors.red,
+                                  //       ),
+                                  //       progressIndicatorColor: Colors.red,
+                                  //     ).show(context);
+                                  //   } else {
+                                  //     SubscriptionService().addSubscription(
+                                  //         subscriptionAmount: amountController.text,
+                                  //         subscriptionstatus: 'true',
+                                  //         subscribedUser: FirebaseAuth.instance!.currentUser!.uid,
+                                  //         subscribtionOwner: widget.snap['owner']);
+                                  //     ElegantNotification(
+                                  //       title: Text("Success"),
+                                  //       description: const Text(
+                                  //           "You Have Been Added to Subscription plan."),
+                                  //       icon: const Icon(
+                                  //         Icons.done,
+                                  //         color: Colors.green,
+                                  //       ),
+                                  //       progressIndicatorColor: Colors.green,
+                                  //     ).show(context);
+                                  //     Chapa.paymentParameters(
+                                  //       context: context, // context
+                                  //       publicKey:
+                                  //       'CHASECK_TEST-FnTXa03f7dXyGVn0HCyfZFvHgT8j1XJX',
+                                  //       currency: 'ETB',
+                                  //       amount: amountController.text,
+                                  //       email: 'xyz@gmail.com',
+                                  //       firstName: 'firstname',
+                                  //       lastName: 'lastname',
+                                  //       txRef: '34TXTHHgb',
+                                  //       title: 'title',
+                                  //       desc: 'desc',
+                                  //       namedRouteFallBack: '/fallback',
+                                  //       // fall back route name
+                                  //     );
+                                  //   }
+                                  // }
+                                  : null,
+                              child: Text(
+                                'Subscribe'.toUpperCase(),
+                                style: const TextStyle(color: Colors.white),
+                              )),
+                        );
+                      }
+                      return CircularProgressIndicator();
+                    },
                   )
                 ],
               ),
+
               Padding(
-                padding:
-                    const EdgeInsets.symmetric( horizontal: 12),
+                padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:enebla_user_app/screens/search/search.dart';
 import 'package:enebla_user_app/widget/homepage_slider.dart';
 import 'package:enebla_user_app/widget/resturant_card.dart';
 import 'package:flutter/material.dart';
@@ -35,10 +36,8 @@ class HomePage extends StatelessWidget {
                 onPressed: () {
                   // Navigator.push(context,
                   //     MaterialPageRoute(builder: (context) => OnBording()));
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const LoginPage()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Search()));
                 },
               ),
             )
@@ -66,19 +65,21 @@ class HomePage extends StatelessWidget {
                     if (snapshot.data != null) {
                       snap = snapshot.data!.docs;
                     }
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: snap.length,
+                        itemBuilder: (context, index) {
+                          final resturant = snap[index].data();
 
-                    return ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: 4,
-                      itemBuilder: (context, index) {
-                        final resturant = snap[index].data();
-
-                        return ResturantItem(
-                          snap: resturant,
-                        );
-                      },
-                    );
+                          return ResturantItem(
+                            snap: resturant,
+                          );
+                        },
+                      );
+                    }
+                    return CircularProgressIndicator();
                   }),
             ),
           ],

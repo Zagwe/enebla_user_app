@@ -252,7 +252,7 @@ class _OrderPreviewState extends State<OrderPreview> {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: style.Style.primaryColor,
                           ),
-                          onPressed: () {
+                          onPressed: () async {
                             ///logic to add order to a database
                             // print(AppStateProvider.of(context)
                             //     ?.state
@@ -262,7 +262,7 @@ class _OrderPreviewState extends State<OrderPreview> {
                                 .state
                                 .orderFoodList['food']!
                                 .isNotEmpty) {
-                              bloc.orderService
+                              await bloc.orderService
                                   .addOrderToDatabase(context: context);
                             }
 
@@ -277,11 +277,16 @@ class _OrderPreviewState extends State<OrderPreview> {
                                   .orderFoodList['price']!
                                   .clear();
                             });
-
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => const Order()));
+                            // String subOrderTotal = bloc!.orderService
+                            //     .getOrderTotal(context)
+                            //     .toString();
+                            // print(
+                            //     "?????????????????????????????????????3333333333333333333333");
+                            // print(subOrderTotal);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Order()));
                           },
                           child: const Text(
                             'Continue To Order',

@@ -5,6 +5,7 @@ class User {
   String? address;
   String? firstname;
   String? lastname;
+  String photoUrl;
 
   User(
       {this.uid,
@@ -12,10 +13,12 @@ class User {
       this.firstname,
       this.phonenumber,
       this.address,
-      this.lastname});
+      this.lastname,
+      required this.photoUrl});
   //receiving data from server
   factory User.fromMap(Map) {
     return User(
+      photoUrl: Map['photoUrl'],
       uid: Map['uid'],
       email: Map['email'],
       firstname: Map['firstname'],
@@ -33,6 +36,7 @@ class User {
       'lastname': lastname,
       'phonenumber': phonenumber,
       'address': address,
+      'photoUrl': photoUrl
     };
   }
 }

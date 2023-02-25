@@ -1,4 +1,6 @@
+import 'package:enebla_user_app/bloc/comment_bloc.dart';
 import 'package:enebla_user_app/models/food_model.dart';
+import 'package:enebla_user_app/screens/comment_and_rating.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -69,5 +71,6 @@ class AppState {
 
 class BlocProvider {
   final OrderBloc orderBloc;
-  BlocProvider({required this.orderBloc});
+  final CommentBloc commentBloc;
+  BlocProvider({required this.orderBloc, required this.commentBloc});
 }
