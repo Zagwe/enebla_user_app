@@ -70,7 +70,8 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: Text(
                         widget.snap['name'],
-                        style: TextStyle(color: Colors.black, fontSize: 24),
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 24),
                       ),
                     ),
 
@@ -114,7 +115,7 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
                               Row(
                                 children: [
                                   //rating value
-                                  Text('4.5'),
+                                  const Text('4.5'),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 4.0),
@@ -124,7 +125,7 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
                                       color: style.Style.SecondaryColor,
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 8,
                                   ),
                                   //rated people count
@@ -161,13 +162,13 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
                                               children: [
                                                 Text(
                                                   min,
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       fontSize: 16),
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 4,
                                                 ),
                                                 Text(
@@ -191,13 +192,13 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
                                               children: [
                                                 Text(
                                                   max,
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       color: Colors.black,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       fontSize: 16),
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 4,
                                                 ),
                                                 Text(
@@ -231,7 +232,7 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   //subscription amount
@@ -242,11 +243,11 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
                       child: TextFormField(
                         controller: amountController,
                         decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.edit),
+                            prefixIcon: const Icon(Icons.edit),
                             hintText: 'Subscription Amount',
-                            hintStyle: TextStyle(fontSize: 10),
+                            hintStyle: const TextStyle(fontSize: 10),
                             border: OutlineInputBorder(
-                                borderSide: BorderSide(width: 1),
+                                borderSide: const BorderSide(width: 1),
                                 borderRadius: BorderRadius.circular(20))),
                       ),
                     ),
@@ -272,8 +273,8 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
                             padding: const EdgeInsets.all(8.0),
                             child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                    padding:
-                                        EdgeInsets.only(left: 13, right: 13),
+                                    padding: const EdgeInsets.only(
+                                        left: 13, right: 13),
                                     elevation: 5,
                                     backgroundColor:
                                         style.Style.SecondaryColor),
@@ -310,11 +311,11 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
                                             amountController.text,
                                         subscriptionstatus: 'true',
                                         subscribedUser: FirebaseAuth
-                                            .instance!.currentUser!.uid,
+                                            .instance.currentUser!.uid,
                                         subscribtionOwner:
                                             widget.snap['owner']);
                                     ElegantNotification(
-                                      title: Text("Success"),
+                                      title: const Text("Success"),
                                       description: const Text(
                                           "You Have Been Added to Subscription plan."),
                                       icon: const Icon(
@@ -352,7 +353,8 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
                           padding: const EdgeInsets.all(8.0),
                           child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                  padding: EdgeInsets.only(left: 13, right: 13),
+                                  padding: const EdgeInsets.only(
+                                      left: 13, right: 13),
                                   elevation: 5,
                                   backgroundColor: style.Style.SecondaryColor),
                               onPressed
@@ -424,7 +426,7 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
                               )),
                         );
                       }
-                      return CircularProgressIndicator();
+                      return const CircularProgressIndicator();
                     },
                   )
                 ],
@@ -473,7 +475,7 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
 
                         //title menuname[index]
 
-                        return Center(
+                        return const Center(
                             child: Text(
                                 'this resturant does not have a menu yet'));
                       }))

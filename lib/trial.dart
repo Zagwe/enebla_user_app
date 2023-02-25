@@ -19,28 +19,31 @@ class Trial extends StatelessWidget {
     return Scaffold(
       body: StreamBuilder(
           stream: FirebaseFirestore.instance
-              .collection('subscription')
+              .collection('subscriptionuser')
               // .where('owner', isEqualTo: user)
               .snapshots(),
           builder: (context, snapshot) {
-            final snap;
+            ///for the threshold
+            // final snap;
 
-            if (snapshot.data != null) {
-              snap = snapshot.data!.docs[0].data();
-            } else {
-              snap = Map();
-            }
-            print('==-==-=-=--');
+            // if (snapshot.data != null) {
+            //   snap = snapshot.data!.docs[0].data();
+            // } else {
+            //   snap = Map();
+            // }
+            // print('==-==-=-=--');
 
-            print(snap.keys.toList());
-            print(FirebaseAuth.instance.currentUser!.uid);
-            print(snap.values.toList());
-            print(snap['owner']);
+            // print(snap.keys.toList());
+            // print(FirebaseAuth.instance.currentUser!.uid);
+            // print(snap.values.toList());
+            // print(snap['owner']);
 
-            print(snap['maxthreshold ']);
-            print(snap['minthreshold']);
+            // print(snap['maxthreshold ']);
+            // print(snap['minthreshold']);
 
-            return Center(child: CircularProgressIndicator());
+            // return Center(child: CircularProgressIndicator());
+
+            return CircularProgressIndicator();
           }),
     );
   }
