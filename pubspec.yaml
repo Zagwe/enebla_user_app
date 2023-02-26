@@ -36,6 +36,7 @@ dependencies:
   elegant_notification: ^1.6.3
   connectivity_plus: ^2.3.9
   flutter_inappwebview: ^5.7.2+3
+  
 
   flutter:
     sdk: flutter
@@ -102,7 +103,10 @@ flutter:
      - lib/assets/logo1.png  
      - lib/assets/home.jpg
      - lib/assets/enebla.jpg
+     - lib/assets/chapa.jpg
+     - lib/assets/telebirr.jpg
      - lib/assets/profile image.png
+     - lib/assets/yenepay.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

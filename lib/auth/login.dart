@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:enebla_user_app/theme/style.dart' as style;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -23,6 +24,21 @@ class _LoginPageState extends State<LoginPage> {
   final _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
+    //var isLogin = false;
+
+    checkIfLogin() async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var email = prefs.getString("email");
+      print(email);
+      email == null ? LoginPage() : EneblaHome();
+    }
+
+    // @override
+    // initState() {
+    //   checkIfLogin();
+    //   super.initState();
+    // }
+
     final emailField = TextFormField(
       autofocus: false,
       controller: emailController,
@@ -74,6 +90,8 @@ class _LoginPageState extends State<LoginPage> {
       child: ElevatedButton(
         onPressed: () async {
 /////LOGIN
+          SharedPreferences pref = await SharedPreferences.getInstance();
+          pref.setString("email", "useremail@gmail.com");
           if (_formkey.currentState!.validate()) {
             String res = await AuthMethods().loginUser(
                 email: emailController.text, password: passwordController.text);
@@ -122,7 +140,7 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(
                     child: Image.asset("lib/assets/logo1.png"),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                     child: Text('Enbla'),
                   ),
