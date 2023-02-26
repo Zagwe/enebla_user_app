@@ -108,6 +108,9 @@ class AccountSetting extends StatelessWidget {
                 onPressed: (BuildContext context) {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => LoginPage()));
+
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginPage()));
                   //navigator
                 },
               ),

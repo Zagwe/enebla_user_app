@@ -8,7 +8,8 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 class Trial extends StatelessWidget {
-  const Trial({super.key});
+  final snap;
+  const Trial({super.key, required this.snap});
 
   @override
   Widget build(BuildContext context) {
@@ -19,28 +20,41 @@ class Trial extends StatelessWidget {
     return Scaffold(
       body: StreamBuilder(
           stream: FirebaseFirestore.instance
-              .collection('subscription')
-              // .where('owner', isEqualTo: user)
+              .collection('subscriptionuser')
+              .doc(snap['owner'])
               .snapshots(),
           builder: (context, snapshot) {
-            final snap;
-
-            if (snapshot.data != null) {
-              snap = snapshot.data!.docs[0].data();
-            } else {
-              snap = Map();
+            if (snapshot.hasData) {
+              if (snapshot.data!
+                      .data()![FirebaseAuth.instance.currentUser!.uid] ==
+                  null) {
+                //user hasent subscribed so show the clickeble button
+              } else {
+                ///user has subscribed to this resturant so button shouldn't be clickable
+              }
             }
-            print('==-==-=-=--');
 
-            print(snap.keys.toList());
-            print(FirebaseAuth.instance.currentUser!.uid);
-            print(snap.values.toList());
-            print(snap['owner']);
+            ///for the threshold
+            // final snap;
 
-            print(snap['maxthreshold ']);
-            print(snap['minthreshold']);
+            // if (snapshot.data != null) {
+            //   snap = snapshot.data!.docs[0].data();
+            // } else {
+            //   snap = Map();
+            // }
+            // print('==-==-=-=--');
 
-            return Center(child: CircularProgressIndicator());
+            // print(snap.keys.toList());
+            // print(FirebaseAuth.instance.currentUser!.uid);
+            // print(snap.values.toList());
+            // print(snap['owner']);
+
+            // print(snap['maxthreshold ']);
+            // print(snap['minthreshold']);
+
+            // return Center(child: CircularProgressIndicator());
+
+            return CircularProgressIndicator();
           }),
     );
   }

@@ -145,7 +145,10 @@ class _CommentAndRatingState extends State<CommentAndRating> {
                     //           .data()![key]['comment']
                     //           .length) as int;
                     // }
+                    print('=-=0-=-0=0=-0');
+                    print(keys.length);
 
+                    print(keys);
                     return ListView.builder(
                         itemCount: keys.length,
                         itemBuilder: (context, index) {
@@ -155,79 +158,92 @@ class _CommentAndRatingState extends State<CommentAndRating> {
                                   .doc(keys[index])
                                   .get(),
                               builder: (context, snapshot) {
+                                // print(keys[index]);
                                 if (snapshot.hasData) {
-                                  String username =
-                                      '${snapshot.data!.data()!['firstname']} ${snapshot.data!.data()!['lastname']}';
+                                  print('has data ');
+                                  print(index);
+                                  // print(snapshot.data!.data());
+                                  if (snapshot.data!.data() != null) {
+                                    ///here i am trying to get the user naem
+                                    String username =
+                                        '${snapshot.data!.data()!['firstname']} ${snapshot.data!.data()!['lastname']}';
+                                    // print(username);
 
-                                  String comment = commentsnapshot.data!
-                                      .data()![keys[index]]['comment'];
-                                  String? imageUrl;
+                                    ///here i am trying to get the comment
+                                    String comment = commentsnapshot.data!
+                                        .data()![keys[index]]['comment'];
+                                    String? imageUrl;
 
-                                  if (snapshot.data!.data()!['photoUrl'] !=
-                                      null) {
-                                    imageUrl =
-                                        snapshot.data!.data()!['photoUrl'];
-                                  }
-                                  return Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    // padding: EdgeInsets.all(20),
-                                    margin: EdgeInsets.all(10),
-                                    child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            decoration: BoxDecoration(
+                                    if (snapshot.data!.data()!['photoUrl'] !=
+                                        null) {
+                                      imageUrl =
+                                          snapshot.data!.data()!['photoUrl'];
+                                    }
+                                    return Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      // padding: EdgeInsets.all(20),
+                                      margin: EdgeInsets.all(10),
+                                      child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(50),
+                                                  border: Border.all(
+                                                    color: Colors.black,
+                                                  )),
+
+                                              ///the image of user profile
+                                              child: ClipRRect(
                                                 borderRadius:
                                                     BorderRadius.circular(50),
-                                                border: Border.all(
-                                                  color: Colors.black,
-                                                )),
-
-                                            ///the image of user profile
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(50),
-                                              child: imageUrl == null
-                                                  ? Image.asset(
-                                                      'lib/assets/profile image.png',
-                                                      height: 50,
-                                                      width: 50,
-                                                      fit: BoxFit.cover,
-                                                    )
-                                                  : Image.network(
-                                                      imageUrl,
-                                                      height: 50,
-                                                      width: 50,
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                username,
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                                child: imageUrl == null
+                                                    ? Image.asset(
+                                                        'lib/assets/profile image.png',
+                                                        height: 50,
+                                                        width: 50,
+                                                        fit: BoxFit.cover,
+                                                      )
+                                                    : Image.network(
+                                                        imageUrl,
+                                                        height: 50,
+                                                        width: 50,
+                                                        fit: BoxFit.cover,
+                                                      ),
                                               ),
-                                              LimitedBox(
-                                                maxWidth: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    .7,
-                                                child: Text(comment),
-                                              )
-                                            ],
-                                          )
-                                        ]),
-                                  );
+                                            ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  username,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                LimitedBox(
+                                                  maxWidth:
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .width *
+                                                          .7,
+                                                  child: Text(comment),
+                                                )
+                                              ],
+                                            )
+                                          ]),
+                                    );
+                                  }
                                 }
+
+                                print(' dont has data ');
+                                print(index);
                                 return Center(
                                     child: CircularProgressIndicator());
                               });

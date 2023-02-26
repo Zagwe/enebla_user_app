@@ -1,4 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:elegant_notification/elegant_notification.dart';
 import 'package:enebla_user_app/bloc/state.dart';
+import 'package:enebla_user_app/screens/order/orderPreview.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:enebla_user_app/theme/style.dart';
 import 'package:enebla_user_app/theme/style.dart' as style;
@@ -82,7 +86,7 @@ class _TopTabBarWidget extends State<TopTabBarWidget>
             visibility = true;
           }
           print('-=-==-=-');
-          print(value);
+          // print(value);
 
           return Stack(
             children: [
@@ -135,23 +139,50 @@ class _TopTabBarWidget extends State<TopTabBarWidget>
                       borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(50),
                           topRight: Radius.circular(50)),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: style.Style.SecondaryColor,
-                        ),
-                        onPressed: () {
-                          AppStateProvider.of(context)
-                              ?.state
-                              .orderFoodList['resturantId']!
-                              .add(widget.snap['id']);
+                      child: StreamBuilder(
+                          stream: FirebaseFirestore.instance
+                              .collection('subscriptionuser')
+                              .doc(widget.snap['id'])
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              if (snapshot.data!.data() != null) {
+                                if (snapshot.data!.data()![FirebaseAuth
+                                        .instance.currentUser!.uid] ==
+                                    null) {
+                                  ///he hasen't subscribed
+                                  ///
+                                  ///subscribed button green
+                                  ///
+                                  ///add button gray
 
-                          // print(widget.snap['id']);
-                        },
-                        child: const Icon(
-                          Icons.add,
-                          size: 50,
-                        ),
-                      ),
+                                  return buttonMaker(
+                                      context: context,
+                                      disabled: true,
+                                      icon: const Icon(
+                                        Icons.add,
+                                        size: 50,
+                                      ));
+                                } else {
+                                  return buttonMaker(
+                                      context: context,
+                                      disabled: false,
+                                      icon: const Icon(
+                                        Icons.add,
+                                        size: 50,
+                                      ));
+                                }
+                              }
+                            }
+
+                            return buttonMaker(
+                                context: context,
+                                disabled: true,
+                                icon: const Icon(
+                                  Icons.add,
+                                  size: 50,
+                                ));
+                          }),
                     ),
                   )
                 ],
@@ -159,5 +190,68 @@ class _TopTabBarWidget extends State<TopTabBarWidget>
             ],
           );
         });
+  }
+
+  Widget buttonMaker(
+      {required BuildContext context, required bool disabled, required icon}) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: disabled
+            ? style.Style.SecondaryColor.withOpacity(.4)
+            : style.Style.SecondaryColor,
+      ),
+      onPressed: disabled ? _disabledButtonHandler : _enableddButtonHandler,
+      child: icon,
+    );
+  }
+
+  _disabledButtonHandler() {
+    ElegantNotification(
+      width: MediaQuery.of(context).size.width,
+      title: const Text("subscribe!!"),
+      description: const Text("You Have subscribe in order to make an order"),
+      icon: const Icon(
+        Icons.cancel,
+        color: Colors.red,
+      ),
+      toastDuration: Duration(seconds: 5),
+      progressIndicatorColor: Colors.red,
+    ).show(context);
+  }
+
+  _enableddButtonHandler() {
+    if (AppStateProvider.of(context)!.state.orderFoodList['food']!.isNotEmpty) {
+      AppStateProvider.of(context)
+          ?.state
+          .orderFoodList['resturantId']!
+          .add(widget.snap['id']);
+
+      ElegantNotification(
+        width: MediaQuery.of(context).size.width,
+        title: const Text("Success"),
+        description: const Text("order has been added"),
+        icon: const Icon(
+          Icons.done,
+          color: Colors.green,
+        ),
+        progressIndicatorColor: Colors.green,
+      ).show(context);
+
+      Future.delayed(Duration(seconds: 2), () {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => OrderPreview()));
+      });
+    } else {
+      ElegantNotification(
+        width: MediaQuery.of(context).size.width,
+        title: const Text("order failed"),
+        description: const Text("you have to select food to make an order"),
+        icon: const Icon(
+          Icons.done,
+          color: Colors.red,
+        ),
+        progressIndicatorColor: Colors.red,
+      ).show(context);
+    }
   }
 }

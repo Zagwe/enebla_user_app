@@ -2,24 +2,20 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elegant_notification/elegant_notification.dart';
-import 'package:enebla_user_app/provider/dumy_provider.dart';
-import 'package:enebla_user_app/screens/account/contucUs.dart';
 import 'package:enebla_user_app/bloc/state.dart';
 
 import 'package:enebla_user_app/screens/home/tabbar.dart';
-import 'package:enebla_user_app/theme/style.dart';
+import 'package:enebla_user_app/screens/subscription/subscripion.dart';
+
 import 'package:enebla_user_app/widget/resturant_page_upper_slider.dart';
+import 'package:enebla_user_app/widget/subscription_treshold.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
 import 'package:enebla_user_app/theme/style.dart' as style;
 
-import '../../main.dart';
 import '../../service/subscription_service.dart';
 import '../chapapayment/chapa_payment initializer.dart';
 import '../comment_and_rating.dart';
@@ -70,7 +66,8 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: Text(
                         widget.snap['name'],
-                        style: TextStyle(color: Colors.black, fontSize: 24),
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 24),
                       ),
                     ),
 
@@ -114,7 +111,7 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
                               Row(
                                 children: [
                                   //rating value
-                                  Text('4.5'),
+                                  const Text('4.5'),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 4.0),
@@ -124,7 +121,7 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
                                       color: style.Style.SecondaryColor,
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 8,
                                   ),
                                   //rated people count
@@ -133,87 +130,11 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
                                     style: TextStyle(
                                         color: style.Style.SecondaryColor),
                                   ),
-                                  StreamBuilder(
-                                      stream: FirebaseFirestore.instance
-                                          .collection('subscription')
-                                          .where('owner',
-                                              isEqualTo: widget.snap['owner'])
-                                          .snapshots(),
-                                      builder: (BuildContext context,
-                                          AsyncSnapshot<dynamic> snapshot) {
-                                        final snapSubscription =
-                                            snapshot.data!.docs[0].data();
-                                        final min =
-                                            snapSubscription['minthreshold'];
-                                        final max =
-                                            snapSubscription['maxthreshold'];
-                                        return Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Icon(
-                                              Icons.attach_money,
-                                              color: style.Style.SecondaryColor,
-                                            ),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  min,
-                                                  style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 16),
-                                                ),
-                                                SizedBox(
-                                                  height: 4,
-                                                ),
-                                                Text(
-                                                  'Minimum Threshold',
-                                                  style: TextStyle(
-                                                      color: style.Style
-                                                          .resturantTagColor,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 12),
-                                                )
-                                              ],
-                                            ),
-                                            Icon(
-                                              Icons.attach_money,
-                                              color: style.Style.SecondaryColor,
-                                            ),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  max,
-                                                  style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 16),
-                                                ),
-                                                SizedBox(
-                                                  height: 4,
-                                                ),
-                                                Text(
-                                                  'Maximum Threshold',
-                                                  style: TextStyle(
-                                                      color: style.Style
-                                                          .resturantTagColor,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 12),
-                                                )
-                                              ],
-                                            ),
-                                          ],
-                                        );
-                                      }),
+
+                                  ///THIS SHOWS THE MAXIMUM AND THE MINUMUM TRESHOLD
+                                  // SubscriptionTreshold(snap: widget.snap)
+
+                                  ///END
                                 ],
                               ),
                               //separetor
@@ -227,207 +148,12 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
                   ],
                 ),
               ),
+              SubscriptionTreshold(snap: widget.snap),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: 10,
-                  ),
-                  //subscription amount
-                  Flexible(
-                    child: SizedBox(
-                      height: 40,
-                      width: 180,
-                      child: TextFormField(
-                        controller: amountController,
-                        decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.edit),
-                            hintText: 'Subscription Amount',
-                            hintStyle: TextStyle(fontSize: 10),
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(width: 1),
-                                borderRadius: BorderRadius.circular(20))),
-                      ),
-                    ),
-                  ),
-                  //subscription Button
-                  StreamBuilder(
-                    stream: FirebaseFirestore.instance
-                        .collection('subscriptionuser')
-                        .doc(widget.snap['owner'])
-                        .snapshots(),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<dynamic> snapshot) {
-                      print("snap============------falses");
-                      print(snapshot);
-                      if (snapshot.data == null) {
-                        // isButtonActive = snapshot!.data![FirebaseAuth.instance.currentUser!.uid]['subscriptionstatus'];
-                        // print(isButtonActive);
-                        if (snapshot.data![
-                                FirebaseAuth.instance.currentUser!.uid] ==
-                            null) {
-                          return Container(
-                            width: 150,
-                            padding: const EdgeInsets.all(8.0),
-                            child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    padding:
-                                        EdgeInsets.only(left: 13, right: 13),
-                                    elevation: 5,
-                                    backgroundColor:
-                                        style.Style.SecondaryColor),
-                                onPressed: () async {
-                                  print(amountController);
-
-                                  if (amountController.text.isEmpty) {
-                                    ElegantNotification(
-                                      title: const Text("Error"),
-                                      description: const Text(
-                                          " Please Enter Subscription Amount More Than 1000"),
-                                      icon: const Icon(
-                                        Icons.close,
-                                        color: Colors.red,
-                                      ),
-                                      progressIndicatorColor: Colors.red,
-                                    ).show(context);
-                                  }
-
-                                  if (int.parse(amountController.text) < 1000) {
-                                    ElegantNotification(
-                                      title: const Text("Error"),
-                                      description: const Text(
-                                          " The Subscription Amount must be More Than 1000"),
-                                      icon: const Icon(
-                                        Icons.close,
-                                        color: Colors.red,
-                                      ),
-                                      progressIndicatorColor: Colors.red,
-                                    ).show(context);
-                                  } else {
-                                    SubscriptionService().addSubscription(
-                                        subscriptionAmount:
-                                            amountController.text,
-                                        subscriptionstatus: 'true',
-                                        subscribedUser: FirebaseAuth
-                                            .instance!.currentUser!.uid,
-                                        subscribtionOwner:
-                                            widget.snap['owner']);
-                                    ElegantNotification(
-                                      title: Text("Success"),
-                                      description: const Text(
-                                          "You Have Been Added to Subscription plan."),
-                                      icon: const Icon(
-                                        Icons.done,
-                                        color: Colors.green,
-                                      ),
-                                      progressIndicatorColor: Colors.green,
-                                    ).show(context);
-                                    Chapa.paymentParameters(
-                                      context: context, // context
-                                      publicKey:
-                                          'CHASECK_TEST-FnTXa03f7dXyGVn0HCyfZFvHgT8j1XJX',
-                                      currency: 'ETB',
-                                      amount: amountController.text,
-                                      email: 'xyz@gmail.com',
-                                      firstName: 'firstname',
-                                      lastName: 'lastname',
-                                      txRef: '34TXTHHgb',
-                                      title: 'title',
-                                      desc: 'desc',
-                                      namedRouteFallBack: '/fallback',
-                                      // fall back route name
-                                    );
-                                  }
-                                },
-                                child: Text(
-                                  'Subscribe'.toUpperCase(),
-                                  style: const TextStyle(color: Colors.white),
-                                )),
-                          );
-                        }
-                      } else {
-                        return Container(
-                          width: 150,
-                          padding: const EdgeInsets.all(8.0),
-                          child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  padding: EdgeInsets.only(left: 13, right: 13),
-                                  elevation: 5,
-                                  backgroundColor: style.Style.SecondaryColor),
-                              onPressed
-                                  // isButtonActive == null
-                                  //     ? () async {
-                                  //   print(amountController);
-                                  //
-                                  //   if (amountController.text.isEmpty) {
-                                  //     ElegantNotification(
-                                  //       title: const Text("Error"),
-                                  //       description: const Text(
-                                  //           " Please Enter Subscription Amount More Than 1000"),
-                                  //       icon: const Icon(
-                                  //         Icons.close,
-                                  //         color: Colors.red,
-                                  //       ),
-                                  //       progressIndicatorColor: Colors.red,
-                                  //     ).show(context);
-                                  //   }
-                                  //
-                                  //   if (int.parse(amountController.text) < 1000) {
-                                  //     ElegantNotification(
-                                  //       title: const Text("Error"),
-                                  //       description: const Text(
-                                  //           " The Subscription Amount must be More Than 1000"),
-                                  //       icon: const Icon(
-                                  //         Icons.close,
-                                  //         color: Colors.red,
-                                  //       ),
-                                  //       progressIndicatorColor: Colors.red,
-                                  //     ).show(context);
-                                  //   } else {
-                                  //     SubscriptionService().addSubscription(
-                                  //         subscriptionAmount: amountController.text,
-                                  //         subscriptionstatus: 'true',
-                                  //         subscribedUser: FirebaseAuth.instance!.currentUser!.uid,
-                                  //         subscribtionOwner: widget.snap['owner']);
-                                  //     ElegantNotification(
-                                  //       title: Text("Success"),
-                                  //       description: const Text(
-                                  //           "You Have Been Added to Subscription plan."),
-                                  //       icon: const Icon(
-                                  //         Icons.done,
-                                  //         color: Colors.green,
-                                  //       ),
-                                  //       progressIndicatorColor: Colors.green,
-                                  //     ).show(context);
-                                  //     Chapa.paymentParameters(
-                                  //       context: context, // context
-                                  //       publicKey:
-                                  //       'CHASECK_TEST-FnTXa03f7dXyGVn0HCyfZFvHgT8j1XJX',
-                                  //       currency: 'ETB',
-                                  //       amount: amountController.text,
-                                  //       email: 'xyz@gmail.com',
-                                  //       firstName: 'firstname',
-                                  //       lastName: 'lastname',
-                                  //       txRef: '34TXTHHgb',
-                                  //       title: 'title',
-                                  //       desc: 'desc',
-                                  //       namedRouteFallBack: '/fallback',
-                                  //       // fall back route name
-                                  //     );
-                                  //   }
-                                  // }
-                                  : null,
-                              child: Text(
-                                'Subscribe'.toUpperCase(),
-                                style: const TextStyle(color: Colors.white),
-                              )),
-                        );
-                      }
-                      return CircularProgressIndicator();
-                    },
-                  )
-                ],
+              ///
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SubscriptionInfromation(snap: widget.snap),
               ),
 
               Padding(
@@ -473,7 +199,7 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
 
                         //title menuname[index]
 
-                        return Center(
+                        return const Center(
                             child: Text(
                                 'this resturant does not have a menu yet'));
                       }))

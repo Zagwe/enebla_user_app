@@ -1,4 +1,5 @@
 import 'package:enebla_user_app/bloc/comment_bloc.dart';
+import 'package:enebla_user_app/bloc/subscription_bloc.dart';
 import 'package:enebla_user_app/models/food_model.dart';
 import 'package:enebla_user_app/screens/comment_and_rating.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -66,11 +67,17 @@ class AppState {
     'price': [],
     'resturantId': []
   };
+  String? maxthreshold;
+
   bool visibility = false;
 }
 
 class BlocProvider {
   final OrderBloc orderBloc;
   final CommentBloc commentBloc;
-  BlocProvider({required this.orderBloc, required this.commentBloc});
+  final SubscriptionBloc subscriptionBloc;
+  BlocProvider(
+      {required this.orderBloc,
+      required this.commentBloc,
+      required this.subscriptionBloc});
 }
