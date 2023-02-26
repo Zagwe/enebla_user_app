@@ -1,7 +1,9 @@
+import 'package:enebla_user_app/auth/login.dart';
 import 'package:enebla_user_app/screens/account/changePassword.dart';
 import 'package:enebla_user_app/screens/account/contucUs.dart';
 import 'package:enebla_user_app/screens/account/editProfile.dart';
 import 'package:enebla_user_app/screens/order/orderPreview.dart';
+import 'package:enebla_user_app/screens/payment/payment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 import 'package:enebla_user_app/theme/style.dart' as style;
@@ -63,7 +65,12 @@ class AccountSetting extends StatelessWidget {
                 title: 'Payment Method',
                 subtitle: 'Add your Account',
                 leading: Icon(Icons.payment),
-                onPressed: (BuildContext context) {},
+                onPressed: (BuildContext context) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Payment_method()));
+                },
               ),
               SettingsTile(
                 title: 'Order History',
@@ -99,7 +106,9 @@ class AccountSetting extends StatelessWidget {
                 title: 'Logout',
                 leading: Icon(Icons.logout),
                 onPressed: (BuildContext context) {
-                  
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginPage()));
+                  //navigator
                 },
               ),
             ],
