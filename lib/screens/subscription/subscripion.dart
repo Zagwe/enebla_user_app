@@ -13,7 +13,7 @@ import '../chapapayment/chapa_payment initializer.dart';
 
 class SubscriptionInfromation extends StatefulWidget {
   final snap;
-
+  // var payedAmount;
   SubscriptionInfromation({super.key, required this.snap});
 
   @override
@@ -135,55 +135,48 @@ class _SubscriptionInfromationState extends State<SubscriptionInfromation> {
               progressIndicatorColor: Colors.red,
             ).show(context);
           }
-          if (AppStateProvider.of(context)!.state.maxthreshold != null) {
-            if (int.parse(amountController.text) <
-                int.parse(AppStateProvider.of(context)!.state.maxthreshold
-                    as String)) {
-              ElegantNotification(
-                title: const Text("Error"),
-                description: Text(
-                    " The Subscription Amount must be More Than ${AppStateProvider.of(context)!.state.maxthreshold} "),
-                icon: const Icon(
-                  Icons.close,
-                  color: Colors.red,
-                ),
-                progressIndicatorColor: Colors.red,
-              ).show(context);
-            } else {
-              SubscriptionService().addSubscription(
-                  subscriptionAmount: amountController.text,
-                  subscriptionstatus: 'true',
-                  subscribedUser: FirebaseAuth.instance.currentUser!.uid,
-                  subscribtionOwner: widget.snap['owner']);
-              ElegantNotification(
-                width: MediaQuery.of(context).size.width,
-                title: const Text("Success"),
-                description:
-                    const Text("You Have Been Added to Subscription plan."),
-                icon: const Icon(
-                  Icons.done,
-                  color: Colors.green,
-                ),
-                progressIndicatorColor: Colors.green,
-              ).show(context);
 
-              Chapa.paymentParameters(
-                context: context, // context
-                publicKey: 'CHASECK_TEST-FnTXa03f7dXyGVn0HCyfZFvHgT8j1XJX',
-                currency: 'ETB',
-                amount: amountController.text,
-                email: 'xyz@gmail.com',
-                firstName: 'firstname',
-                lastName: 'lastname',
-                txRef: '34TXTHHgb',
-                title: 'title',
-                desc: 'desc',
-                namedRouteFallBack: '/fallback',
-
-                // fall back route name
-              );
-              // setState(() {});
-            }
+          if (int.parse(amountController.text) < 1000) {
+            ElegantNotification(
+              title: const Text("Error"),
+              description:
+                  const Text(" The Subscription Amount must be More Than 1000"),
+              icon: const Icon(
+                Icons.close,
+                color: Colors.red,
+              ),
+              progressIndicatorColor: Colors.red,
+            ).show(context);
+          } else {
+            Chapa.paymentParameters(
+              context: context, // context
+              publicKey: 'CHASECK_TEST-FnTXa03f7dXyGVn0HCyfZFvHgT8j1XJX',
+              currency: 'ETB',
+              amount: amountController.text,
+              email: 'xyz@gmail.com',
+              firstName: 'firstname',
+              lastName: 'lastname',
+              txRef: '34TXTHHgb',
+              title: 'title',
+              desc: 'desc',
+              namedRouteFallBack: '/fallback',
+              // fall back route name
+            );
+            SubscriptionService().addSubscription(
+                subscriptionAmount: amountController.text,
+                subscriptionstatus: 'true',
+                subscribedUser: FirebaseAuth.instance.currentUser!.uid,
+                subscribtionOwner: widget.snap['owner']);
+            ElegantNotification(
+              title: const Text("Success"),
+              description:
+                  const Text("You Have Been Added to Subscription plan."),
+              icon: const Icon(
+                Icons.done,
+                color: Colors.green,
+              ),
+              progressIndicatorColor: Colors.green,
+            ).show(context);
           }
         },
         child: Text(

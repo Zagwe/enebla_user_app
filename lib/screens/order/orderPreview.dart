@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enebla_user_app/enebla_user_home.dart';
 import 'package:enebla_user_app/screens/order/order.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:enebla_user_app/theme/style.dart' as style;
 
@@ -253,11 +255,27 @@ class _OrderPreviewState extends State<OrderPreview> {
                             backgroundColor: style.Style.primaryColor,
                           ),
                           onPressed: () async {
-                            ///logic to add order to a database
-                            // print(AppStateProvider.of(context)
-                            //     ?.state
-                            //     .orderFoodList['resturantId']!
-                            //     .first);
+                            var resturant = await FirebaseFirestore.instance
+                                .collection('subscriptionuser')
+                                .doc(AppStateProvider.of(context)!
+                                    .state
+                                    .orderFoodList['resturantId']!
+                                    .first)
+                                .get()
+                                .then((value) => value.data());
+                            print(
+                                "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%resturant");
+                            print(resturant);
+                            var balance = resturant![FirebaseAuth.instance
+                                .currentUser!.uid]["subscriptionAmount"];
+                            if (balance <
+                                bloc.orderService.getOrderTotal(context)) {
+                              var totalBalance = balance -
+                                  bloc.orderService.getOrderTotal(context);
+                            }
+
+                            print(balance);
+
                             if (AppStateProvider.of(context)!
                                 .state
                                 .orderFoodList['food']!
@@ -283,10 +301,10 @@ class _OrderPreviewState extends State<OrderPreview> {
                             // print(
                             //     "?????????????????????????????????????3333333333333333333333");
                             // print(subOrderTotal);
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const Order()));
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => const Order()));
                           },
                           child: const Text(
                             'Continue To Order',
