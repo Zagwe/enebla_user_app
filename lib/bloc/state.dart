@@ -68,6 +68,8 @@ class AppState {
     'resturantId': []
   };
 
+  String? maxthreshold;
+
   bool visibility = false;
 }
 

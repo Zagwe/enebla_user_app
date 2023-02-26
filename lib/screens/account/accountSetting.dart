@@ -1,3 +1,4 @@
+import 'package:enebla_user_app/auth/login.dart';
 import 'package:enebla_user_app/screens/account/changePassword.dart';
 import 'package:enebla_user_app/screens/account/contucUs.dart';
 import 'package:enebla_user_app/screens/account/editProfile.dart';
@@ -98,7 +99,10 @@ class AccountSetting extends StatelessWidget {
               SettingsTile(
                 title: 'Logout',
                 leading: Icon(Icons.logout),
-                onPressed: (BuildContext context) {},
+                onPressed: (BuildContext context) {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginPage()));
+                },
               ),
             ],
           ),

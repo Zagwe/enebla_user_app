@@ -55,9 +55,9 @@ class ResturantInformation extends StatelessWidget {
         //rating and comment
         GestureDetector(
           onTap: () {
-            print('=-=-=-=-=-=-=-=-=-');
-            print(FirebaseAuth.instance.currentUser!.uid);
-            print(snap);
+            // print('=-=-=-=-=-=-=-=-=-');
+            // print(FirebaseAuth.instance.currentUser!.uid);
+            // print(snap);
             showBarModalBottomSheet(
               expand: false,
               context: context,
