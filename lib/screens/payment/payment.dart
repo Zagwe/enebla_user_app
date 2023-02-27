@@ -11,6 +11,13 @@ class Payment_method extends StatelessWidget {
     'Stripe',
     'Paypal'
   ];
+  List<String> paymentCardTag = [
+    'Ethiopia',
+    'Ethiopia',
+    'Ethiopia',
+    'International',
+    'International'
+  ];
   List<String> activeStatus = [
     'Active',
     'Comming Soon',
@@ -37,7 +44,7 @@ class Payment_method extends StatelessWidget {
             color: Colors.black,
           ),
           title: Center(
-            child: Text('payment methods',
+            child: Text('Payment Methods',
                 style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.w800,
@@ -118,7 +125,7 @@ class Payment_method extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
                                       Text(
-                                        'Ethiopia',
+                                        paymentCardTag[index],
                                         style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.w800,
