@@ -1,5 +1,3 @@
-import 'package:chapasdk/chapawebview.dart';
-import 'package:enebla_user_app/auth/login.dart';
 import 'package:enebla_user_app/bloc/order_bloc.dart';
 import 'package:enebla_user_app/bloc/state.dart';
 import 'package:enebla_user_app/bloc/subscription_bloc.dart';
@@ -28,7 +26,7 @@ Future<void> main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   isViewed = prefs.getInt('OnBording');
 
-  print(FirebaseAuth.instance.currentUser!.uid);
+  // print(FirebaseAuth.instance.currentUser!.uid);
   runApp(
       AppStateContainer(blocProvider: blocProvider, child: const EneblaUser()));
 }

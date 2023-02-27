@@ -21,7 +21,6 @@ class _FallbackState extends State<Fallback> {
         if (ModalRoute.of(context)?.settings.arguments != null) {
           args = ModalRoute.of(context)?.settings.arguments;
           print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% after payment ");
-          message = args['message'];
           print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% transactionReference ");
           print(message);
           print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% transactionReference ");

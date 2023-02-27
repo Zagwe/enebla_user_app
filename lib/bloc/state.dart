@@ -69,6 +69,8 @@ class AppState {
   };
   String? maxthreshold;
 
+  Map<String, dynamic> snap = {};
+
   bool visibility = false;
 }
 

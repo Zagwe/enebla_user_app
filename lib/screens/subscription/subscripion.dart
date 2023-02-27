@@ -162,21 +162,25 @@ class _SubscriptionInfromationState extends State<SubscriptionInfromation> {
               namedRouteFallBack: '/fallback',
               // fall back route name
             );
-            SubscriptionService().addSubscription(
-                subscriptionAmount: amountController.text,
-                subscriptionstatus: 'true',
-                subscribedUser: FirebaseAuth.instance.currentUser!.uid,
-                subscribtionOwner: widget.snap['owner']);
-            ElegantNotification(
-              title: const Text("Success"),
-              description:
-                  const Text("You Have Been Added to Subscription plan."),
-              icon: const Icon(
-                Icons.done,
-                color: Colors.green,
-              ),
-              progressIndicatorColor: Colors.green,
-            ).show(context);
+
+            AppStateProvider.of(context)!.state.snap = widget.snap;
+
+            ///this will be implemented after we confirm chapa payment
+            // SubscriptionService().addSubscription(
+            //     subscriptionAmount: amountController.text,
+            //     subscriptionstatus: 'true',
+            //     subscribedUser: FirebaseAuth.instance.currentUser!.uid,
+            //     subscribtionOwner: widget.snap['owner']);
+            // ElegantNotification(
+            //   title: const Text("Success"),
+            //   description:
+            //       const Text("You Have Been Added to Subscription plan."),
+            //   icon: const Icon(
+            //     Icons.done,
+            //     color: Colors.green,
+            //   ),
+            //   progressIndicatorColor: Colors.green,
+            // ).show(context);
           }
         },
         child: Text(
