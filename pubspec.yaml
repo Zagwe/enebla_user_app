@@ -107,6 +107,8 @@ flutter:
      - lib/assets/telebirr.jpg
      - lib/assets/profile image.png
      - lib/assets/yenepay.png
+     - lib/assets/stripe.png
+     - lib/assets/paypal.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

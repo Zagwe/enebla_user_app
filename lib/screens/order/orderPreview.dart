@@ -20,6 +20,7 @@ class _OrderPreviewState extends State<OrderPreview> {
   @override
   Widget build(BuildContext context) {
     final bloc = AppStateProvider.of(context)?.blocProvider.orderBloc;
+    var orderTotal = bloc!.orderService.getOrderTotal(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -264,18 +265,17 @@ class _OrderPreviewState extends State<OrderPreview> {
                                 .get()
                                 .then((value) => value.data());
                             print(
-                                "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%resturant");
+                                "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%first");
                             print(resturant);
+                            print(
+                                "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%second");
                             var balance = resturant![FirebaseAuth.instance
                                 .currentUser!.uid]["subscriptionAmount"];
-                            if (balance <
+                            if (int.parse(balance) <
                                 bloc.orderService.getOrderTotal(context)) {
-                              var totalBalance = balance -
+                              var totalBalance = int.parse(balance) -
                                   bloc.orderService.getOrderTotal(context);
                             }
-
-                            print(balance);
-
                             if (AppStateProvider.of(context)!
                                 .state
                                 .orderFoodList['food']!
