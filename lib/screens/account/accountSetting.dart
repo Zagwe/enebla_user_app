@@ -1,4 +1,5 @@
 import 'package:enebla_user_app/auth/login.dart';
+import 'package:enebla_user_app/screens/account/balance.dart';
 import 'package:enebla_user_app/screens/account/changePassword.dart';
 import 'package:enebla_user_app/screens/account/contucUs.dart';
 import 'package:enebla_user_app/screens/account/editProfile.dart';
@@ -39,6 +40,15 @@ class AccountSetting extends StatelessWidget {
                 onPressed: (BuildContext context) {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => EneblaHome()));
+                },
+              ),
+              SettingsTile(
+                title: 'Balance',
+                subtitle: 'current balance',
+                leading: Icon(Icons.home),
+                onPressed: (BuildContext context) {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Balance()));
                 },
               ),
               SettingsTile(
