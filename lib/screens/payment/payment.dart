@@ -4,11 +4,26 @@ import 'package:flutter/src/widgets/framework.dart';
 
 class Payment_method extends StatelessWidget {
   Payment_method({super.key});
-  List<String> homeCardTag = ['chapa', 'yenepay', 'telebirr'];
+  List<String> homeCardTag = [
+    'Chapa',
+    'Telebirr',
+    'Yenepay',
+    'Stripe',
+    'Paypal'
+  ];
+  List<String> activeStatus = [
+    'Active',
+    'Comming Soon',
+    'Comming Soon',
+    'Comming Soon',
+    'Comming Soon'
+  ];
   List<String> homeCardImage = [
     "lib/assets/chapa.jpg",
     "lib/assets/telebirr.jpg",
-    "lib/assets/yenepay.png"
+    "lib/assets/yenepay.png",
+    "lib/assets/stripe.png",
+    "lib/assets/paypal.png"
   ];
 
   @override
@@ -38,7 +53,7 @@ class Payment_method extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    'available payment methods',
+                    'Available payment methods',
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w800,
@@ -50,7 +65,7 @@ class Payment_method extends StatelessWidget {
                       //      builder: (BuildContext context) => EneblaHome()));
                     },
                     child: Text(
-                      'current status',
+                      'Current Status',
                       textAlign: TextAlign.end,
                       style: TextStyle(
                           fontSize: 14,
@@ -84,7 +99,7 @@ class Payment_method extends StatelessWidget {
                           ),
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.only(left: 8, right: 8),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment:
@@ -93,29 +108,15 @@ class Payment_method extends StatelessWidget {
                                   Text(
                                     homeCardTag[index],
                                     style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w800,
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.w900,
                                         color: Colors.black,
                                         wordSpacing: 5),
-                                  ),
-                                  // const  Flexible(
-                                  //     child: Text(
-                                  //       'Shortbread, chocolate turtle cookies, and red velvet.',
-                                  //       style: TextStyle(
-                                  //           fontSize: 16,
-                                  //           fontWeight: FontWeight.w800,
-                                  //           color: Colors.black54,
-                                  //           // wordSpacing: 5
-                                  //       ),
-                                  //     ),
-                                  // ),
-                                  const SizedBox(
-                                    height: 10,
                                   ),
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
-                                    children: const <Widget>[
+                                    children: <Widget>[
                                       Text(
                                         'Ethiopia',
                                         style: TextStyle(
@@ -125,11 +126,14 @@ class Payment_method extends StatelessWidget {
                                         ),
                                       ),
                                       Text(
-                                        'active',
+                                        activeStatus[index],
                                         style: TextStyle(
+                                          // backgroundColor: Colors.red,
                                           fontSize: 20,
                                           fontWeight: FontWeight.w800,
-                                          color: Colors.green,
+                                          color: activeStatus[index] == 'Active'
+                                              ? Colors.green
+                                              : Colors.red,
                                         ),
                                       ),
                                     ],
