@@ -263,6 +263,11 @@ class _OrderPreviewState extends State<OrderPreview> {
                             backgroundColor: style.Style.primaryColor,
                           ),
                           onPressed: () async {
+                            var snapBalance =[AppStateProvider.of(context)!
+                                .state
+                                .orderFoodList['resturantId']!
+                                .first,FirebaseAuth.instance.currentUser!.uid,];
+
                             var resturant = await FirebaseFirestore.instance
                                 .collection('subscriptionuser')
                                 .doc(AppStateProvider.of(context)!
@@ -338,11 +343,13 @@ class _OrderPreviewState extends State<OrderPreview> {
                               ).show(context);
                             }
                             Navigator.push(context,
-                                MaterialPageRoute(builder: (context) => BalanceView(resturantId: AppStateProvider.of(context)!
-                                    .state
-                                    .orderFoodList['resturantId']!
-                                    .first,
-                                  userId: FirebaseAuth.instance.currentUser!.uid, )));
+                                MaterialPageRoute(builder: (context) => BalanceView(
+                                  resturantId: AppStateProvider.of(context)!
+                                      .state
+                                      .orderFoodList['resturantId']!
+                                      .first,
+                                  userId: FirebaseAuth.instance.currentUser!.uid,
+                                  currentBalance: balance,)));
                             setState(() {
                               AppStateProvider.of(context)!
                                   .state

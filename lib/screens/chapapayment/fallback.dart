@@ -44,8 +44,8 @@ class _FallbackState extends State<Fallback> {
         width: double.infinity,
         height: double.infinity,
         color: message == "paymentSuccessful"
-            ? Color.fromARGB(255, 2, 101, 230)
-            : Color.fromARGB(255, 230, 2, 2),
+            ? Color.fromARGB(255, 2, 20, 44)
+            : Color.fromARGB(255, 124, 2, 2),
         child: Column(children: [
           Image.asset('lib/assets/home.png'),
           SizedBox(

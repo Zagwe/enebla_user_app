@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:enebla_user_app/theme/style.dart' as style;
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 
+import '../../bloc/state.dart';
 import '../subscription/balanceView.dart';
 
 class Balance extends StatefulWidget {
@@ -37,6 +38,7 @@ class _BalanceState extends State<Balance> {
             itemCount: snapshots.data!.docs.length,
             itemBuilder: ( context, index) {
               var data = snapshots.data!.docs[index].data()as Map<String, dynamic>;
+
               return FutureBuilder(
                   future: FirebaseFirestore.instance
                       .collection('subscriptionuser')
@@ -47,14 +49,16 @@ class _BalanceState extends State<Balance> {
                     return const Center(child: CircularProgressIndicator());
                   } else {
                     return GestureDetector(
-
                       onTap: () {
-
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) =>
-                                BalanceView(resturantId: data['owner'],
-                                  userId: FirebaseAuth.instance.currentUser!
-                                      .uid,)));
+                                BalanceView(
+                                  resturantId: data['owner'],
+                                  userId: FirebaseAuth.instance.currentUser!.uid,
+                                  currentBalance: futureSnapshot!.data!.data()![FirebaseAuth
+                                      .instance.currentUser!
+                                      .uid]["currentBalance"],
+                                )));
                       },
                       child: ListTile(
                         // style: ListTileStyle.list,

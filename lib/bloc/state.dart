@@ -62,7 +62,10 @@ class AppState {
   //everyting we define in here will be exposed to the rest of the app
   List<Food> selectedFoodList = [];
   Map<String, dynamic>  snap = {};
-
+  Map<String, List>  snapBalance = {
+    'resturantId': [],
+    'userId': []
+  };
   Map<String, List> orderFoodList = {
     'food': [],
     'price': [],

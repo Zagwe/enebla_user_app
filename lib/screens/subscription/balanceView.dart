@@ -15,8 +15,8 @@ import '../chapapayment/chapa_payment initializer.dart';
 class BalanceView extends StatefulWidget {
   var resturantId;
   var userId;
-
-  BalanceView({super.key,  required this.resturantId, required this.userId});
+  var currentBalance ;
+  BalanceView({super.key,  required this.resturantId, required this.userId, required this.currentBalance});
 
   @override
   State<BalanceView> createState() => _BalanceViewState();
@@ -227,9 +227,7 @@ class _BalanceViewState extends State<BalanceView> {
 
                             ),
                             onPressed: () async {
-                              var snap =[widget.resturantId,widget.userId];
-                              AppStateProvider.of(context)?.state.snap = snap as Map<String, dynamic>;
-                              await Chapa.paymentParameters(
+                                await Chapa.paymentParameters(
                                 context: context, // context
                                 publicKey: 'CHASECK_TEST-FnTXa03f7dXyGVn0HCyfZFvHgT8j1XJX',
                                 currency: 'ETB',
@@ -243,30 +241,26 @@ class _BalanceViewState extends State<BalanceView> {
                                 namedRouteFallBack: '/fallbackBalance',
                                 // fall back route name
                               );
-
-                              if(args['message'] == 'paymentSuccessful' ){
-                                //logic
-                                BalanceService().setCurrentBalance(
-                                    totalBalance: amountController.text,
+                             var updatedBalance = int.parse(amountController.text) + int.parse(widget.currentBalance);
+                               await BalanceService().setCurrentBalance(
+                                    totalBalance: updatedBalance.toString(),
                                     subscribtionOwner: widget.resturantId,
-                                    subscribtionUser: widget.userId
-                                );
+                                    subscribtionUser: widget.userId,);
 
-                              }else{
                                 ElegantNotification(
-                                  title: const Text("Error"),
+                                  width: MediaQuery.of(context).size.width,
+                                  height: MediaQuery.of(context).size.height * .1,
+                                  title: const Text("Balance Update"),
                                   description:
-                                  const Text(" Payment failed"),
+                                  const Text("Balance Update. is Being Proccesed"),
                                   icon: const Icon(
-                                    Icons.close,
-                                    color: Colors.red,
+                                    Icons.done,
+                                    color: Colors.green,
                                   ),
                                   progressIndicatorColor: Colors.red,
                                 ).show(context);
-                              }
+                              },
 
-
-                            },
                               child: const Text(
                             'TopUp',
                             style: TextStyle(

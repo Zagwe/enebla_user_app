@@ -145,7 +145,7 @@ class AccountSetting extends StatelessWidget {
               SettingsTile(
                 title: 'Rules & Regulations',
                 subtitle: 'information About Us',
-                leading: Icon(Icons.info),
+                leading: Icon(Icons.handyman),
                 onPressed: (BuildContext context) {
                   showAboutDialog(
                       context: context,

@@ -11,6 +11,8 @@ class BalanceService {
     required String subscribtionUser,
   }) async {
     String res = '';
+
+    print("%%%%%%%%%%% ${totalBalance} %%%%%%%%%%%%%% ${subscribtionOwner} %%%%%%%%%%%% ${subscribtionUser}%%%%%%%%%%%%%%");
     _firestore.collection('subscriptionuser').doc(subscribtionOwner).set({
       subscribtionUser: {"currentBalance": totalBalance}
     }, SetOptions(merge: true)).then((value) {
