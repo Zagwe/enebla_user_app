@@ -7,7 +7,7 @@ import 'package:enebla_user_app/bloc/state.dart';
 import 'package:enebla_user_app/screens/home/tabbar.dart';
 import 'package:enebla_user_app/screens/subscription/subscripion.dart';
 
-import 'package:enebla_user_app/widget/resturant_page_upper_slider.dart';
+import 'package:enebla_user_app/screens/home/widget/resturant_page_upper_slider.dart';
 import 'package:enebla_user_app/widget/subscription_treshold.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +37,6 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
 
   String isButtonActive = "";
 
-
   @override
   void initState() {
     Future.delayed(Duration.zero, () {
@@ -57,7 +56,6 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
     });
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -171,7 +169,7 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
               ///
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: SubscriptionInfromation(snap: widget.snap,args:args),
+                child: SubscriptionInfromation(snap: widget.snap, args: args),
               ),
 
               Padding(
@@ -192,23 +190,24 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
                   child: StreamBuilder(
                       stream: FirebaseFirestore.instance
                           .collection('menus')
-                          .where('id', isEqualTo: widget.snap['owner'])
+                          .doc(widget.snap['owner'])
+                          // .where('id', isEqualTo: widget.snap['owner'])
                           .snapshots(),
-                      builder: (context,
-                          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                              snapshot) {
-                        final PlatformProvidedMenuItemType;
-                        if (snapshot.data!.docs.isNotEmpty) {
-                          final snap = snapshot.data!.docs[0].data();
-                          final menuItem = snap['menulist'];
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          if (snapshot.data!.data() != null) {
+                            final snap = snapshot.data!.data();
+                            // print(snap);
+                            final menuItem = snap!['menulist'];
 
-                          final menuName = menuItem.keys.toList();
+                            final menuName = menuItem.keys.toList();
 
-                          return TopTabBarWidget(
-                            snap: snap,
-                            menuItem: menuItem,
-                            menuName: menuName,
-                          );
+                            return TopTabBarWidget(
+                              snap: snap,
+                              menuItem: menuItem,
+                              menuName: menuName,
+                            );
+                          }
                         }
 
                         //the entire list of menus

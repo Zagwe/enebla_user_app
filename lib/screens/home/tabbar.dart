@@ -6,8 +6,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:enebla_user_app/theme/style.dart';
 import 'package:enebla_user_app/theme/style.dart' as style;
+import 'package:flutter/rendering.dart';
 
-import '../../widget/tab_bar_listtile.dart';
+import '../menu/tab_bar_listtile.dart';
 
 class TopTabBarWidget extends StatefulWidget {
   final snap;
@@ -79,101 +80,78 @@ class _TopTabBarWidget extends State<TopTabBarWidget>
     ValueNotifier show = ValueNotifier(
         AppStateProvider.of(context)?.state.orderFoodList['food']!.length);
     show.notifyListeners();
-    return ValueListenableBuilder(
-        valueListenable: show,
-        builder: (context, value, child) {
-          if (value != 0) {
-            visibility = true;
-          }
-          print('-=-==-=-');
-          // print(value);
+    return Stack(
+      children: [
+        Column(
+          children: [
+            TabBar(
+              indicatorWeight: 20,
 
-          return Stack(
-            children: [
-              Column(
-                children: [
-                  TabBar(
-                    indicatorWeight: 20,
+              labelStyle: const TextStyle(
+                  fontWeight: FontWeight.bold, color: Colors.black),
 
-                    labelStyle: const TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.black),
+              indicatorPadding: const EdgeInsets.only(right: 20, top: 40),
+              //labelPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+              isScrollable: true,
+              controller: _tabController,
+              onTap: (value) {
+                setState(() {
+                  visibility = false;
+                });
+              },
+              tabs: tabs,
+            ),
+            Expanded(
+                child: TabBarView(
+              controller: _tabController,
+              children:
+                  List<Widget>.generate(widget.menuName.length, (int index) {
+                final foods =
+                    widget.menuItem[widget.menuName[index]]['listOfFood'];
+                // print(foods['image']);
+                // print(foods[index]['image']);
 
-                    indicatorPadding: const EdgeInsets.only(right: 20, top: 40),
-                    //labelPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                    isScrollable: true,
-                    controller: _tabController,
-                    onTap: (value) {
-                      setState(() {
-                        visibility = false;
-                      });
-                    },
-                    tabs: tabs,
-                  ),
-                  Expanded(
-                      child: TabBarView(
-                    controller: _tabController,
-                    children: List<Widget>.generate(widget.menuName.length,
-                        (int index) {
-                      final foods =
-                          widget.menuItem[widget.menuName[index]]['listOfFood'];
+                //LIST VIEW BUILDER START
+                return ListView.builder(
+                    itemCount: foods.length,
+                    itemBuilder: (context, index) {
+                      final name = foods[index]['name'];
+                      final price = foods[index]['price'].toString();
+                      // print(foods);
 
-                      //LIST VIEW BUILDER START
-                      return ListView.builder(
-                          itemCount: foods.length,
-                          itemBuilder: (context, index) {
-                            final name = foods[index]['name'];
-                            final price = foods[index]['price'].toString();
-                            return ListViewTile(
-                              notifyParent: refresh,
-                              containerColor: containerColor,
-                              name: name,
-                              price: price,
-                            );
-                          });
-                    }),
-                  )),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: 70,
-                    child: ClipRRect(
-                      borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(50),
-                          topRight: Radius.circular(50)),
-                      child: StreamBuilder(
-                          stream: FirebaseFirestore.instance
-                              .collection('subscriptionuser')
-                              .doc(widget.snap['id'])
-                              .snapshots(),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasData) {
-                              if (snapshot.data!.data() != null) {
-                                if (snapshot.data!.data()![FirebaseAuth
-                                        .instance.currentUser!.uid] ==
-                                    null) {
-                                  ///he hasen't subscribed
-                                  ///
-                                  ///subscribed button green
-                                  ///
-                                  ///add button gray
-
-                                  return buttonMaker(
-                                      context: context,
-                                      disabled: true,
-                                      icon: const Icon(
-                                        Icons.add,
-                                        size: 50,
-                                      ));
-                                } else {
-                                  return buttonMaker(
-                                      context: context,
-                                      disabled: false,
-                                      icon: const Icon(
-                                        Icons.add,
-                                        size: 50,
-                                      ));
-                                }
-                              }
-                            }
+                      return ListViewTile(
+                        image: foods[index]['image'],
+                        notifyParent: refresh,
+                        containerColor: containerColor,
+                        name: name,
+                        price: price,
+                      );
+                    });
+              }),
+            )),
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: 70,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(50),
+                    topRight: Radius.circular(50)),
+                child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('subscriptionuser')
+                        .doc(widget.snap['id'])
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        if (snapshot.data!.data() != null) {
+                          if (snapshot.data!.data()![
+                                  FirebaseAuth.instance.currentUser!.uid] ==
+                              null) {
+                            ///he hasen't subscribed
+                            ///
+                            ///subscribed button green
+                            ///
+                            ///add button gray
 
                             return buttonMaker(
                                 context: context,
@@ -182,15 +160,36 @@ class _TopTabBarWidget extends State<TopTabBarWidget>
                                   Icons.add,
                                   size: 50,
                                 ));
-                          }),
-                    ),
-                  )
-                ],
+                          } else {
+                            return buttonMaker(
+                                context: context,
+                                disabled: false,
+                                icon: const Icon(
+                                  Icons.add,
+                                  size: 50,
+                                ));
+                          }
+                        }
+                      }
+
+                      return buttonMaker(
+                          context: context,
+                          disabled: true,
+                          icon: const Icon(
+                            Icons.add,
+                            size: 50,
+                          ));
+                    }),
               ),
-            ],
-          );
-        });
+            )
+          ],
+        ),
+      ],
+    );
+    ;
   }
+
+  //button maker function
 
   Widget buttonMaker(
       {required BuildContext context, required bool disabled, required icon}) {

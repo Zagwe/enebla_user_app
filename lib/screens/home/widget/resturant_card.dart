@@ -1,6 +1,6 @@
 import 'package:enebla_user_app/screens/comment_and_rating.dart';
 import 'package:enebla_user_app/screens/home/resturant_home_page.dart';
-import 'package:enebla_user_app/widget/resturant_information.dart';
+import 'package:enebla_user_app/screens/home/widget/resturant_information.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:enebla_user_app/theme/style.dart' as style;
