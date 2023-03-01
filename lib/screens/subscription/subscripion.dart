@@ -11,17 +11,13 @@ import '../../service/subscription_service.dart';
 
 import '../chapapayment/chapa_payment initializer.dart';
 
-class SubscriptionInfromation extends StatefulWidget {
+class SubscriptionInfromation extends StatelessWidget {
   final snap;
+
+  var args;
   // var payedAmount;
-  SubscriptionInfromation({super.key, required this.snap});
+  SubscriptionInfromation({super.key, required this.snap,required this.args});
 
-  @override
-  State<SubscriptionInfromation> createState() =>
-      _SubscriptionInfromationState();
-}
-
-class _SubscriptionInfromationState extends State<SubscriptionInfromation> {
   final TextEditingController amountController = TextEditingController();
 
   @override
@@ -49,13 +45,13 @@ class _SubscriptionInfromationState extends State<SubscriptionInfromation> {
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           width: 10,
         ),
         StreamBuilder(
             stream: FirebaseFirestore.instance
                 .collection('subscriptionuser')
-                .doc(widget.snap['owner'])
+                .doc(snap['owner'])
                 .snapshots(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
@@ -148,7 +144,11 @@ class _SubscriptionInfromationState extends State<SubscriptionInfromation> {
               progressIndicatorColor: Colors.red,
             ).show(context);
           } else {
-            Chapa.paymentParameters(
+            AppStateProvider.of(context)?.state.snap = snap;
+            // print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-------AppStateProvider-------args");
+            // print(AppStateProvider.of(context)?.state.snap);
+            // print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-------AppStateProvider-------args");
+           await Chapa.paymentParameters(
               context: context, // context
               publicKey: 'CHASECK_TEST-FnTXa03f7dXyGVn0HCyfZFvHgT8j1XJX',
               currency: 'ETB',
@@ -163,24 +163,45 @@ class _SubscriptionInfromationState extends State<SubscriptionInfromation> {
               // fall back route name
             );
 
-            AppStateProvider.of(context)!.state.snap = widget.snap;
+            AppStateProvider.of(context)!.state.snap = snap;
 
-            ///this will be implemented after we confirm chapa payment
-            // SubscriptionService().addSubscription(
-            //     subscriptionAmount: amountController.text,
-            //     subscriptionstatus: 'true',
-            //     subscribedUser: FirebaseAuth.instance.currentUser!.uid,
-            //     subscribtionOwner: widget.snap['owner']);
-            // ElegantNotification(
-            //   title: const Text("Success"),
-            //   description:
-            //       const Text("You Have Been Added to Subscription plan."),
-            //   icon: const Icon(
-            //     Icons.done,
-            //     color: Colors.green,
-            //   ),
-            //   progressIndicatorColor: Colors.green,
-            // ).show(context);
+            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-------AppStateProvider-------args");
+            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-------AppStateProvider-------args");
+            print(args);
+
+             if(args['message'] == 'paymentSuccessful' ){
+              //logic
+               SubscriptionService().addSubscription(
+                  subscriptionAmount: amountController.text,
+                  subscriptionstatus: 'true',
+                  subscribedUser: FirebaseAuth.instance.currentUser!.uid,
+                  subscribtionOwner: snap['owner'],
+                  currentBalance: amountController.text
+              );
+            }else{
+              ElegantNotification(
+                title: const Text("Error"),
+                description:
+                const Text(" Payment failed"),
+                icon: const Icon(
+                  Icons.close,
+                  color: Colors.red,
+                ),
+                progressIndicatorColor: Colors.red,
+              ).show(context);
+            }
+
+
+            ElegantNotification(
+              title: const Text("Success"),
+              description:
+                  const Text("You Have Been Added to Subscription plan."),
+              icon: const Icon(
+                Icons.done,
+                color: Colors.green,
+              ),
+              progressIndicatorColor: Colors.green,
+            ).show(context);
           }
         },
         child: Text(

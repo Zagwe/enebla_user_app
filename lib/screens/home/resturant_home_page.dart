@@ -32,14 +32,32 @@ class ResturantHomePage extends StatefulWidget {
 class _ResturantHomePageState extends State<ResturantHomePage> {
   final amountController = TextEditingController();
 
+  var args;
+  String message = "";
+
   String isButtonActive = "";
 
-  // @override
-  // void initState() {
-  //   checkSuscription();
-  //
-  //   super.initState();
-  // }
+
+  @override
+  void initState() {
+    Future.delayed(Duration.zero, () {
+      setState(() {
+        if (ModalRoute.of(context)?.settings.arguments != null) {
+          args = ModalRoute.of(context)?.settings.arguments;
+          print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% after payment ");
+          message = args['message'];
+          print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% transactionReference ");
+          print(message);
+          print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% transactionReference ");
+          print(args['transactionReference']);
+          print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% transactionReference ");
+          print(args['paidAmount']);
+        }
+      });
+    });
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -153,7 +171,7 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
               ///
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: SubscriptionInfromation(snap: widget.snap),
+                child: SubscriptionInfromation(snap: widget.snap,args:args),
               ),
 
               Padding(

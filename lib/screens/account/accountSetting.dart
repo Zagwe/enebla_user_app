@@ -10,6 +10,8 @@ import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 import 'package:enebla_user_app/theme/style.dart' as style;
 import '../../enebla_user_home.dart';
 import '../order/order.dart';
+import '../subscription/balanceView.dart';
+import 'aboutUs.dart';
 
 class AccountSetting extends StatelessWidget {
   const AccountSetting({Key? key}) : super(key: key);
@@ -45,10 +47,12 @@ class AccountSetting extends StatelessWidget {
               SettingsTile(
                 title: 'Balance',
                 subtitle: 'current balance',
-                leading: Icon(Icons.home),
+                leading: Icon(Icons.currency_exchange),
                 onPressed: (BuildContext context) {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => Balance()));
+
+
                 },
               ),
               SettingsTile(
@@ -71,6 +75,7 @@ class AccountSetting extends StatelessWidget {
                           builder: (context) => BackupSettings()));
                 },
               ),
+
               SettingsTile(
                 title: 'Payment Method',
                 subtitle: 'Add your Account',
@@ -110,6 +115,55 @@ class AccountSetting extends StatelessWidget {
                 onPressed: (BuildContext context) {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => ContactUs()));
+                },
+              ),
+
+              SettingsTile(
+                title: 'About Us',
+                subtitle: 'information About Us',
+                leading: Icon(Icons.info),
+                onPressed: (BuildContext context) {
+                  showAboutDialog(
+                      context: context,
+                      applicationIcon: Image.asset("lib/assets/logo1.png",
+                          height: 80, width: 80),
+                      applicationName: 'About Enebla',
+                      applicationVersion: 'Version 0.0.1',
+                      applicationLegalese:
+                          'Developed by Telet Software Solution',
+                      children: <Widget>[
+                        Text(
+                            "Enebla and allows users to pay for their orders with a pre-paid subscription plan, which will allow restaurants to compete on price and quality."),
+                        Text(
+                            "It uses crowdsourced ratings from users' friends and family to make recommendations of restaurants")
+                      ]);
+
+                  // Navigator.push(context,
+                  //     MaterialPageRoute(builder: (context) => AboutUs()));
+                },
+              ),
+              SettingsTile(
+                title: 'Rules & Regulations',
+                subtitle: 'information About Us',
+                leading: Icon(Icons.info),
+                onPressed: (BuildContext context) {
+                  showAboutDialog(
+                      context: context,
+                      applicationIcon: Image.asset("lib/assets/logo1.png",
+                          height: 80, width: 80),
+                      applicationName: 'About Enebla',
+                      applicationVersion: 'Version 0.0.1',
+                      applicationLegalese:
+                      'Developed by Telet Software Solution',
+                      children: <Widget>[
+                        Text(
+                            "Enebla and allows users to pay for their orders with a pre-paid subscription plan, which will allow restaurants to compete on price and quality."),
+                        Text(
+                            "It uses crowdsourced ratings from users' friends and family to make recommendations of restaurants")
+                      ]);
+
+                  // Navigator.push(context,
+                  //     MaterialPageRoute(builder: (context) => AboutUs()));
                 },
               ),
               SettingsTile(

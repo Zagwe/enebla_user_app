@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../enebla_user_home.dart';
+
 class Fallback extends StatefulWidget {
   Fallback({
     Key? key,
@@ -64,13 +66,19 @@ class _FallbackState extends State<Fallback> {
                   : 'Payment processed Faild, please try again!',
               style: TextStyle(color: Colors.white, fontSize: 30)),
           SizedBox(
-            height: 120,
+            height: 60,
           ),
           Container(
             width: double.infinity,
             height: 40,
             child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  message == "paymentSuccessful" ?
+                      Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => EneblaHome()))
+                      : Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => EneblaHome()));
+                },
                 child: Text(message == "paymentSuccessful"
                     ? 'Continue to order'
                     : 'Back'),

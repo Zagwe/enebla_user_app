@@ -58,7 +58,7 @@ class Order extends StatelessWidget {
               Expanded(
                 child: ListView.builder(
                   physics: const BouncingScrollPhysics(),
-                  itemCount: 10,
+                  itemCount: 4,
                   itemBuilder: (context, index) {
                     return Container(
                       width: MediaQuery.of(context).size.width,

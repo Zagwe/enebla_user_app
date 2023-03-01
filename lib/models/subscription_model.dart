@@ -5,13 +5,14 @@ class SubscriptionModel {
   final String subscriptionstatus;
   final String subscribedUser;
   final String subscribtionOwner;
+  final String currentBalance;
 
   SubscriptionModel(
       {required this.subscriptionAmount,
-        required this.subscriptionstatus,
-        required this.subscribedUser,
-        required this.subscribtionOwner
-      });
+      required this.subscriptionstatus,
+      required this.subscribedUser,
+      required this.subscribtionOwner,
+      required this.currentBalance});
 
   Map<String, dynamic> toJson() {
     return {
@@ -19,7 +20,8 @@ class SubscriptionModel {
         'subscriptionAmount': subscriptionAmount,
         'subscriptionstatus': subscriptionstatus,
         'subscribedUser': subscribedUser,
-        'subscribtionOwner': subscribtionOwner
+        'subscribtionOwner': subscribtionOwner,
+        'currentBalance': currentBalance
       }
     };
   }
@@ -29,6 +31,7 @@ class SubscriptionModel {
         subscriptionAmount: Map['subscriptionAmount'],
         subscriptionstatus: Map['subscriptionstatus'],
         subscribedUser: Map['subscribedUser'],
-        subscribtionOwner: Map['subscribtionOwner']);
+        subscribtionOwner: Map['subscribtionOwner'],
+        currentBalance: Map['currentBalance']);
   }
 }

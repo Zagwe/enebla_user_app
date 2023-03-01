@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:elegant_notification/elegant_notification.dart';
 import 'package:enebla_user_app/enebla_user_home.dart';
 import 'package:enebla_user_app/screens/order/order.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,6 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:enebla_user_app/theme/style.dart' as style;
 
 import '../../bloc/state.dart';
+import '../../service/balance_services.dart';
+import '../../service/subscription_service.dart';
+import '../subscription/balanceView.dart';
 
 class OrderPreview extends StatefulWidget {
   const OrderPreview({Key? key}) : super(key: key);
@@ -17,6 +21,10 @@ class OrderPreview extends StatefulWidget {
 }
 
 class _OrderPreviewState extends State<OrderPreview> {
+  var totalBalance;
+  var balance;
+  var treshHold;
+  BalanceService balanceService = new BalanceService();
   @override
   Widget build(BuildContext context) {
     final bloc = AppStateProvider.of(context)?.blocProvider.orderBloc;
@@ -83,7 +91,7 @@ class _OrderPreviewState extends State<OrderPreview> {
                                 ),
                               ),
                               onDismissed: (direction) {
-                                bloc?.orderService.removeFoodFromOrderList(
+                                bloc.orderService.removeFoodFromOrderList(
                                     context: context,
                                     foodName: foodlist[index]);
 
@@ -162,8 +170,7 @@ class _OrderPreviewState extends State<OrderPreview> {
                               color: Colors.black),
                         ),
                         Text(
-                          (bloc!.orderService.getOrderTotal(context))
-                              .toString(),
+                          (bloc.orderService.getOrderTotal(context)).toString(),
                           textAlign: TextAlign.end,
                           style: const TextStyle(
                               fontSize: 14,
@@ -264,26 +271,78 @@ class _OrderPreviewState extends State<OrderPreview> {
                                     .first)
                                 .get()
                                 .then((value) => value.data());
-                            print(
-                                "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%first");
-                            print(resturant);
-                            print(
-                                "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%second");
-                            var balance = resturant![FirebaseAuth.instance
-                                .currentUser!.uid]["subscriptionAmount"];
-                            if (int.parse(balance) <
-                                bloc.orderService.getOrderTotal(context)) {
-                              var totalBalance = int.parse(balance) -
-                                  bloc.orderService.getOrderTotal(context);
-                            }
-                            if (AppStateProvider.of(context)!
-                                .state
-                                .orderFoodList['food']!
-                                .isNotEmpty) {
-                              await bloc.orderService
-                                  .addOrderToDatabase(context: context);
-                            }
 
+                            var subscription = await FirebaseFirestore.instance
+                                .collection('subscription')
+                                .doc(AppStateProvider.of(context)!
+                                .state
+                                .orderFoodList['resturantId']!
+                                .first)
+                                .get()
+                                .then((value) => value.data());
+                            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% resturantId threshhold");
+
+                            print(AppStateProvider.of(context)!
+                                .state
+                                .orderFoodList['resturantId']!
+                                .first);
+                            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% resturantId threshhold");
+                            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% subscription threshhold");
+
+                            print(subscription);
+                            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% subscription threshhold");
+                            treshHold = subscription!['minthreshold'];
+                              print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% threshhold");
+
+                              print(treshHold);
+                              print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% threshhold");
+                            balance = resturant![FirebaseAuth
+                                .instance.currentUser!.uid]["currentBalance"];
+
+                            var currentTotalBalance = int.parse(balance) - int.parse(treshHold);
+                            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% currentTotalBalance");
+
+                            print(currentTotalBalance);
+                            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% currentTotalBalance");
+
+                            if (currentTotalBalance >
+                                bloc.orderService.getOrderTotal(context)) {
+                              totalBalance = currentTotalBalance -
+                                  bloc.orderService.getOrderTotal(context);
+                              balanceService.setCurrentBalance(
+                                  totalBalance: totalBalance.toString(),
+                                  subscribtionOwner: resturant[FirebaseAuth
+                                      .instance
+                                      .currentUser!
+                                      .uid]["subscribtionOwner"],
+                                  subscribtionUser:
+                                      FirebaseAuth.instance.currentUser!.uid);
+
+                              if (AppStateProvider.of(context)!
+                                  .state
+                                  .orderFoodList['food']!
+                                  .isNotEmpty) {
+                                await bloc.orderService
+                                    .addOrderToDatabase(context: context);
+                              }
+                            } else {
+                              ElegantNotification(
+                                title: const Text("Error"),
+                                description: Text(
+                                    "your Current balance is ${balance} Please order a food that cost less or update your subscription"),
+                                icon: const Icon(
+                                  Icons.close,
+                                  color: Colors.red,
+                                ),
+                                progressIndicatorColor: Colors.red,
+                              ).show(context);
+                            }
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => BalanceView(resturantId: AppStateProvider.of(context)!
+                                    .state
+                                    .orderFoodList['resturantId']!
+                                    .first,
+                                  userId: FirebaseAuth.instance.currentUser!.uid, )));
                             setState(() {
                               AppStateProvider.of(context)!
                                   .state
@@ -295,16 +354,6 @@ class _OrderPreviewState extends State<OrderPreview> {
                                   .orderFoodList['price']!
                                   .clear();
                             });
-                            // String subOrderTotal = bloc!.orderService
-                            //     .getOrderTotal(context)
-                            //     .toString();
-                            // print(
-                            //     "?????????????????????????????????????3333333333333333333333");
-                            // print(subOrderTotal);
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => const Order()));
                           },
                           child: const Text(
                             'Continue To Order',
