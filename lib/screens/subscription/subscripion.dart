@@ -171,7 +171,7 @@ class SubscriptionInfromation extends StatelessWidget {
 
              if(args['message'] == 'paymentSuccessful' ){
               //logic
-               SubscriptionService().addSubscription(
+               await SubscriptionService().addSubscription(
                   subscriptionAmount: amountController.text,
                   subscriptionstatus: 'true',
                   subscribedUser: FirebaseAuth.instance.currentUser!.uid,

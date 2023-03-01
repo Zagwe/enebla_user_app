@@ -34,79 +34,50 @@ class ResturantInformation extends StatelessWidget {
         ),
 
         //tag
-        RichText(
-            text: TextSpan(
-                style: TextStyle(
-                    color: style.Style.resturantTagColor, fontSize: 16),
+        Row(
+          children: [
+            RichText(
+                text: TextSpan(
+                    style: TextStyle(
+                        color: style.Style.resturantTagColor, fontSize: 16),
+                    children: [
+                  TextSpan(text: '\$\$'),
+                  TextSpan(text: ' \u2981 '),
+                  TextSpan(text: 'chicken'),
+                  TextSpan(text: ' \u2981 '),
+                  TextSpan(text: snap['address']),
+                  TextSpan(text: ' \u2981  '),
+                  TextSpan(text: 'Deshi Food'),
+                ])),
+            GestureDetector(
+              onTap: () {
+                // print('=-=-=-=-=-=-=-=-=-');
+                // print(FirebaseAuth.instance.currentUser!.uid);
+                // print(snap);
+                showBarModalBottomSheet(
+                  expand: false,
+                  context: context,
+                  bounce: true,
+                  backgroundColor: Colors.transparent,
+                  builder: (context) => CommentAndRating(
+                      commentedby: FirebaseAuth.instance.currentUser!.uid,
+                      commentedto: snap['owner']),
+                );
+                // Navigator.push(context,
+                //     MaterialPageRoute(builder: (context) => CommentAndRating()));
+              },
+              child: Row(
                 children: [
-              TextSpan(text: '\$\$'),
-              TextSpan(text: ' \u2981 '),
-              TextSpan(text: 'chicken'),
-              TextSpan(text: ' \u2981 '),
-              TextSpan(text: snap['address']),
-              TextSpan(text: ' \u2981  '),
-              TextSpan(text: 'Deshi Food'),
-            ])),
-
-        SizedBox(
-          height: 6,
-        ),
-
-        //rating and comment
-        GestureDetector(
-          onTap: () {
-            // print('=-=-=-=-=-=-=-=-=-');
-            // print(FirebaseAuth.instance.currentUser!.uid);
-            // print(snap);
-            showBarModalBottomSheet(
-              expand: false,
-              context: context,
-              bounce: true,
-              backgroundColor: Colors.transparent,
-              builder: (context) => CommentAndRating(
-                  commentedby: FirebaseAuth.instance.currentUser!.uid,
-                  commentedto: snap['owner']),
-            );
-            // Navigator.push(context,
-            //     MaterialPageRoute(builder: (context) => CommentAndRating()));
-          },
-          child: Row(
-            children: [
-              Row(
-                children: [
-                  //rating
                   Row(
                     children: [
-                      //rating value
-                      Text('4.5'),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                        child: Icon(
-                          Icons.star,
-                          size: 20,
-                          color: style.Style.SecondaryColor,
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Text(
+                          '\u2981',
+                          style: TextStyle(
+                              color: style.Style.resturantTagColor, fontSize: 16),
                         ),
                       ),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      //rated people count
-                      Text('200+ Rating'),
-                    ],
-                  ),
-                  //separetor
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Text(
-                      '\u2981',
-                      style: TextStyle(
-                          color: style.Style.resturantTagColor, fontSize: 16),
-                    ),
-                  ),
-
-                  //comment
-                  Row(
-                    children: const [
                       Icon(
                         Icons.comment,
                         size: 20,
@@ -116,13 +87,22 @@ class ResturantInformation extends StatelessWidget {
                         width: 5,
                       ),
                       Text('comment')
+                      //comment
+
                     ],
                   )
                 ],
-              )
-            ],
-          ),
-        )
+              ),
+            )
+          ],
+        ),
+
+        SizedBox(
+          height: 6,
+        ),
+
+        //rating and comment
+
       ],
     );
   }

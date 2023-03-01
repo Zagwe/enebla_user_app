@@ -46,13 +46,11 @@ class AccountSetting extends StatelessWidget {
               ),
               SettingsTile(
                 title: 'Balance',
-                subtitle: 'current balance',
+                subtitle: 'Change your account information',
                 leading: Icon(Icons.currency_exchange),
                 onPressed: (BuildContext context) {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => Balance()));
-
-
                 },
               ),
               SettingsTile(
@@ -75,7 +73,6 @@ class AccountSetting extends StatelessWidget {
                           builder: (context) => BackupSettings()));
                 },
               ),
-
               SettingsTile(
                 title: 'Payment Method',
                 subtitle: 'Add your Account',
@@ -117,7 +114,6 @@ class AccountSetting extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => ContactUs()));
                 },
               ),
-
               SettingsTile(
                 title: 'About Us',
                 subtitle: 'information About Us',
@@ -145,7 +141,7 @@ class AccountSetting extends StatelessWidget {
               SettingsTile(
                 title: 'Rules & Regulations',
                 subtitle: 'information About Us',
-                leading: Icon(Icons.handyman),
+                leading: Icon(Icons.balance),
                 onPressed: (BuildContext context) {
                   showAboutDialog(
                       context: context,
@@ -160,6 +156,7 @@ class AccountSetting extends StatelessWidget {
                             "Enebla and allows users to pay for their orders with a pre-paid subscription plan, which will allow restaurants to compete on price and quality."),
                         Text(
                             "It uses crowdsourced ratings from users' friends and family to make recommendations of restaurants")
+                        ,
                       ]);
 
                   // Navigator.push(context,
