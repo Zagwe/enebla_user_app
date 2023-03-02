@@ -70,119 +70,48 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
         ResturantPageUpperSlider(),
         Expanded(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               ////resturant information section
               Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    //resturant name
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      padding: const EdgeInsets.symmetric(vertical: 20.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          widget.snap['name'].toUpperCase(),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: style.Style.primaryColor,
+                              fontSize: 20),
+                        ),
+                      ),
+                    ),
+
+                    SubscriptionTreshold(snap: widget.snap),
+                    SizedBox(
+                      height: 15,
+                    ),
+
+                    ///
+                    SubscriptionInfromation(snap: widget.snap, args: args),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
                       child: Text(
-                        widget.snap['name'],
-                        style:
-                            const TextStyle(color: Colors.black, fontSize: 24),
+                        'Menu',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineLarge!
+                            .copyWith(color: style.Style.primaryColor),
                       ),
                     ),
-
-                    //tag
-                    RichText(
-                        text: TextSpan(
-                            style: TextStyle(
-                                color: style.Style.resturantTagColor,
-                                fontSize: 16),
-                            children: const [
-                          TextSpan(text: '\$\$'),
-                          TextSpan(text: ' \u2981 '),
-                          TextSpan(text: 'chicken'),
-                          TextSpan(text: ' \u2981 '),
-                          TextSpan(text: 'America'),
-                          TextSpan(text: ' \u2981  '),
-                          TextSpan(text: 'Deshi Food'),
-                        ])),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    //rating
-                    GestureDetector(
-                      onTap: () {
-                        showBarModalBottomSheet(
-                          expand: false,
-                          context: context,
-                          bounce: true,
-                          backgroundColor: Colors.transparent,
-                          builder: (context) => CommentAndRating(
-                            commentedby: FirebaseAuth.instance.currentUser!.uid,
-                            commentedto: widget.snap['owner'],
-                          ),
-                        );
-                      },
-                      child: Row(
-                        children: [
-                          Row(
-                            children: [
-                              //rating
-                              Row(
-                                children: [
-                                  //rating value
-                                  const Text('4.5'),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 4.0),
-                                    child: Icon(
-                                      Icons.star,
-                                      size: 20,
-                                      color: style.Style.SecondaryColor,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 8,
-                                  ),
-                                  //rated people count
-                                  Text(
-                                    '200+ Rating',
-                                    style: TextStyle(
-                                        color: style.Style.SecondaryColor),
-                                  ),
-
-                                  ///THIS SHOWS THE MAXIMUM AND THE MINUMUM TRESHOLD
-                                  // SubscriptionTreshold(snap: widget.snap)
-
-                                  ///END
-                                ],
-                              ),
-                              //separetor
-
-                              //comment
-                            ],
-                          )
-                        ],
-                      ),
-                    )
                   ],
-                ),
-              ),
-              SubscriptionTreshold(snap: widget.snap),
-
-              ///
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SubscriptionInfromation(snap: widget.snap, args: args),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Menu',
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineLarge!
-                        .copyWith(color: style.Style.primaryColor),
-                  ),
                 ),
               ),
               //food menu tab bar

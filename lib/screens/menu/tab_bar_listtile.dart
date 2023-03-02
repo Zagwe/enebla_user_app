@@ -64,9 +64,10 @@ class _ListViewTileState extends State<ListViewTile>
             }
           },
           child: Container(
+            width: MediaQuery.of(context).size.width,
             // height: 100,
             padding: const EdgeInsets.all(8),
-            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+            margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 12),
             decoration: BoxDecoration(
                 boxShadow: const [
                   BoxShadow(
@@ -78,8 +79,7 @@ class _ListViewTileState extends State<ListViewTile>
                 color: widget.containerColor,
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(width: 1)),
-            child: Center(
-                child: Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
@@ -148,7 +148,7 @@ class _ListViewTileState extends State<ListViewTile>
                   ],
                 )
               ],
-            )),
+            ),
           ),
         ),
       ],

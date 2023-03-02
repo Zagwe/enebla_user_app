@@ -1,11 +1,49 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enebla_user_app/bloc/state.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:enebla_user_app/theme/style.dart' as style;
 
 class SubscriptionTreshold extends StatelessWidget {
+  Widget makeRow({required threshold, required value}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Text(
+              'etb'.toUpperCase(),
+              style:
+                  TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Text(
+              value,
+              style: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 4,
+        ),
+        Text(
+          threshold,
+          style: TextStyle(
+              color: style.Style.resturantTagColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 12),
+        )
+      ],
+    );
+  }
+
   final snap;
   const SubscriptionTreshold({super.key, required this.snap});
 
@@ -25,75 +63,26 @@ class SubscriptionTreshold extends StatelessWidget {
               final max = snapSubscription['maxthreshold'];
 
               AppStateProvider.of(context)!.state.maxthreshold = max;
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
+              return Container(
+                height: 70,
+                decoration: BoxDecoration(
+                    border: Border.all(
+                  width: 3,
+                )),
+                padding: EdgeInsets.all(12),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     //min threshold
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.attach_money,
-                          color: style.Style.SecondaryColor,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              min,
-                              style: const TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16),
-                            ),
-                            const SizedBox(
-                              height: 4,
-                            ),
-                            Text(
-                              'Minimum Threshold',
-                              style: TextStyle(
-                                  color: style.Style.resturantTagColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12),
-                            )
-                          ],
-                        ),
-                      ],
+                    makeRow(threshold: 'Minimum threshold', value: min),
+                    VerticalDivider(
+                      color: Colors.grey.shade400,
+                      thickness: 1,
                     ),
-
                     //max threshold
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.attach_money,
-                          color: style.Style.SecondaryColor,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              max,
-                              style: const TextStyle(
-                                  color: Colors.red,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16),
-                            ),
-                            const SizedBox(
-                              height: 4,
-                            ),
-                            Text(
-                              'Maximum Threshold',
-                              style: TextStyle(
-                                  color: style.Style.resturantTagColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12),
-                            )
-                          ],
-                        ),
-                      ],
-                    )
+
+                    makeRow(threshold: 'Maximum threshold', value: max)
                   ],
                 ),
               );

@@ -16,7 +16,7 @@ class SubscriptionInfromation extends StatelessWidget {
 
   var args;
   // var payedAmount;
-  SubscriptionInfromation({super.key, required this.snap,required this.args});
+  SubscriptionInfromation({super.key, required this.snap, required this.args});
 
   final TextEditingController amountController = TextEditingController();
 
@@ -25,14 +25,10 @@ class SubscriptionInfromation extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        const SizedBox(
-          width: 10,
-        ),
         //subscription amount
         Expanded(
           child: SizedBox(
             height: 40,
-            width: 180,
             child: TextFormField(
               controller: amountController,
               decoration: InputDecoration(
@@ -145,10 +141,12 @@ class SubscriptionInfromation extends StatelessWidget {
             ).show(context);
           } else {
             AppStateProvider.of(context)?.state.snap = snap;
-            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-------AppStateProvider-------args");
+            print(
+                "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-------AppStateProvider-------args");
             print(AppStateProvider.of(context)?.state.snap);
-            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-------AppStateProvider-------args");
-         await Chapa.paymentParameters(
+            print(
+                "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-------AppStateProvider-------args");
+            await Chapa.paymentParameters(
               context: context, // context
               publicKey: 'CHASECK_TEST-jmyHK17FPhLvjPDNRfNIAPODsfLKZd9Y',
               currency: 'ETB',
@@ -164,10 +162,12 @@ class SubscriptionInfromation extends StatelessWidget {
 
             AppStateProvider.of(context)!.state.snap = snap;
 
-            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-------AppStateProvider-------args");
-            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-------AppStateProvider-------args");
+            print(
+                "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-------AppStateProvider-------args");
+            print(
+                "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-------AppStateProvider-------args");
             print(args);
-             // //
+            // //
             //  if(args['message'] == 'paymentSuccessful' ){
             //    await SubscriptionService().addSubscription(
             //       subscriptionAmount: amountController.text,
