@@ -20,6 +20,15 @@ class _BalanceState extends State<Balance> {
         toolbarHeight: 70,
         elevation: 2,
         automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text(
           'Balance status',
           style: TextStyle(color: style.Style.primaryColor),
@@ -32,9 +41,26 @@ class _BalanceState extends State<Balance> {
           builder: (context,
               AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
                   subscriptionSnapshot) {
+            int length = 0;
+            if (subscriptionSnapshot.hasData) {
+              for (int index = 0;
+                  index < subscriptionSnapshot.data!.docs.length;
+                  index++) {
+                final keys =
+                    subscriptionSnapshot.data!.docs[index].data().keys.toList();
+
+                for (int j = 0; j < keys.length; j++) {
+                  if (keys[j] == FirebaseAuth.instance.currentUser!.uid) {
+                    length++;
+                  }
+                }
+              }
+              print(FirebaseAuth.instance.currentUser!.uid);
+              print(length);
+            }
             // if (subscriptionSnapshot.data)
             return ListView.builder(
-              itemCount: subscriptionSnapshot.data!.docs.length,
+              itemCount: length,
               itemBuilder: (context, index) {
                 var data = subscriptionSnapshot.data!.docs[index].data()
                     as Map<String, dynamic>;
