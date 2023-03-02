@@ -10,6 +10,8 @@ import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 import 'package:enebla_user_app/theme/style.dart' as style;
 import '../../enebla_user_home.dart';
 import '../order/order.dart';
+import 'PrivacyPolicyScreen.dart';
+import 'termsAndConditions.dart';
 import '../subscription/balanceView.dart';
 import 'aboutUs.dart';
 
@@ -152,15 +154,59 @@ class AccountSetting extends StatelessWidget {
                       applicationLegalese:
                       'Developed by Telet Software Solution',
                       children: <Widget>[
-                        Text(
-                            "Enebla and allows users to pay for their orders with a pre-paid subscription plan, which will allow restaurants to compete on price and quality."),
-                        Text(
-                            "It uses crowdsourced ratings from users' friends and family to make recommendations of restaurants")
-                        ,
+                        Text.rich(
+                          TextSpan(
+                            children: [
+                              TextSpan(
+                                text:
+                                '1-The user and customer of the application must have either telebirr or bank account \n',
+                                style: TextStyle(fontSize: 12),
+                              ),
+                              TextSpan(
+                                text:
+                                '2-When setting a threshold, the customer is allowed to set any amount he or she prefers. For example, if the customer wants to set a minimum threshold of 0ETB or less, he or she can choose to do soThe customer will not be guaranteed that the user will be able to pay back any money they owe; however, we recommend setting a lower threshold of 0ETB.\n',
+                                style: TextStyle(fontSize: 12),
+                              ),
+                              TextSpan(
+                                text:
+                                '3-The user cannot unsubscribe until they have placed 15 consecutive orders. In the event that a user is in an exceptional situation and must unsubscribe, we will make them fill out a special form \n',
+                                style: TextStyle(fontSize: 12),
+                              ),
+                              TextSpan(
+                                text:
+                                '4-If a customer is registered, they must provide service for at least 6 months beforethey can request to cancel. \n',
+                                style: TextStyle(fontSize: 12),
+                              ),
+                              TextSpan(
+                                text:
+                                '5-The user and customer must be fill legal information about background \n',
+                                style: TextStyle(fontSize: 12),
+                              ),
+                            ],
+                          ),
+                        )
                       ]);
 
                   // Navigator.push(context,
                   //     MaterialPageRoute(builder: (context) => AboutUs()));
+                },
+              ),
+              SettingsTile(
+                title: 'Terms & Conditions',
+                subtitle: 'Terms & Conditions to use the application',
+                leading: Icon(Icons.warning),
+                onPressed: (BuildContext context) {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => TermsAndConditionsPage()));
+                },
+              ),
+              SettingsTile(
+                title: 'Privacy Policy',
+                subtitle: 'PrivacyPolicyScreen to consider',
+                leading: Icon(Icons.policy),
+                onPressed: (BuildContext context) {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => PrivacyPolicyScreen()));
                 },
               ),
               SettingsTile(

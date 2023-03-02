@@ -145,12 +145,12 @@ class SubscriptionInfromation extends StatelessWidget {
             ).show(context);
           } else {
             AppStateProvider.of(context)?.state.snap = snap;
-            // print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-------AppStateProvider-------args");
-            // print(AppStateProvider.of(context)?.state.snap);
-            // print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-------AppStateProvider-------args");
-           await Chapa.paymentParameters(
+            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-------AppStateProvider-------args");
+            print(AppStateProvider.of(context)?.state.snap);
+            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-------AppStateProvider-------args");
+         await Chapa.paymentParameters(
               context: context, // context
-              publicKey: 'CHASECK_TEST-FnTXa03f7dXyGVn0HCyfZFvHgT8j1XJX',
+              publicKey: 'CHASECK_TEST-jmyHK17FPhLvjPDNRfNIAPODsfLKZd9Y',
               currency: 'ETB',
               amount: amountController.text,
               email: 'xyz@gmail.com',
@@ -160,7 +160,6 @@ class SubscriptionInfromation extends StatelessWidget {
               title: 'title',
               desc: 'desc',
               namedRouteFallBack: '/fallback',
-              // fall back route name
             );
 
             AppStateProvider.of(context)!.state.snap = snap;
@@ -168,29 +167,28 @@ class SubscriptionInfromation extends StatelessWidget {
             print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-------AppStateProvider-------args");
             print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-------AppStateProvider-------args");
             print(args);
-
-             if(args['message'] == 'paymentSuccessful' ){
-              //logic
-               await SubscriptionService().addSubscription(
-                  subscriptionAmount: amountController.text,
-                  subscriptionstatus: 'true',
-                  subscribedUser: FirebaseAuth.instance.currentUser!.uid,
-                  subscribtionOwner: snap['owner'],
-                  currentBalance: amountController.text
-              );
-            }else{
-              ElegantNotification(
-                title: const Text("Error"),
-                description:
-                const Text(" Payment failed"),
-                icon: const Icon(
-                  Icons.close,
-                  color: Colors.red,
-                ),
-                progressIndicatorColor: Colors.red,
-              ).show(context);
-            }
-
+             // //
+            //  if(args['message'] == 'paymentSuccessful' ){
+            //    await SubscriptionService().addSubscription(
+            //       subscriptionAmount: amountController.text,
+            //       subscriptionstatus: 'true',
+            //       subscribedUser: FirebaseAuth.instance.currentUser!.uid,
+            //       subscribtionOwner: snap['owner'],
+            //       currentBalance: amountController.text
+            //   );
+            // }else{
+            //   ElegantNotification(
+            //     title: const Text("Error"),
+            //     description:
+            //     const Text(" Payment failed"),
+            //     icon: const Icon(
+            //       Icons.close,
+            //       color: Colors.red,
+            //     ),
+            //     progressIndicatorColor: Colors.red,
+            //   ).show(context);
+            // }
+            //
 
             ElegantNotification(
               title: const Text("Success"),

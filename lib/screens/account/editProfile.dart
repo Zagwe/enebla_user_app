@@ -77,6 +77,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   print(snapshot.data!.data()!['photoUrl']);
                 }
                 String imageUrl = snapshot.data!.data()!['photoUrl'];
+                String firstName = snapshot.data!.data()!['firstname'];
+                String lastName = snapshot.data!.data()!['lastname'];
+                String email = snapshot.data!.data()!['email'];
+                String address = snapshot.data!.data()!['address'];
+                String phoneNumber = snapshot.data!.data()!['phonenumber'];
+
                 return ListView(
                   children: [
                     Text(
@@ -138,11 +144,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     SizedBox(
                       height: 35,
                     ),
-                    buildTextField("Full Name", "Dor Alex", false),
-                    buildTextField("E-mail", "alexd@gmail.com", false),
+                    buildTextField("Full Name", firstName, false),
+                    buildTextField("Last Name", lastName, false),
+                    buildTextField("E-mail", email, false),
                     // buildTextField("Password", "********", true),
-                    buildTextField("Location", "TLV, Israel", false),
-                    buildTextField("Phone", "+251-911-111-111", false),
+                    buildTextField("Location", address, false),
+                    buildTextField("Phone", phoneNumber, false),
                     SizedBox(
                       height: 35,
                     ),
