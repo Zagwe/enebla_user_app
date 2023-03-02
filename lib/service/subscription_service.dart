@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enebla_user_app/models/comment_model.dart';
+import 'package:enebla_user_app/models/unsubscribe.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../models/currentBalance_model.dart';
@@ -34,5 +35,25 @@ class SubscriptionService {
     });
 
     return res;
+  }
+
+  unsubscribe(
+      {required resturantId,
+      required userId,
+      required currentBalance,
+      required subscriptionAmount}) {
+    Unsubscribe unsubscribe = Unsubscribe(
+        currentBalance: currentBalance,
+        resturantId: resturantId,
+        subscriptionAmount: subscriptionAmount,
+        userId: userId);
+
+    FirebaseFirestore.instance
+        .collection('unsubscribecomplient')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .set(unsubscribe.toJson())
+        .then((value) => print('request sent'));
+    // print(subscriptionAmount);
+    // print(resturantId);
   }
 }

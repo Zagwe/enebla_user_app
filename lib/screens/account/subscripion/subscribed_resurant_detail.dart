@@ -1,3 +1,5 @@
+import 'package:enebla_user_app/bloc/state.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -8,16 +10,21 @@ class SubscribedResturantDetail extends StatelessWidget {
   final name;
   final currentBalance;
   final imageUrl;
+  final resturantId;
+  final subscriptionAmount;
   SubscribedResturantDetail(
       {super.key,
       required this.name,
       required this.currentBalance,
-      required this.imageUrl});
+      required this.imageUrl,
+      required this.resturantId,
+      required this.subscriptionAmount});
   TextEditingController controller = TextEditingController();
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    final bloc = AppStateProvider.of(context)!.blocProvider.subscriptionBloc;
     return Form(
       key: _formkey,
       child: Column(
@@ -144,6 +151,12 @@ class SubscribedResturantDetail extends StatelessWidget {
                           onPressed: () {
                             if (_formkey.currentState!.validate()) {
                               //logic
+                              bloc.subscriptionService.unsubscribe(
+                                  resturantId: resturantId,
+                                  currentBalance: currentBalance,
+                                  subscriptionAmount: subscriptionAmount,
+                                  userId:
+                                      FirebaseAuth.instance.currentUser!.uid);
                             }
                           },
                           child: Text("unsubscribe".toUpperCase(),

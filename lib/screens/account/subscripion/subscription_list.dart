@@ -64,6 +64,7 @@ class SubscriptionList extends StatelessWidget {
                     [FirebaseAuth.instance.currentUser!.uid];
                 // print(singleDoc);
                 String resturant = singleDoc['subscribtionOwner'];
+                // print(singleDoc);
 
                 return FutureBuilder(
                   future: FirebaseFirestore.instance
@@ -77,7 +78,11 @@ class SubscriptionList extends StatelessWidget {
                         // print(resturantInfo!['imageUrl']);
                         final currentBalance = singleDoc['currentBalance'];
                         final resturantName = resturantInfo!['name'];
+                        // print(resturantInfo);
 
+                        final resturantId = singleDoc['subscribtionOwner'];
+                        final subscriptionAmount =
+                            singleDoc['subscriptionAmount'];
                         return GestureDetector(
                           onTap: () {
                             showBarModalBottomSheet(
@@ -89,6 +94,8 @@ class SubscriptionList extends StatelessWidget {
                                       currentBalance: currentBalance,
                                       name: resturantName,
                                       imageUrl: resturantInfo['imageUrl'],
+                                      resturantId: resturantId,
+                                      subscriptionAmount: subscriptionAmount,
                                     )
 
                                 ///this page will show
