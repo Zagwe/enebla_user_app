@@ -13,6 +13,9 @@ class ResturantItem extends StatelessWidget {
   ResturantItem({required this.snap});
   @override
   Widget build(BuildContext context) {
+    // if (snap['imageUrl'] is String) {
+    //   print(snap['imageUrl']);
+    // }
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Column(
@@ -32,11 +35,13 @@ class ResturantItem extends StatelessWidget {
               height: 240,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
-                child: Image.network(
-                  snap['imageUrl'],
-                  fit: BoxFit.fill,
-                  width: MediaQuery.of(context).size.width,
-                ),
+                child: snap['imageUrl'] != null
+                    ? Image.network(
+                        snap['imageUrl'],
+                        fit: BoxFit.fill,
+                        width: MediaQuery.of(context).size.width,
+                      )
+                    : Image.asset('lib/assets/enebla.jpg'),
               ),
             ),
           ),

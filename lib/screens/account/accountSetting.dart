@@ -3,6 +3,7 @@ import 'package:enebla_user_app/screens/account/balance.dart';
 import 'package:enebla_user_app/screens/account/changePassword.dart';
 import 'package:enebla_user_app/screens/account/contucUs.dart';
 import 'package:enebla_user_app/screens/account/editProfile.dart';
+import 'package:enebla_user_app/screens/account/subscripion/subscription_list.dart';
 import 'package:enebla_user_app/screens/order/orderPreview.dart';
 import 'package:enebla_user_app/screens/payment/payment.dart';
 import 'package:flutter/material.dart';
@@ -93,6 +94,17 @@ class AccountSetting extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => Order()));
                 },
               ),
+              SettingsTile(
+                title: 'subscription list',
+                subtitle: 'View Order History',
+                leading: Icon(Icons.fastfood),
+                onPressed: (BuildContext context) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SubscriptionList()));
+                },
+              ),
               // SettingsTile(
               //   title: 'Location',
               //   subtitle: 'Add or Remove Location',
@@ -150,13 +162,12 @@ class AccountSetting extends StatelessWidget {
                       applicationName: 'About Enebla',
                       applicationVersion: 'Version 0.0.1',
                       applicationLegalese:
-                      'Developed by Telet Software Solution',
+                          'Developed by Telet Software Solution',
                       children: <Widget>[
                         Text(
                             "Enebla and allows users to pay for their orders with a pre-paid subscription plan, which will allow restaurants to compete on price and quality."),
                         Text(
-                            "It uses crowdsourced ratings from users' friends and family to make recommendations of restaurants")
-                        ,
+                            "It uses crowdsourced ratings from users' friends and family to make recommendations of restaurants"),
                       ]);
 
                   // Navigator.push(context,

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elegant_notification/elegant_notification.dart';
 import 'package:enebla_user_app/bloc/state.dart';
@@ -142,6 +144,7 @@ class _TopTabBarWidget extends State<TopTabBarWidget>
                         .doc(widget.snap['id'])
                         .snapshots(),
                     builder: (context, snapshot) {
+                      print(widget.snap);
                       if (snapshot.hasData) {
                         if (snapshot.data!.data() != null) {
                           if (snapshot.data!.data()![
