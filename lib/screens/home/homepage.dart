@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enebla_user_app/screens/search/search.dart';
-import 'package:enebla_user_app/widget/homepage_slider.dart';
-import 'package:enebla_user_app/widget/resturant_card.dart';
+import 'package:enebla_user_app/screens/home/widget/homepage_slider.dart';
+import 'package:enebla_user_app/screens/home/widget/resturant_card.dart';
 import 'package:flutter/material.dart';
 import 'package:enebla_user_app/theme/style.dart' as style;
 import '../../auth/login.dart';

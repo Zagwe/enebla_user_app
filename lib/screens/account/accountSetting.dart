@@ -3,6 +3,7 @@ import 'package:enebla_user_app/screens/account/balance.dart';
 import 'package:enebla_user_app/screens/account/changePassword.dart';
 import 'package:enebla_user_app/screens/account/contucUs.dart';
 import 'package:enebla_user_app/screens/account/editProfile.dart';
+import 'package:enebla_user_app/screens/account/subscripion/subscription_list.dart';
 import 'package:enebla_user_app/screens/order/orderPreview.dart';
 import 'package:enebla_user_app/screens/payment/payment.dart';
 import 'package:flutter/material.dart';
@@ -37,15 +38,15 @@ class AccountSetting extends StatelessWidget {
             titlePadding: EdgeInsets.all(20),
             title: 'Account Setting',
             tiles: [
-              SettingsTile(
-                title: 'Home',
-                subtitle: 'Go to Enebla Home',
-                leading: Icon(Icons.home),
-                onPressed: (BuildContext context) {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => EneblaHome()));
-                },
-              ),
+              // SettingsTile(
+              //   title: 'Home',
+              //   subtitle: 'Go to Enebla Home',
+              //   leading: Icon(Icons.home),
+              //   onPressed: (BuildContext context) {
+              //     Navigator.push(context,
+              //         MaterialPageRoute(builder: (context) => EneblaHome()));
+              //   },
+              // ),
               SettingsTile(
                 title: 'Balance',
                 subtitle: 'Change your account information',
@@ -80,19 +81,28 @@ class AccountSetting extends StatelessWidget {
                 subtitle: 'Add your Account',
                 leading: Icon(Icons.payment),
                 onPressed: (BuildContext context) {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => PaymentMethod()));
+                },
+              ),
+              // SettingsTile(
+              //   title: 'Order History',
+              //   subtitle: 'View Order History',
+              //   leading: Icon(Icons.fastfood),
+              //   onPressed: (BuildContext context) {
+              //     Navigator.push(context,
+              //         MaterialPageRoute(builder: (context) => Order()));
+              //   },
+              // ),
+              SettingsTile(
+                title: 'subscription list',
+                subtitle: 'View subscription list',
+                leading: Icon(Icons.fastfood),
+                onPressed: (BuildContext context) {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => Payment_method()));
-                },
-              ),
-              SettingsTile(
-                title: 'Order History',
-                subtitle: 'View Order History',
-                leading: Icon(Icons.fastfood),
-                onPressed: (BuildContext context) {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Order()));
+                          builder: (context) => SubscriptionList()));
                 },
               ),
               // SettingsTile(
@@ -152,7 +162,7 @@ class AccountSetting extends StatelessWidget {
                       applicationName: 'About Enebla',
                       applicationVersion: 'Version 0.0.1',
                       applicationLegalese:
-                      'Developed by Telet Software Solution',
+                          'Developed by Telet Software Solution',
                       children: <Widget>[
                         Text.rich(
                           TextSpan(

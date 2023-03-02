@@ -3,9 +3,10 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:enebla_user_app/theme/style.dart' as style;
+import 'package:flutter_launcher_icons/constants.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import '../screens/comment_and_rating.dart';
-import '../screens/home/resturant_home_page.dart';
+import '../../comment_and_rating.dart';
+import '../resturant_home_page.dart';
 
 class ResturantInformation extends StatelessWidget {
   final snap;
@@ -34,21 +35,25 @@ class ResturantInformation extends StatelessWidget {
         ),
 
         //tag
-        Row(
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             RichText(
                 text: TextSpan(
                     style: TextStyle(
                         color: style.Style.resturantTagColor, fontSize: 16),
                     children: [
-                  TextSpan(text: '\$\$'),
-                  TextSpan(text: ' \u2981 '),
-                  TextSpan(text: 'chicken'),
-                  TextSpan(text: ' \u2981 '),
+                  const TextSpan(text: '\$\$'),
+                  const TextSpan(text: ' \u2981 '),
+                  const TextSpan(text: 'chicken'),
+                  const TextSpan(text: ' \u2981 '),
                   TextSpan(text: snap['address']),
-                  TextSpan(text: ' \u2981  '),
-                  TextSpan(text: 'Deshi Food'),
+                  const TextSpan(text: ' \u2981  '),
+                  const TextSpan(text: 'Deshi Food'),
                 ])),
+            SizedBox(
+              height: 12,
+            ),
             GestureDetector(
               onTap: () {
                 // print('=-=-=-=-=-=-=-=-=-');
@@ -66,43 +71,47 @@ class ResturantInformation extends StatelessWidget {
                 // Navigator.push(context,
                 //     MaterialPageRoute(builder: (context) => CommentAndRating()));
               },
-              child: Row(
-                children: [
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Text(
-                          '\u2981',
-                          style: TextStyle(
-                              color: style.Style.resturantTagColor, fontSize: 16),
+              child: Container(
+                width: 120,
+                padding: EdgeInsets.all(5),
+                decoration: BoxDecoration(border: Border.all(width: 2)),
+                child: Row(
+                  children: [
+                    Row(
+                      children: [
+                        // Text(
+                        //   '\u2981',
+                        //   style: TextStyle(
+                        //       color: style.Style.resturantTagColor,
+                        //       fontSize: 16),
+                        // ),
+                        Icon(
+                          Icons.comment,
+                          size: 20,
+                          color: style.Style.SecondaryColor,
                         ),
-                      ),
-                      Icon(
-                        Icons.comment,
-                        size: 20,
-                        color: Color.fromARGB(255, 54, 48, 48),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text('comment')
-                      //comment
-
-                    ],
-                  )
-                ],
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          'comment'.toUpperCase(),
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        )
+                        //comment
+                      ],
+                    )
+                  ],
+                ),
               ),
             )
           ],
         ),
 
-        SizedBox(
+        const SizedBox(
           height: 6,
         ),
 
         //rating and comment
-
       ],
     );
   }

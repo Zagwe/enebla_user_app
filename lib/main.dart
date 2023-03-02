@@ -4,7 +4,7 @@ import 'package:enebla_user_app/bloc/subscription_bloc.dart';
 import 'package:enebla_user_app/screens/chapapayment/fallback.dart';
 import 'package:enebla_user_app/screens/home/resturant_home_page.dart';
 import 'package:enebla_user_app/screens/onboarding/onBoarding.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:enebla_user_app/theme/another_style.dart' as style;
@@ -42,10 +42,9 @@ class EneblaUser extends StatelessWidget {
         theme: style.Style.themeData,
         home: isViewed != 0 ? OnBording() : EneblaHome(),
         routes: {
-          "/fallback": (context) => ResturantHomePage(snap: AppStateProvider.of(context)?.state.snap),
+          "/fallback": (context) =>
+              ResturantHomePage(snap: AppStateProvider.of(context)?.state.snap),
           "/fallbackBalance": (context) => Fallback()
-        }
-
-    );
+        });
   }
 }

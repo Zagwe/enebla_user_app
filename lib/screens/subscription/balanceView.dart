@@ -6,17 +6,21 @@ import 'package:enebla_user_app/service/balance_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-
 import 'package:enebla_user_app/theme/style.dart' as style;
 
 import '../../bloc/state.dart';
 import '../../service/subscription_service.dart';
 import '../chapapayment/chapa_payment initializer.dart';
+
 class BalanceView extends StatefulWidget {
   var resturantId;
   var userId;
-  var currentBalance ;
-  BalanceView({super.key,  required this.resturantId, required this.userId, required this.currentBalance});
+  var currentBalance;
+  BalanceView(
+      {super.key,
+      required this.resturantId,
+      required this.userId,
+      required this.currentBalance});
 
   @override
   State<BalanceView> createState() => _BalanceViewState();
@@ -75,7 +79,7 @@ class _BalanceViewState extends State<BalanceView> {
   Widget build(BuildContext context) {
     List keys = [];
     return Scaffold(
-        resizeToAvoidBottomInset : false,
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
             title: Text(
               'Balance Details',
@@ -110,24 +114,26 @@ class _BalanceViewState extends State<BalanceView> {
                       title('Current Balance'),
                       ////resturant information section
                       StreamBuilder(
-                        stream: FirebaseFirestore.instance
-                            .collection('subscriptionuser')
-                            .doc(widget.resturantId)
-                            .snapshots(),
-                        builder: (context, snapshot) {
-                          var balance = snapshot!.data![widget.userId]["currentBalance"];
-                          return Container(
-                            height: 100,
-                            decoration: BoxDecoration(boxShadow: const [
-                              BoxShadow(
+                          stream: FirebaseFirestore.instance
+                              .collection('subscriptionuser')
+                              .doc(widget.resturantId)
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            var balance =
+                                snapshot.data![widget.userId]["currentBalance"];
+                            return Container(
+                              height: 100,
+                              decoration: BoxDecoration(boxShadow: const [
+                                BoxShadow(
                                   color: Colors.grey, //New
                                   blurRadius: 25.0,
                                   // offset: Offset(0, -10)
-                              )
-                            ], color: style.Style.primaryColor),
-                            padding: const EdgeInsets.all(12),
-                              child:Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                )
+                              ], color: style.Style.primaryColor),
+                              padding: const EdgeInsets.all(12),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   Text(
                                     "Current Balance".toUpperCase(),
@@ -136,7 +142,6 @@ class _BalanceViewState extends State<BalanceView> {
                                         fontWeight: FontWeight.bold,
                                         fontSize: 24),
                                   ),
-
                                   Text(
                                     "${balance} ETB",
                                     style: const TextStyle(
@@ -146,9 +151,8 @@ class _BalanceViewState extends State<BalanceView> {
                                   ),
                                 ],
                               ),
-                          );
-                        }
-                      ),
+                            );
+                          }),
                       const SizedBox(
                         height: 20,
                       ),
@@ -176,9 +180,8 @@ class _BalanceViewState extends State<BalanceView> {
                                               style: TextStyle(
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.w800,
-                                                  color:Colors.black ),
-                                            )
-                                        ),
+                                                  color: Colors.black),
+                                            )),
                                       ),
                                       SizedBox(
                                         height: 10,
@@ -189,11 +192,14 @@ class _BalanceViewState extends State<BalanceView> {
                                           decoration: InputDecoration(
                                               prefixIcon: Icon(Icons.edit),
                                               hintText: 'TopUp Amount',
-                                              hintStyle: TextStyle(fontSize: 20),
+                                              hintStyle:
+                                                  TextStyle(fontSize: 20),
                                               border: OutlineInputBorder(
-                                                  borderSide: BorderSide(width: 1),
-                                                  borderRadius: BorderRadius.circular(20)
-                                              )),
+                                                  borderSide:
+                                                      BorderSide(width: 1),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20))),
                                           validator: (value) {
                                             if (value!.isEmpty) {
                                               return 'Please enter Correct TopUp Amount';
@@ -206,30 +212,29 @@ class _BalanceViewState extends State<BalanceView> {
                                   ),
                                 ),
                               ),
-
                             ],
                           ),
                         ),
                       ),
-                    SizedBox(
-                      height: 160,
-                    ),
+                      SizedBox(
+                        height: 160,
+                      ),
                       Container(
                         width: MediaQuery.of(context).size.width,
                         height: 50,
                         margin: const EdgeInsets.only(left: 15, right: 15),
                         child: ClipRRect(
                           borderRadius:
-                          const BorderRadius.all(Radius.circular(12)),
+                              const BorderRadius.all(Radius.circular(12)),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor: style.Style.primaryColor,
-
                             ),
                             onPressed: () async {
-                                await Chapa.paymentParameters(
+                              await Chapa.paymentParameters(
                                 context: context, // context
-                                publicKey: 'CHASECK_TEST-FnTXa03f7dXyGVn0HCyfZFvHgT8j1XJX',
+                                publicKey:
+                                    'CHASECK_TEST-FnTXa03f7dXyGVn0HCyfZFvHgT8j1XJX',
                                 currency: 'ETB',
                                 amount: amountController.text,
                                 email: 'xyz@gmail.com',
@@ -241,33 +246,36 @@ class _BalanceViewState extends State<BalanceView> {
                                 namedRouteFallBack: '/fallbackBalance',
                                 // fall back route name
                               );
-                             var updatedBalance = int.parse(amountController.text) + int.parse(widget.currentBalance);
-                               await BalanceService().setCurrentBalance(
-                                    totalBalance: updatedBalance.toString(),
-                                    subscribtionOwner: widget.resturantId,
-                                    subscribtionUser: widget.userId,);
+                              var updatedBalance =
+                                  int.parse(amountController.text) +
+                                      int.parse(widget.currentBalance);
+                              await BalanceService().setCurrentBalance(
+                                totalBalance: updatedBalance.toString(),
+                                subscribtionOwner: widget.resturantId,
+                                subscribtionUser: widget.userId,
+                              );
 
-                                ElegantNotification(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: MediaQuery.of(context).size.height * .1,
-                                  title: const Text("Balance Update"),
-                                  description:
-                                  const Text("Balance Update. is Being Proccesed"),
-                                  icon: const Icon(
-                                    Icons.done,
-                                    color: Colors.green,
-                                  ),
-                                  progressIndicatorColor: Colors.red,
-                                ).show(context);
-                              },
-
-                              child: const Text(
-                            'TopUp',
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w800,
-                                color: Colors.white),
-                          ),),
+                              ElegantNotification(
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.height * .1,
+                                title: const Text("Balance Update"),
+                                description: const Text(
+                                    "Balance Update. is Being Proccesed"),
+                                icon: const Icon(
+                                  Icons.done,
+                                  color: Colors.green,
+                                ),
+                                progressIndicatorColor: Colors.red,
+                              ).show(context);
+                            },
+                            child: const Text(
+                              'TopUp',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w800,
+                                  color: Colors.white),
+                            ),
+                          ),
                         ),
                       )
                     ],
