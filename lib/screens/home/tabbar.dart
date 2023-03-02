@@ -79,9 +79,6 @@ class _TopTabBarWidget extends State<TopTabBarWidget>
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    ValueNotifier show = ValueNotifier(
-        AppStateProvider.of(context)?.state.orderFoodList['food']!.length);
-    show.notifyListeners();
     return Stack(
       children: [
         Column(

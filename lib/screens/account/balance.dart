@@ -1,11 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:enebla_user_app/enebla_user_home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:enebla_user_app/theme/style.dart' as style;
-import 'package:flutter_settings_ui/flutter_settings_ui.dart';
-
-import '../../bloc/state.dart';
 import '../subscription/balanceView.dart';
 
 class Balance extends StatefulWidget {
@@ -30,14 +26,18 @@ class _BalanceState extends State<Balance> {
         ),
       ),
       body: StreamBuilder(
-          stream:
-              FirebaseFirestore.instance.collection('resturant').snapshots(),
-          builder: (context, snapshots) {
+          stream: FirebaseFirestore.instance
+              .collection('subscriptionuser')
+              .snapshots(),
+          builder: (context,
+              AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                  subscriptionSnapshot) {
+            // if (subscriptionSnapshot.data)
             return ListView.builder(
-              itemCount: snapshots.data!.docs.length,
+              itemCount: subscriptionSnapshot.data!.docs.length,
               itemBuilder: (context, index) {
-                var data =
-                    snapshots.data!.docs[index].data() as Map<String, dynamic>;
+                var data = subscriptionSnapshot.data!.docs[index].data()
+                    as Map<String, dynamic>;
 
                 return FutureBuilder(
                     future: FirebaseFirestore.instance
@@ -45,7 +45,8 @@ class _BalanceState extends State<Balance> {
                         .doc(data['owner'])
                         .get(),
                     builder: (context, futureSnapshot) {
-                      if (futureSnapshot.data == null) {
+                      if (futureSnapshot.hasData) {
+                        // print(data);
                         return const Center(child: CircularProgressIndicator());
                       } else {
                         return GestureDetector(
@@ -95,7 +96,15 @@ class _BalanceState extends State<Balance> {
                         );
                       }
                     });
-                //   Card(
+              },
+            );
+          }),
+    );
+  }
+}
+
+
+       //   Card(
                 //   color: Colors.grey[200],
                 //   child: SizedBox(
                 //     height: 100.0,
@@ -118,9 +127,3 @@ class _BalanceState extends State<Balance> {
                 //     ),
                 //   ),
                 // );
-              },
-            );
-          }),
-    );
-  }
-}

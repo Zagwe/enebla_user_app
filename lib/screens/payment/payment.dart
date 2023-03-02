@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-class Payment_method extends StatelessWidget {
-  Payment_method({super.key});
+class PaymentMethod extends StatelessWidget {
+  PaymentMethod({super.key});
   List<String> homeCardTag = [
     'Chapa',
     'Telebirr',
@@ -40,10 +40,10 @@ class Payment_method extends StatelessWidget {
           backgroundColor: Colors.white,
           toolbarHeight: 70,
           elevation: 0,
-          leading: BackButton(
+          leading: const BackButton(
             color: Colors.black,
           ),
-          title: Center(
+          title: const Center(
             child: Text('Payment Methods',
                 style: TextStyle(
                     fontSize: 24,
@@ -56,48 +56,49 @@ class Payment_method extends StatelessWidget {
           padding: const EdgeInsets.all(10.0),
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    'Available payment methods',
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w800,
-                        color: Colors.black54),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      //  Navigator.of(context).push(MaterialPageRoute(
-                      //      builder: (BuildContext context) => EneblaHome()));
-                    },
-                    child: Text(
-                      'Current Status',
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w800,
-                          color: Colors.black),
-                    ),
-                  ),
-                ],
-              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Flexible(
+              //       child: const Text(
+              //         'Available payment methods',
+              //         style: TextStyle(
+              //             fontSize: 18,
+              //             fontWeight: FontWeight.w800,
+              //             color: Colors.black54),
+              //       ),
+              //     ),
+              //     Flexible(
+              //       child: const Text(
+              //         'Current Status',
+              //         textAlign: TextAlign.end,
+              //         style: TextStyle(
+              //             fontSize: 14,
+              //             fontWeight: FontWeight.w800,
+              //             color: Colors.black),
+              //       ),
+              //     ),
+              //   ],
+              // ),
               Expanded(
                 child: ListView.builder(
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   itemCount: homeCardTag.length,
                   itemBuilder: (context, index) {
                     return Container(
+                      padding: EdgeInsets.all(12),
                       width: MediaQuery.of(context).size.width,
-                      height: 120,
-                      margin: EdgeInsets.only(bottom: 15),
-                      decoration: const BoxDecoration(
+                      // height: 80,
+                      margin: const EdgeInsets.only(bottom: 15),
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 1),
                           // color: Colors.red,
                           borderRadius: BorderRadius.all(Radius.circular(15))),
                       child: Row(
                         children: [
                           ClipRRect(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10)),
                             child: Image(
                                 image: AssetImage(homeCardImage[index]),
                                 width: 60,
@@ -114,8 +115,8 @@ class Payment_method extends StatelessWidget {
                                 children: <Widget>[
                                   Text(
                                     homeCardTag[index],
-                                    style: TextStyle(
-                                        fontSize: 25,
+                                    style: const TextStyle(
+                                        fontSize: 20,
                                         fontWeight: FontWeight.w900,
                                         color: Colors.black,
                                         wordSpacing: 5),
@@ -126,21 +127,24 @@ class Payment_method extends StatelessWidget {
                                     children: <Widget>[
                                       Text(
                                         paymentCardTag[index],
-                                        style: TextStyle(
-                                          fontSize: 20,
+                                        style: const TextStyle(
+                                          // fontSize: 20,
                                           fontWeight: FontWeight.w800,
                                           color: Colors.black54,
                                         ),
                                       ),
-                                      Text(
-                                        activeStatus[index],
-                                        style: TextStyle(
-                                          // backgroundColor: Colors.red,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w800,
-                                          color: activeStatus[index] == 'Active'
-                                              ? Colors.green
-                                              : Colors.red,
+                                      Flexible(
+                                        child: Text(
+                                          activeStatus[index],
+                                          style: TextStyle(
+                                            // backgroundColor: Colors.red,
+                                            // fontSize: 20,
+                                            fontWeight: FontWeight.w800,
+                                            color:
+                                                activeStatus[index] == 'Active'
+                                                    ? Colors.green
+                                                    : Colors.red,
+                                          ),
                                         ),
                                       ),
                                     ],

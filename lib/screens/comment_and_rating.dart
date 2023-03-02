@@ -33,92 +33,85 @@ class _CommentAndRatingState extends State<CommentAndRating> {
     return Scaffold(
       body: Column(
         children: [
-          //rating
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //titel and comment editing section
+          Container(
+            decoration: BoxDecoration(
+                color: Colors.grey.shade200,
+                border: Border(
+                    bottom: BorderSide(width: 1, color: Colors.grey.shade400))),
+            child: Column(
               children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      '$ratingValue Rating',
-                      style: Theme.of(context).textTheme.headline4,
-                    ),
-                    // SizedBox(
-                    //   width: 20,
-                    //   child: ListView.builder(
-                    //       physics: NeverScrollableScrollPhysics(),
-                    //       scrollDirection: Axis.horizontal,
-                    //       itemCount: ratingValue.round(),
-                    //       itemBuilder: (context, index) {
-                    //         return Icon(
-                    //           Icons.star,
-                    //           color: style.Style.SecondaryColor,
-                    //           size: 20,
-                    //         );
-                    //       }),
-                    // )
-                  ],
+                //title
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Text(
+                    'Add comment'.toUpperCase(),
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline4!
+                        .copyWith(fontSize: 17),
+                  ),
                 ),
-                Text('200+', style: Theme.of(context).textTheme.headlineMedium)
-              ],
-            ),
-          ),
 
-          ///COMMENT ADDING SECIONT
-          Form(
-            key: _formkey,
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: SizedBox(
-                      height: 50,
-                      child: TextFormField(
-                        controller: commentController,
-                        autofocus: true,
-                        autocorrect: false,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        decoration: InputDecoration(
-                            focusColor: style.Style.primaryColor,
-                            hoverColor: style.Style.primaryColor,
-                            label: Text('add comment'),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(50))),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'you need to write a comment';
-                          }
-                        },
-                      ),
+                ///COMMENT ADDING SECIONT
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 13.0),
+                  child: Form(
+                    key: _formkey,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: SizedBox(
+                            height: 50,
+                            child: TextFormField(
+                              controller: commentController,
+                              autofocus: true,
+                              autocorrect: false,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              decoration: InputDecoration(
+                                  focusColor: style.Style.primaryColor,
+                                  hoverColor: style.Style.primaryColor,
+                                  label: const Text('add comment'),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(50))),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'you need to write a comment';
+                                }
+                              },
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Container(
+                            height: 50,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                border: Border.all(width: 2)),
+                            child: IconButton(
+                                onPressed: () async {
+                                  if (_formkey.currentState!.validate()) {
+                                    String res = await bloc.commentService
+                                        .postUserCommentToDatabase(
+                                            commentedby: widget.commentedby,
+                                            commentedto: widget.commentedto,
+                                            comment: commentController.text);
+
+                                    Fluttertoast.showToast(msg: res);
+                                  }
+                                },
+                                icon: const Icon(Icons.send)))
+                      ],
                     ),
                   ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Container(
-                      height: 50,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                          border: Border.all(width: 2)),
-                      child: IconButton(
-                          onPressed: () async {
-                            if (_formkey.currentState!.validate()) {
-                              String res = await bloc.commentService
-                                  .postUserCommentToDatabase(
-                                      commentedby: widget.commentedby,
-                                      commentedto: widget.commentedto,
-                                      comment: commentController.text);
-
-                              Fluttertoast.showToast(msg: res);
-                            }
-                          },
-                          icon: Icon(Icons.send)))
-                ],
-              ),
+                ),
+                SizedBox(
+                  height: 20,
+                )
+              ],
             ),
           ),
 //rating will be placed here
@@ -145,10 +138,7 @@ class _CommentAndRatingState extends State<CommentAndRating> {
                     //           .data()![key]['comment']
                     //           .length) as int;
                     // }
-                    print('=-=0-=-0=0=-0');
-                    print(keys.length);
 
-                    print(keys);
                     return ListView.builder(
                         itemCount: keys.length,
                         itemBuilder: (context, index) {
@@ -160,8 +150,6 @@ class _CommentAndRatingState extends State<CommentAndRating> {
                               builder: (context, snapshot) {
                                 // print(keys[index]);
                                 if (snapshot.hasData) {
-                                  print('has data ');
-                                  print(index);
                                   // print(snapshot.data!.data());
                                   if (snapshot.data!.data() != null) {
                                     ///here i am trying to get the user naem
@@ -179,77 +167,107 @@ class _CommentAndRatingState extends State<CommentAndRating> {
                                       imageUrl =
                                           snapshot.data!.data()!['photoUrl'];
                                     }
-                                    return Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      // padding: EdgeInsets.all(20),
-                                      margin: EdgeInsets.all(10),
-                                      child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(50),
-                                                  border: Border.all(
-                                                    color: Colors.black,
-                                                  )),
-
-                                              ///the image of user profile
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(50),
-                                                child: imageUrl == null
-                                                    ? Image.asset(
-                                                        'lib/assets/profile image.png',
-                                                        height: 50,
-                                                        width: 50,
-                                                        fit: BoxFit.cover,
-                                                      )
-                                                    : Image.network(
-                                                        imageUrl,
-                                                        height: 50,
-                                                        width: 50,
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: 10,
-                                            ),
-                                            Column(
+                                    return Column(
+                                      children: [
+                                        Container(
+                                          // decoration: BoxDecoration(
+                                          //     border: Border.all(width: 1)),
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          // padding: EdgeInsets.all(20),
+                                          margin: const EdgeInsets.all(10),
+                                          child: Row(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                Text(
-                                                  username,
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              50),
+                                                      border: Border.all(
+                                                        color: Colors.black,
+                                                      )),
+
+                                                  ///the image of user profile
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            50),
+                                                    child: imageUrl == null
+                                                        ? Image.asset(
+                                                            'lib/assets/profile image.png',
+                                                            height: 50,
+                                                            width: 50,
+                                                            fit: BoxFit.cover,
+                                                          )
+                                                        : SizedBox(
+                                                            height: 50,
+                                                            width: 50,
+                                                            child: FittedBox(
+                                                              fit: BoxFit.cover,
+                                                              child:
+                                                                  FadeInImage(
+                                                                      placeholder:
+                                                                          const AssetImage(
+                                                                              'lib/assets/profile image.png'),
+                                                                      image:
+                                                                          NetworkImage(
+                                                                        imageUrl,
+                                                                      )),
+                                                            ),
+                                                          ),
+                                                  ),
                                                 ),
-                                                LimitedBox(
-                                                  maxWidth:
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .width *
-                                                          .7,
-                                                  child: Text(comment),
+                                                const SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      username,
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    LimitedBox(
+                                                      maxWidth:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              .7,
+                                                      child: Text(comment),
+                                                    )
+                                                  ],
                                                 )
-                                              ],
-                                            )
-                                          ]),
+                                              ]),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 12.0),
+                                          child: Divider(
+                                            thickness: 1,
+                                          ),
+                                        )
+                                      ],
                                     );
                                   }
                                 }
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  if (index == 0) {
+                                    return const Center(
+                                        child: CircularProgressIndicator());
+                                  }
+                                }
 
-                                print(' dont has data ');
-                                print(index);
-                                return Center(
-                                    child: CircularProgressIndicator());
+                                return Container();
                               });
                         });
                   } else {
-                    return Center(
+                    return const Center(
                       child: Text('there is no comment yet'),
                     );
                   }

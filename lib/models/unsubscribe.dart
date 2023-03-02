@@ -5,9 +5,11 @@ class Unsubscribe {
   final String userId;
   final String currentBalance;
   final String subscriptionAmount;
+  final String complinet;
 
   Unsubscribe(
-      {required this.currentBalance,
+      {required this.complinet,
+      required this.currentBalance,
       required this.resturantId,
       required this.subscriptionAmount,
       required this.userId});
@@ -16,6 +18,7 @@ class Unsubscribe {
         "resturantId": resturantId,
         "userId": userId,
         "currentBalance": currentBalance,
-        "subscriptionAmount": subscriptionAmount
+        "subscriptionAmount": subscriptionAmount,
+        "complinet": complinet
       };
 }

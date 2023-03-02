@@ -36,15 +36,15 @@ class AccountSetting extends StatelessWidget {
             titlePadding: EdgeInsets.all(20),
             title: 'Account Setting',
             tiles: [
-              SettingsTile(
-                title: 'Home',
-                subtitle: 'Go to Enebla Home',
-                leading: Icon(Icons.home),
-                onPressed: (BuildContext context) {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => EneblaHome()));
-                },
-              ),
+              // SettingsTile(
+              //   title: 'Home',
+              //   subtitle: 'Go to Enebla Home',
+              //   leading: Icon(Icons.home),
+              //   onPressed: (BuildContext context) {
+              //     Navigator.push(context,
+              //         MaterialPageRoute(builder: (context) => EneblaHome()));
+              //   },
+              // ),
               SettingsTile(
                 title: 'Balance',
                 subtitle: 'Change your account information',
@@ -79,24 +79,22 @@ class AccountSetting extends StatelessWidget {
                 subtitle: 'Add your Account',
                 leading: Icon(Icons.payment),
                 onPressed: (BuildContext context) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Payment_method()));
-                },
-              ),
-              SettingsTile(
-                title: 'Order History',
-                subtitle: 'View Order History',
-                leading: Icon(Icons.fastfood),
-                onPressed: (BuildContext context) {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Order()));
+                      MaterialPageRoute(builder: (context) => PaymentMethod()));
                 },
               ),
+              // SettingsTile(
+              //   title: 'Order History',
+              //   subtitle: 'View Order History',
+              //   leading: Icon(Icons.fastfood),
+              //   onPressed: (BuildContext context) {
+              //     Navigator.push(context,
+              //         MaterialPageRoute(builder: (context) => Order()));
+              //   },
+              // ),
               SettingsTile(
                 title: 'subscription list',
-                subtitle: 'View Order History',
+                subtitle: 'View subscription list',
                 leading: Icon(Icons.fastfood),
                 onPressed: (BuildContext context) {
                   Navigator.push(

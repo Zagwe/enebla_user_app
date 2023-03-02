@@ -12,13 +12,15 @@ class SubscribedResturantDetail extends StatelessWidget {
   final imageUrl;
   final resturantId;
   final subscriptionAmount;
-  SubscribedResturantDetail(
-      {super.key,
-      required this.name,
-      required this.currentBalance,
-      required this.imageUrl,
-      required this.resturantId,
-      required this.subscriptionAmount});
+
+  SubscribedResturantDetail({
+    super.key,
+    required this.name,
+    required this.currentBalance,
+    required this.imageUrl,
+    required this.resturantId,
+    required this.subscriptionAmount,
+  });
   TextEditingController controller = TextEditingController();
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
@@ -36,7 +38,7 @@ class SubscribedResturantDetail extends StatelessWidget {
                 color: Colors.grey.shade300,
                 border: Border(
                     bottom: BorderSide(color: Colors.grey.shade500, width: 1))),
-            padding: EdgeInsets.all(12),
+            padding: const EdgeInsets.all(12),
             width: MediaQuery.of(context).size.width,
             child: Center(
               child: Column(
@@ -47,7 +49,8 @@ class SubscribedResturantDetail extends StatelessWidget {
                   ),
                   Text(
                     name.toUpperCase(),
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
                   )
                 ],
               ),
@@ -60,15 +63,15 @@ class SubscribedResturantDetail extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 35,
                 ),
-                Text(
+                const Text(
                   'Unsubscription Form',
                   style: TextStyle(
                       height: 1.1, fontWeight: FontWeight.bold, fontSize: 40),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 12,
                 ),
                 SizedBox(
@@ -76,10 +79,10 @@ class SubscribedResturantDetail extends StatelessWidget {
                   child: Text(
                     'if you wish to unsubscribe from this resturant please fill the your compliant in the following text field, we will get back to you with less that 24 hours!!'
                         .toUpperCase(),
-                    style: TextStyle(fontSize: 15, color: Colors.red.shade900),
+                    style: const TextStyle(fontSize: 15, color: Colors.black),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 12,
                 ),
                 //resturant informatino and caustino
@@ -96,7 +99,7 @@ class SubscribedResturantDetail extends StatelessWidget {
                                   .toUpperCase()),
                       TextSpan(
                           text: name,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 13, fontWeight: FontWeight.w900)),
                       TextSpan(
                           text:
@@ -104,15 +107,15 @@ class SubscribedResturantDetail extends StatelessWidget {
                                   .toUpperCase()),
                       TextSpan(
                           text: currentBalance,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 13, fontWeight: FontWeight.w900)),
                     ])),
-                SizedBox(
+                const SizedBox(
                   height: 12,
                 ),
                 TextFormField(
                   controller: controller,
-                  scrollPadding: EdgeInsets.all(12),
+                  scrollPadding: const EdgeInsets.all(12),
                   keyboardType: TextInputType.multiline,
                   minLines: 1, // <-- SEE HERE
                   maxLines: 5,
@@ -122,31 +125,32 @@ class SubscribedResturantDetail extends StatelessWidget {
                   decoration: InputDecoration(
                       focusColor: style.Style.primaryColor,
                       hoverColor: style.Style.primaryColor,
-                      border: OutlineInputBorder()),
+                      border: const OutlineInputBorder()),
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'you need to write a complient';
                     }
                   },
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     SizedBox(
-                      width: 200,
+                      width: 150,
                       height: 50,
 
                       ///unsubscribe button
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                                side: BorderSide(
-                                    width: 5, color: Colors.red.shade900),
-                                borderRadius: BorderRadius.circular(50)),
+                            backgroundColor: Colors.red,
+                            shape: const RoundedRectangleBorder(
+                                // side: BorderSide(
+                                //     width: 5, color: Colors.red.shade900),
+                                // borderRadius: BorderRadius.circular(10)
+                                ),
                           ),
                           onPressed: () {
                             if (_formkey.currentState!.validate()) {
@@ -156,13 +160,14 @@ class SubscribedResturantDetail extends StatelessWidget {
                                   currentBalance: currentBalance,
                                   subscriptionAmount: subscriptionAmount,
                                   userId:
-                                      FirebaseAuth.instance.currentUser!.uid);
+                                      FirebaseAuth.instance.currentUser!.uid,
+                                  complinet: controller.text);
                             }
                           },
                           child: Text("unsubscribe".toUpperCase(),
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.red.shade900))),
+                                  color: Colors.white))),
                     ),
                   ],
                 )

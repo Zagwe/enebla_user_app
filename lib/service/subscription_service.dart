@@ -38,7 +38,8 @@ class SubscriptionService {
   }
 
   unsubscribe(
-      {required resturantId,
+      {required complinet,
+      required resturantId,
       required userId,
       required currentBalance,
       required subscriptionAmount}) {
@@ -46,7 +47,8 @@ class SubscriptionService {
         currentBalance: currentBalance,
         resturantId: resturantId,
         subscriptionAmount: subscriptionAmount,
-        userId: userId);
+        userId: userId,
+        complinet: complinet);
 
     FirebaseFirestore.instance
         .collection('unsubscribecomplient')

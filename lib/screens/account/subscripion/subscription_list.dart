@@ -8,6 +8,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:enebla_user_app/theme/style.dart' as style;
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:rate_my_app/rate_my_app.dart';
 
 class SubscriptionList extends StatelessWidget {
   const SubscriptionList({super.key});
@@ -40,12 +41,16 @@ class SubscriptionList extends StatelessWidget {
             .collection('subscriptionuser')
             .snapshots(),
         builder: (context,
-            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-          if (snapshot.hasData) {
+            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                subscriptionSnapshot) {
+          if (subscriptionSnapshot.hasData) {
             int length = 0;
-            for (int index = 0; index < snapshot.data!.docs.length; index++) {
+            for (int index = 0;
+                index < subscriptionSnapshot.data!.docs.length;
+                index++) {
               // print(snapshot.data!.docs[index].data().keys);
-              final keys = snapshot.data!.docs[index].data().keys.toList();
+              final keys =
+                  subscriptionSnapshot.data!.docs[index].data().keys.toList();
 
               for (var j = 0; j < keys.length; j++) {
                 if (FirebaseAuth.instance.currentUser!.uid == keys[j]) {
@@ -60,7 +65,7 @@ class SubscriptionList extends StatelessWidget {
             return ListView.builder(
               itemCount: length,
               itemBuilder: (context, index) {
-                final singleDoc = snapshot.data!.docs[index]
+                final singleDoc = subscriptionSnapshot.data!.docs[index]
                     [FirebaseAuth.instance.currentUser!.uid];
                 // print(singleDoc);
                 String resturant = singleDoc['subscribtionOwner'];
@@ -71,10 +76,21 @@ class SubscriptionList extends StatelessWidget {
                       .collection('resturant')
                       .doc(resturant)
                       .get(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      if (snapshot.data!.data() != null) {
-                        final resturantInfo = snapshot.data!.data();
+                  builder: (context, resturantSnapshot) {
+                    if (resturantSnapshot.connectionState ==
+                        ConnectionState.waiting) {
+                      if (index == 0) {
+                        return Center(
+                            child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: MediaQuery.of(context).size.width / 2),
+                          child: const CircularProgressIndicator(),
+                        ));
+                      }
+                    }
+                    if (resturantSnapshot.hasData) {
+                      if (resturantSnapshot.data!.data() != null) {
+                        final resturantInfo = resturantSnapshot.data!.data();
                         // print(resturantInfo!['imageUrl']);
                         final currentBalance = singleDoc['currentBalance'];
                         final resturantName = resturantInfo!['name'];
@@ -113,95 +129,125 @@ class SubscriptionList extends StatelessWidget {
                                 );
                           },
                           child: Container(
-                            margin: EdgeInsets.all(12),
+                            margin: const EdgeInsets.all(12),
                             // margin: EdgeInsets.all(12),
                             child: Material(
                               elevation: 20,
                               child: Container(
                                 // margin: EdgeInsets.all(10),
-                                padding: EdgeInsets.all(12),
+                                padding: const EdgeInsets.all(12),
                                 // height: 100,
                                 decoration: BoxDecoration(
                                     color: Colors.black,
                                     border: Border.all(width: 2)),
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     resturantInfo['imageUrl'] is String
                                         ? CircleAvatar(
-                                            radius: 50,
+                                            radius: 40,
                                             backgroundImage: NetworkImage(
                                               resturantInfo['imageUrl'],
                                             ),
                                           )
+
+                                        //  CircleAvatar(
+                                        //     radius: 40,
+                                        //     backgroundImage: NetworkImage(
+                                        //       resturantInfo['imageUrl'],
+                                        //     ),
+                                        //   )
                                         : Container(),
-                                    SizedBox(
-                                      width: 10,
+                                    const SizedBox(
+                                      width: 15,
                                     ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Text(
-                                              'resturant name   '.toUpperCase(),
-                                              style: TextStyle(
-                                                  color: Colors.green,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 15),
-                                            ),
-                                            Text(
-                                              resturantInfo['name']
-                                                  .toUpperCase(),
-                                              style: TextStyle(
-                                                  color: Colors.blue,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ],
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 12.0),
-                                          child: Row(
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
                                             children: [
-                                              Text(
-                                                  'currentBalance   '
+                                              Expanded(
+                                                flex: 2,
+                                                child: Text(
+                                                  'resturant name   '
                                                       .toUpperCase(),
-                                                  style: TextStyle(
-                                                      color: Colors.green,
+                                                  style: const TextStyle(
+                                                    color: Colors.green,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ),
+                                              Flexible(
+                                                child: Text(
+                                                  resturantInfo['name'],
+                                                  // softWrap: false,
+                                                  style: const TextStyle(
+                                                      color: Colors.blue,
                                                       fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 15)),
-                                              Text(
-                                                singleDoc['currentBalance'],
-                                                style: TextStyle(
-                                                    color: Colors.blue,
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                                          FontWeight.bold),
+                                                ),
                                               ),
                                             ],
                                           ),
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                                'subscription amount   '
-                                                    .toUpperCase(),
-                                                style: TextStyle(
-                                                    color: Colors.green,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 15)),
-                                            Text(
-                                              singleDoc['subscriptionAmount'],
-                                              style: TextStyle(
-                                                  color: Colors.blue,
-                                                  fontWeight: FontWeight.bold),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 12.0),
+                                            child: Row(
+                                              children: [
+                                                Expanded(
+                                                  flex: 2,
+                                                  child: Text(
+                                                      'current Balance   '
+                                                          .toUpperCase(),
+                                                      style: const TextStyle(
+                                                          color: Colors.green,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 15)),
+                                                ),
+                                                Expanded(
+                                                  child: Text(
+                                                    singleDoc['currentBalance'],
+                                                    style: const TextStyle(
+                                                        color: Colors.blue,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                          ],
-                                        )
-                                      ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                flex: 2,
+                                                child: Text(
+                                                    'subscription amoun'
+                                                        .toUpperCase(),
+                                                    style: const TextStyle(
+                                                        color: Colors.green,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 15)),
+                                              ),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              Flexible(
+                                                child: Text(
+                                                  singleDoc[
+                                                      'subscriptionAmount'],
+                                                  style: const TextStyle(
+                                                      color: Colors.blue,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
                                     ),
                                     // IconButton(
                                     //     onPressed: () {},
@@ -213,8 +259,15 @@ class SubscriptionList extends StatelessWidget {
                           ),
                         );
                       }
+
+                      //if there is a data but it is null
+                      return Container();
+                    } else {
+                      return const Center(
+                        child: Text('unknown error'),
+                      );
                     }
-                    return Container();
+
                     // print(resturant);
                     // print(snapshot.data!.data());
                   },
@@ -222,7 +275,10 @@ class SubscriptionList extends StatelessWidget {
               },
             );
           }
-          return Text('xon');
+          if (subscriptionSnapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          return const Text('xon');
         },
       ),
     );
