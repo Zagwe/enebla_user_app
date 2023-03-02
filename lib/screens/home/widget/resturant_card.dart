@@ -34,7 +34,7 @@ class ResturantItem extends StatelessWidget {
             child: Container(
               height: 240,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(30),
                 child: snap['imageUrl'] != null
                     ? SizedBox(
                         width: MediaQuery.of(context).size.width,

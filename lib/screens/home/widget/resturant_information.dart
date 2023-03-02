@@ -43,7 +43,7 @@ class ResturantInformation extends StatelessWidget {
                     style: TextStyle(
                         color: style.Style.resturantTagColor, fontSize: 16),
                     children: [
-                  const TextSpan(text: '\$\$'),
+                  const TextSpan(text: 'ETB'),
                   const TextSpan(text: ' \u2981 '),
                   const TextSpan(text: 'chicken'),
                   const TextSpan(text: ' \u2981 '),

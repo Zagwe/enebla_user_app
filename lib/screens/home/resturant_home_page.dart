@@ -186,40 +186,42 @@ class _ResturantHomePageState extends State<ResturantHomePage> {
                 ),
               ),
               //food menu tab bar
-              Expanded(
-                  child: StreamBuilder(
-                      stream: FirebaseFirestore.instance
-                          .collection('menus')
-                          .doc(widget.snap['owner'])
-                          // .where('id', isEqualTo: widget.snap['owner'])
-                          .snapshots(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          if (snapshot.data!.data() != null) {
-                            final snap = snapshot.data!.data();
-                            // print(snap);
-                            final menuItem = snap!['menulist'];
+              SingleChildScrollView(
+                child: Expanded(
+                    child: StreamBuilder(
+                        stream: FirebaseFirestore.instance
+                            .collection('menus')
+                            .doc(widget.snap['owner'])
+                            // .where('id', isEqualTo: widget.snap['owner'])
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            if (snapshot.data!.data() != null) {
+                              final snap = snapshot.data!.data();
+                              // print(snap);
+                              final menuItem = snap!['menulist'];
 
-                            final menuName = menuItem.keys.toList();
+                              final menuName = menuItem.keys.toList();
 
-                            return TopTabBarWidget(
-                              snap: snap,
-                              menuItem: menuItem,
-                              menuName: menuName,
-                            );
+                              return TopTabBarWidget(
+                                snap: snap,
+                                menuItem: menuItem,
+                                menuName: menuName,
+                              );
+                            }
                           }
-                        }
 
-                        //the entire list of menus
+                          //the entire list of menus
 
-                        //menuItem['menuname[index]']['listoffood'][index][name]
+                          //menuItem['menuname[index]']['listoffood'][index][name]
 
-                        //title menuname[index]
+                          //title menuname[index]
 
-                        return const Center(
-                            child: Text(
-                                'this resturant does not have a menu yet'));
-                      }))
+                          return const Center(
+                              child: Text(
+                                  'this resturant does not have a menu yet'));
+                        })),
+              )
             ],
           ),
         )

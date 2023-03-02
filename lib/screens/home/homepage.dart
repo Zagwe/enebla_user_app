@@ -18,7 +18,7 @@ class HomePage extends StatelessWidget {
           title: Align(
             alignment: Alignment.topLeft,
             child: Text(
-              'Enebla',
+              'Enebla User',
               style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
