@@ -1,3 +1,4 @@
+import 'package:enebla_user_app/theme/style.dart';
 import 'package:flutter/material.dart';
 
 class TermsAndConditionsPage extends StatefulWidget {
@@ -31,7 +32,19 @@ class _TermsAndConditionsPageState extends State<TermsAndConditionsPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Terms and Conditions'),
+        title: Text(
+          'Terms and Conditions',
+          style: TextStyle(color: Style.primaryColor),
+        ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Style.primaryColor,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: FadeTransition(
         opacity: _animation,

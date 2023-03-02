@@ -31,35 +31,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        elevation: 1,
+        elevation: 0,
+        title: Text(
+          'Edit profile'.toUpperCase(),
+          style: TextStyle(color: style.Style.primaryColor),
+        ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: style.Style.primaryColor),
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.home,
-              color: style.Style.primaryColor,
-            ),
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => EneblaHome()));
-            },
-          ),
-          // IconButton(
-          //   icon: Icon(
-          //     Icons.settings,
-          //     color: style.Style.primaryColor,
-          //   ),
-          //   onPressed: () {
-          //     Navigator.of(context).push(MaterialPageRoute(
-          //         builder: (BuildContext context) => AccountSetting()));
-          //   },
-          // ),
-        ],
       ),
       body: Container(
         padding: EdgeInsets.only(left: 16, top: 25, right: 16),
@@ -85,11 +67,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                 return ListView(
                   children: [
-                    Text(
-                      "Edit Profile",
-                      style:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
-                    ),
                     SizedBox(
                       height: 15,
                     ),
