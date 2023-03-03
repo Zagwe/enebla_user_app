@@ -22,7 +22,7 @@ class SubscriptionInfromation extends StatelessWidget {
 
   final TextEditingController amountController = TextEditingController();
 
-  Future<String> getRef() async{
+  Future<String> getRef() async {
     var intValue = Random().nextInt(1000000) + 1000000;
 
     return intValue.toString();
@@ -113,7 +113,6 @@ class SubscriptionInfromation extends StatelessWidget {
   }
 
   Widget buttonMaker(BuildContext context) {
-
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
@@ -122,7 +121,7 @@ class SubscriptionInfromation extends StatelessWidget {
             backgroundColor: style.Style.SecondaryColor),
         onPressed: () async {
           // print(amountController);
-            var trxef = await getRef();
+          var trxef = await getRef();
           if (amountController.text.isEmpty) {
             ElegantNotification(
               width: MediaQuery.of(context).size.width,
@@ -155,7 +154,7 @@ class SubscriptionInfromation extends StatelessWidget {
             print(AppStateProvider.of(context)?.state.snap);
             print(
                 "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-------AppStateProvider-------args");
-            await Chapa.paymentParameters(
+            Chapa.paymentParameters(
               context: context, // context
               publicKey: 'CHASECK_TEST-doP1v3R1dnFhf8hcTf3ooFThPTyjhJo2',
               currency: 'ETB',
@@ -177,38 +176,48 @@ class SubscriptionInfromation extends StatelessWidget {
                 "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-------AppStateProvider-------args");
             print(args);
             //
-             if(args['message'] == 'paymentSuccessful' ){
-               await SubscriptionService().addSubscription(
-                  subscriptionAmount: amountController.text,
-                  subscriptionstatus: 'true',
-                  subscribedUser: FirebaseAuth.instance.currentUser!.uid,
-                  subscribtionOwner: snap['owner'],
-                  currentBalance: amountController.text
-              );
-            }else{
+
+            String res = await SubscriptionService().addSubscription(
+                subscriptionAmount: amountController.text,
+                subscriptionstatus: 'true',
+                subscribedUser: FirebaseAuth.instance.currentUser!.uid,
+                subscribtionOwner: snap['owner'],
+                currentBalance: amountController.text);
+
+            if (res == 'success') {
+              // ignore: use_build_context_synchronously
               ElegantNotification(
-                title: const Text("Error"),
-                description:
-                const Text(" Payment failed"),
+                title: const Text("Successfull"),
+                description: const Text("you have successfully subscribed"),
                 icon: const Icon(
-                  Icons.close,
-                  color: Colors.red,
+                  Icons.done,
+                  color: Colors.green,
                 ),
-                progressIndicatorColor: Colors.red,
+                progressIndicatorColor: Colors.green,
+              ).show(context);
+            } else {
+              // ignore: use_build_context_synchronously
+              ElegantNotification(
+                title: const Text("unable to subscribe"),
+                description: const Text("some error occured"),
+                icon: const Icon(
+                  Icons.warning,
+                  color: Colors.green,
+                ),
+                progressIndicatorColor: Colors.green,
               ).show(context);
             }
 
-
-            ElegantNotification(
-              title: const Text("Success"),
-              description:
-                  const Text("You Have Been Added to Subscription plan."),
-              icon: const Icon(
-                Icons.done,
-                color: Colors.green,
-              ),
-              progressIndicatorColor: Colors.green,
-            ).show(context);
+            // ElegantNotification(
+            //   title: const Text("Success"),
+            //   description:
+            //       const Text("You Have Been Added to Subscription plan."),
+            //   icon: const Icon(
+            //     Icons.done,
+            //     color: Colors.green,
+            //   ),
+            //   progressIndicatorColor: Colors.green,
+            // ).show(context);
           }
         },
         child: Text(

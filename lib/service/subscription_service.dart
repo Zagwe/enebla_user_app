@@ -29,7 +29,7 @@ class SubscriptionService {
         .doc(subscribtionOwner)
         .set(subscriptionModel.toJson(), SetOptions(merge: true))
         .then((value) {
-      res = 'subscription added successfully';
+      res = 'success';
     }).onError((error, stackTrace) {
       res = error.toString();
     });
