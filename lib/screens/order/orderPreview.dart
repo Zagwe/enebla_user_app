@@ -342,14 +342,14 @@ class _OrderPreviewState extends State<OrderPreview> {
                                 progressIndicatorColor: Colors.red,
                               ).show(context);
                             }
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) => BalanceView(
-                                  resturantId: AppStateProvider.of(context)!
-                                      .state
-                                      .orderFoodList['resturantId']!
-                                      .first,
-                                  userId: FirebaseAuth.instance.currentUser!.uid,
-                                  currentBalance: balance,)));
+                            // Navigator.push(context,
+                            //     MaterialPageRoute(builder: (context) => BalanceView(
+                            //       resturantId: AppStateProvider.of(context)!
+                            //           .state
+                            //           .orderFoodList['resturantId']!
+                            //           .first,
+                            //       userId: FirebaseAuth.instance.currentUser!.uid,
+                            //       currentBalance: balance,)));
                             setState(() {
                               AppStateProvider.of(context)!
                                   .state

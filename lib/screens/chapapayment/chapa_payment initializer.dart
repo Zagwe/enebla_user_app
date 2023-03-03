@@ -69,10 +69,10 @@ class Chapa {
 
     return true;
   }
-
+  // txRef
   void initatePayment() async {
     intilizeMyPayment(context, publicKey, email, amount, currency, firstName,
-        lastName, txRef, title, desc, namedRouteFallBack);
+        lastName, title, txRef,desc, namedRouteFallBack);
     print("broo0");
   }
 }

@@ -31,7 +31,6 @@ class _OnBordingState extends State<OnBording> {
     int isViewed = 0;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setInt("OnBording", isViewed);
-
   }
 
   @override

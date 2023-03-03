@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elegant_notification/elegant_notification.dart';
 import 'package:enebla_user_app/bloc/state.dart';
@@ -19,6 +21,12 @@ class SubscriptionInfromation extends StatelessWidget {
   SubscriptionInfromation({super.key, required this.snap, required this.args});
 
   final TextEditingController amountController = TextEditingController();
+
+  Future<String> getRef() async{
+    var intValue = Random().nextInt(1000000) + 1000000;
+
+    return intValue.toString();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -105,6 +113,7 @@ class SubscriptionInfromation extends StatelessWidget {
   }
 
   Widget buttonMaker(BuildContext context) {
+
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
@@ -113,7 +122,7 @@ class SubscriptionInfromation extends StatelessWidget {
             backgroundColor: style.Style.SecondaryColor),
         onPressed: () async {
           // print(amountController);
-
+            var trxef = await getRef();
           if (amountController.text.isEmpty) {
             ElegantNotification(
               width: MediaQuery.of(context).size.width,
@@ -148,14 +157,14 @@ class SubscriptionInfromation extends StatelessWidget {
                 "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-------AppStateProvider-------args");
             await Chapa.paymentParameters(
               context: context, // context
-              publicKey: 'CHASECK_TEST-jmyHK17FPhLvjPDNRfNIAPODsfLKZd9Y',
+              publicKey: 'CHASECK_TEST-doP1v3R1dnFhf8hcTf3ooFThPTyjhJo2',
               currency: 'ETB',
               amount: amountController.text,
               email: 'xyz@gmail.com',
               firstName: 'firstname',
               lastName: 'lastname',
-              txRef: '34TXTHHgb',
               title: 'title',
+              txRef: "trxef",
               desc: 'desc',
               namedRouteFallBack: '/fallback',
             );
@@ -167,28 +176,28 @@ class SubscriptionInfromation extends StatelessWidget {
             print(
                 "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-------AppStateProvider-------args");
             print(args);
-            // //
-            //  if(args['message'] == 'paymentSuccessful' ){
-            //    await SubscriptionService().addSubscription(
-            //       subscriptionAmount: amountController.text,
-            //       subscriptionstatus: 'true',
-            //       subscribedUser: FirebaseAuth.instance.currentUser!.uid,
-            //       subscribtionOwner: snap['owner'],
-            //       currentBalance: amountController.text
-            //   );
-            // }else{
-            //   ElegantNotification(
-            //     title: const Text("Error"),
-            //     description:
-            //     const Text(" Payment failed"),
-            //     icon: const Icon(
-            //       Icons.close,
-            //       color: Colors.red,
-            //     ),
-            //     progressIndicatorColor: Colors.red,
-            //   ).show(context);
-            // }
             //
+             if(args['message'] == 'paymentSuccessful' ){
+               await SubscriptionService().addSubscription(
+                  subscriptionAmount: amountController.text,
+                  subscriptionstatus: 'true',
+                  subscribedUser: FirebaseAuth.instance.currentUser!.uid,
+                  subscribtionOwner: snap['owner'],
+                  currentBalance: amountController.text
+              );
+            }else{
+              ElegantNotification(
+                title: const Text("Error"),
+                description:
+                const Text(" Payment failed"),
+                icon: const Icon(
+                  Icons.close,
+                  color: Colors.red,
+                ),
+                progressIndicatorColor: Colors.red,
+              ).show(context);
+            }
+
 
             ElegantNotification(
               title: const Text("Success"),

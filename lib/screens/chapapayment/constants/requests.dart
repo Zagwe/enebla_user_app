@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:chapasdk/constants/url.dart';
 import 'package:enebla_user_app/screens/chapapayment/fallback.dart';
 import 'package:enebla_user_app/screens/subscription/subscripion.dart';
@@ -8,6 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../chapawebview.dart';
 import '../model/data.dart';
+var intValue;
+Future<String> getRef() async{
+   intValue = Random().nextInt(1000000) + 1000000;
+
+  return intValue.toString();
+}
 
 Future<String> intilizeMyPayment(
   BuildContext context,
@@ -22,6 +29,7 @@ Future<String> intilizeMyPayment(
   String customDescription,
   String fallBackNamedRoute,
 ) async {
+  getRef();
   final http.Response response = await http.post(
     Uri.parse(ChapaUrl.baseUrl),
     headers: {
@@ -33,7 +41,7 @@ Future<String> intilizeMyPayment(
       'currency': currency.toUpperCase(),
       'first_name': firstName,
       'last_name': lastName,
-      'tx_ref': transactionReference,
+      'tx_ref': intValue.toString(),
       'customization[title]': customTitle,
       'customization[description]': customDescription
     },
@@ -41,9 +49,10 @@ Future<String> intilizeMyPayment(
   var jsonResponse = json.decode(response.body);
   if (response.statusCode == 400) {
     print(jsonResponse);
+
   } else if (response.statusCode == 200) {
     ResponseData res = ResponseData.fromJson(jsonResponse);
-
+    print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Good &&&&&");
     Navigator.push(
       context,
       MaterialPageRoute(
